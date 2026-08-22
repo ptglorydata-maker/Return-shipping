@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>สินค้าตีกลับ กรกฎาคม</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --page:        #f9f9f7;
+    --surface:     #fcfcfb;
+    --surface-2:   #f2f1ec;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --muted:       #898781;
+    --grid:        #e1e0d9;
+    --baseline:    #c3c2b7;
+    --border:      rgba(11,11,11,0.10);
+
+    --blue:    #2a78d6;
+    --orange:  #eb6834;
+    --aqua:    #1baf7a;
+    --yellow:  #eda100;
+    --magenta: #e87ba4;
+    --violet:  #4a3aa7;
+
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --serious:  #ec835a;
+    --critical: #d03b3b;
+
+    --warn-bg:  #fdf3e2;
+    --crit-bg:  #fbe9e8;
+
+    --font-display: "Chakra Petch", "Noto Sans Thai", system-ui, sans-serif;
+    --font-body: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --page:        #0d0d0d;
+      --surface:     #1a1a19;
+      --surface-2:   #201f1d;
+      --ink:         #ffffff;
+      --ink-2:       #c3c2b7;
+      --muted:       #898781;
+      --grid:        #2c2c2a;
+      --baseline:    #383835;
+      --border:      rgba(255,255,255,0.10);
+
+      --blue:    #3987e5;
+      --orange:  #d95926;
+      --aqua:    #199e70;
+      --yellow:  #c98500;
+      --magenta: #d55181;
+      --violet:  #9085e9;
+
+      --good:     #0ca30c;
+      --warning:  #fab219;
+      --serious:  #ec835a;
+      --critical: #e66767;
+
+      --warn-bg:  #2b2412;
+      --crit-bg:  #2c1a19;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:        #0d0d0d;
+    --surface:     #1a1a19;
+    --surface-2:   #201f1d;
+    --ink:         #ffffff;
+    --ink-2:       #c3c2b7;
+    --muted:       #898781;
+    --grid:        #2c2c2a;
+    --baseline:    #383835;
+    --border:      rgba(255,255,255,0.10);
+
+    --blue:    #3987e5;
+    --orange:  #d95926;
+    --aqua:    #199e70;
+    --yellow:  #c98500;
+    --magenta: #d55181;
+    --violet:  #9085e9;
+
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --serious:  #ec835a;
+    --critical: #e66767;
+
+    --warn-bg:  #2b2412;
+    --crit-bg:  #2c1a19;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:var(--page);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:40px 28px 80px;
+    display:flex;
+    flex-direction:column;
+    gap:36px;
+  }
+
+  /* ---- header ---- */
+  header{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    font-family:var(--font-display);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--blue);
+    margin:0 0 8px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(26px,3.4vw,38px);
+    line-height:1.15;
+    margin:0;
+    text-wrap:balance;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    color:var(--ink-2);
+    font-size:15px;
+    max-width:60ch;
+  }
+  .meta{
+    text-align:right;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .meta strong{ color:var(--ink-2); font-weight:600; }
+
+  /* ---- KPI row ---- */
+  .kpi-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:14px;
+  }
+  .kpi{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px 18px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .kpi .label{
+    font-size:12.5px;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .kpi .value{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:28px;
+    font-variant-numeric:tabular-nums;
+    line-height:1.1;
+  }
+  .kpi .value small{
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:14px;
+    color:var(--ink-2);
+    margin-left:2px;
+  }
+  .kpi .note{
+    font-size:12.5px;
+    color:var(--ink-2);
+  }
+  .kpi .note.crit{ color:var(--critical); font-weight:600; }
+  .kpi.accent-blue .value{ color:var(--blue); }
+
+  /* ---- section shell ---- */
+  section{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-size:18px;
+    font-weight:600;
+    margin:0;
+  }
+  .section-head .hint{
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+  }
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:820px){
+    .grid-2{ grid-template-columns:1fr; }
+  }
+
+  /* ---- bar chart (horizontal, css-built) ---- */
+  .chart{ display:flex; flex-direction:column; gap:2px; }
+  .bar-row{
+    display:grid;
+    grid-template-columns:150px 1fr 100px;
+    align-items:center;
+    gap:10px;
+    padding:5px 0;
+  }
+  .bar-row.compact{ grid-template-columns:120px 1fr 78px; }
+  .bar-row .rowlabel{
+    font-size:13px;
+    color:var(--ink-2);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .bar-track{
+    position:relative;
+    height:14px;
+    background:var(--grid);
+    border-radius:4px;
+    overflow:visible;
+  }
+  .bar-fill{
+    position:relative;
+    height:100%;
+    border-radius:4px;
+    min-width:4px;
+  }
+  .bar-fill[data-tooltip]:hover::after{
+    content:attr(data-tooltip);
+    position:absolute;
+    left:0;
+    bottom:calc(100% + 6px);
+    background:var(--ink);
+    color:var(--page);
+    font-size:11.5px;
+    font-family:var(--font-body);
+    padding:5px 8px;
+    border-radius:6px;
+    white-space:nowrap;
+    z-index:5;
+    pointer-events:none;
+    font-variant-numeric:tabular-nums;
+  }
+  .bar-row .rowvalue{
+    font-size:13px;
+    font-weight:600;
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink);
+  }
+  .bar-row .rowvalue small{
+    font-weight:400;
+    color:var(--muted);
+    font-size:11.5px;
+  }
+
+  .legend-line{
+    font-size:12px;
+    color:var(--muted);
+    padding-top:2px;
+  }
+
+  /* ---- line chart (daily trend) ---- */
+  .line-chart{ width:100%; }
+  .line-chart svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .line-chart .gridline{ stroke:var(--grid); stroke-width:1; }
+  .line-chart .baseline{ stroke:var(--baseline); stroke-width:1; }
+  .line-chart .area{ fill:var(--blue); opacity:.10; }
+  .line-chart .line{ fill:none; stroke:var(--blue); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+  .line-chart .dot{ fill:var(--surface); stroke:var(--blue); stroke-width:2; }
+  .line-chart .dot.peak{ fill:var(--blue); }
+  .line-chart .axislabel{ fill:var(--muted); font-size:10.5px; font-family:var(--font-body); }
+
+  /* ---- callout strip (concentration facts) ---- */
+  .fact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+  }
+  .fact{
+    border-radius:10px;
+    padding:16px 18px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .fact .big{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:24px;
+    font-variant-numeric:tabular-nums;
+  }
+  .fact .big.critical{ color:var(--critical); }
+  .fact .big.warning{ color:var(--warning); }
+  .fact .desc{ font-size:13px; color:var(--ink-2); }
+
+  /* ---- table ---- */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+  }
+  thead th{
+    text-align:left;
+    font-weight:600;
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    padding:8px 10px;
+    border-bottom:1px solid var(--baseline);
+  }
+  tbody td{
+    padding:9px 10px;
+    border-bottom:1px solid var(--grid);
+    color:var(--ink-2);
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.num, th.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  td.strong{ color:var(--ink); font-weight:600; }
+  .table-wrap{ overflow-x:auto; }
+
+  /* ---- insight list ---- */
+  .insight-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .insight{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .insight .num{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:13px;
+    color:var(--blue);
+    background:var(--surface-2);
+    border-radius:6px;
+    height:24px;
+    width:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .insight p{ margin:0; font-size:14px; line-height:1.6; color:var(--ink-2); }
+  .insight p strong{ color:var(--ink); }
+
+  /* ---- gap / data-quality section ---- */
+  .gap-panel{
+    border:1px solid var(--critical);
+    background:var(--crit-bg);
+    border-radius:10px;
+    padding:20px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .gap-panel .section-head h2{ color:var(--critical); }
+  .gap-item{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .chip{
+    font-family:var(--font-display);
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.04em;
+    padding:3px 8px;
+    border-radius:5px;
+    white-space:nowrap;
+    height:fit-content;
+    text-transform:uppercase;
+  }
+  .chip.critical{ background:var(--critical); color:#fff; }
+  .chip.warning{ background:var(--warning); color:#3a2a00; }
+  .chip.good{ background:var(--good); color:#fff; }
+  .gap-item p{ margin:0; font-size:14px; line-height:1.6; color:var(--ink-2); }
+  .gap-item p strong{ color:var(--ink); }
+
+  footer{
+    font-size:12px;
+    color:var(--muted);
+    padding-top:14px;
+    border-top:1px solid var(--border);
+  }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <p class="eyebrow">รายงานสินค้าตีกลับ · Return Insight</p>
+      <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
+      <p class="subtitle">สรุปจากแท็บ “Discuse” (ฐานข้อมูลตีกลับเต็มทั้งเดือน) ในไฟล์ “สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569” · ครอบคลุมทั้ง 31 วันของเดือน</p>
+    </div>
+    <div class="meta">
+      อัปเดตข้อมูล: <strong>22 ส.ค. 2569</strong><br>
+      จำนวนแถวข้อมูล: <strong>3,188 ออเดอร์</strong>
+    </div>
+  </header>
+
+  <!-- KPI -->
+  <section>
+    <div class="kpi-row">
+      <div class="kpi accent-blue">
+        <div class="label">ออเดอร์ตีกลับทั้งหมด</div>
+        <div class="value">3,188 <small>ออเดอร์</small></div>
+        <div class="note">ทั้งเดือน ก.ค. 2569 (1–31 ก.ค.)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">มูลค่าสินค้าตีกลับ (ราคาขาย)</div>
+        <div class="value">฿1,704,627</div>
+        <div class="note">เฉลี่ย ฿535 / ออเดอร์</div>
+      </div>
+      <div class="kpi accent-blue">
+        <div class="label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+        <div class="value">3.4%</div>
+        <div class="note">3,188 ตีกลับ / 92,962 ออเดอร์ ก.ค. (ครอบคลุม 99%+ ของยอดขาย)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">เป็นการชำระแบบ COD</div>
+        <div class="value">99.7%</div>
+        <div class="note crit">แทบทั้งหมดเป็น COD</div>
+      </div>
+      <div class="kpi">
+        <div class="label">ตีกลับผ่านเครือ Flash Express</div>
+        <div class="value">95.0%</div>
+        <div class="note">3,029 / 3,188 ออเดอร์ (รวมทุกเขต)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">ระบบตีกลับอัตโนมัติ</div>
+        <div class="value">94.6%</div>
+        <div class="note crit">สถานะขนส่ง SYSTEM_AUTO_RETURN</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- concentration facts -->
+  <section>
+    <div class="section-head">
+      <h2>จุดที่ควรรู้ก่อน — ใครตีกลับ “ผิดปกติ” จริง ๆ</h2>
+      <span class="hint">คิดเป็น % เทียบยอดขายของตัวเอง ไม่ใช่แค่จำนวนดิบ</span>
+    </div>
+    <div class="fact-grid">
+      <div class="fact">
+        <div class="big critical">UNIT23 = 12.7%</div>
+        <div class="desc">อัตราตีกลับสูงสุดในบริษัท (108/848 ออเดอร์) สูงกว่าค่าเฉลี่ยบริษัท (3.4%) เกือบ <strong>4 เท่า</strong> — ทั้งที่ปริมาณขายไม่ได้เยอะที่สุด</div>
+      </div>
+      <div class="fact">
+        <div class="big warning">UNIT18 = 8.3%</div>
+        <div class="desc">อันดับ 2 ของอัตราตีกลับ (81/979 ออเดอร์) — สูงกว่าค่าเฉลี่ยกว่า 2 เท่า</div>
+      </div>
+      <div class="fact">
+        <div class="big">UNIT15/UNIT9 ~4-4.8%</div>
+        <div class="desc">ยูนิตที่ตีกลับ “จำนวนมากที่สุด” ดิบ ๆ (UNIT15, UNIT9) จริง ๆ แล้วอัตรา % สูงกว่าค่าเฉลี่ยแค่เล็กน้อย เพราะเป็นยูนิตที่ขายเยอะที่สุดด้วย</div>
+      </div>
+      <div class="fact">
+        <div class="big critical">94.6% Auto-return</div>
+        <div class="desc">เกือบทั้งหมดเป็นสถานะ “ระบบตีกลับอัตโนมัติ” ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- return rate by unit -->
+  <section>
+    <div class="section-head">
+      <h2>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h2>
+      <span class="hint">10 ยูนิตอัตราสูงสุด (เฉพาะยูนิตที่มียอดขาย ≥ 300 ออเดอร์/เดือน กันตัวอย่างเล็กเกินไปจนตีความผิด) · เส้นประ = ค่าเฉลี่ยบริษัท 3.4%</span>
+    </div>
+    <div class="panel">
+      <div class="chart" id="chart-rate"></div>
+      <div class="legend-line">สีแดง = สูงกว่าค่าเฉลี่ยเกิน 2 เท่า · สีเหลือง = สูงกว่าค่าเฉลี่ย · สีน้ำเงิน = ใกล้เคียงค่าเฉลี่ย</div>
+    </div>
+  </section>
+
+  <!-- daily trend -->
+  <section>
+    <div class="section-head">
+      <h2>แนวโน้มรายวันตลอดเดือน ก.ค.</h2>
+      <span class="hint">จำนวนออเดอร์ที่ตีกลับ แยกตามวันที่สั่งซื้อ (31 วัน)</span>
+    </div>
+    <div class="panel">
+      <div class="line-chart" id="chart-daily"></div>
+      <div class="legend-line">ชี้เมาส์ที่จุดเพื่อดูจำนวนออเดอร์ของวันนั้น · เส้นค่อนข้างคงที่ตลอดเดือน ไม่มีวันใดพุ่งผิดปกติเดี่ยว ๆ</div>
+    </div>
+  </section>
+
+  <!-- charts -->
+  <section>
+    <div class="section-head">
+      <h2>ตีกลับตามร้าน/ยูนิตขาย (จำนวนดิบ)</h2>
+      <span class="hint">10 อันดับแรกตาม “จำนวน” — ดูเพื่อวางแผนกำลังคน ไม่ใช่เพื่อชี้ว่ายูนิตไหนมีปัญหา (ดู % ด้านบนแทน)</span>
+    </div>
+    <div class="panel">
+      <div class="chart" id="chart-unit"></div>
+      <div class="legend-line">แถบสีน้ำเงิน = จำนวนออเดอร์ตีกลับ · ชี้เมาส์เพื่อดูมูลค่ารวม</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid-2">
+      <div>
+        <div class="section-head">
+          <h2>สินค้าที่ถูกตีกลับบ่อยที่สุด</h2>
+        </div>
+        <div class="panel">
+          <div class="chart" id="chart-product"></div>
+          <div class="legend-line">10 อันดับแรก จาก 3,188 ออเดอร์</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head">
+          <h2>ตีกลับตามภูมิภาค</h2>
+        </div>
+        <div class="panel">
+          <div class="chart" id="chart-region"></div>
+          <div class="legend-line">เรียงจากมากไปน้อย</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid-2">
+      <div>
+        <div class="section-head">
+          <h2>สถานะขนส่ง (ตัวแทนสาเหตุที่มี)</h2>
+        </div>
+        <div class="panel">
+          <div class="chart" id="chart-status"></div>
+          <div class="legend-line">นี่คือฟิลด์ที่ใกล้เคียง “สาเหตุ” ที่สุดที่มีอยู่ตอนนี้ — ยังไม่ใช่สาเหตุที่แท้จริง</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head">
+          <h2>วิธีการชำระเงิน</h2>
+        </div>
+        <div class="panel">
+          <div class="chart" id="chart-payment"></div>
+          <div class="legend-line">COD ครองเกือบทั้งหมด ส่วนที่เหลือมีเพียงหลักหน่วยออเดอร์</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- courier table -->
+  <section>
+    <div class="section-head">
+      <h2>ตีกลับตามบริษัทขนส่ง</h2>
+    </div>
+    <div class="panel table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>บริษัทขนส่ง</th>
+            <th class="num">จำนวนออเดอร์ตีกลับ</th>
+            <th class="num">สัดส่วน</th>
+          </tr>
+        </thead>
+        <tbody id="table-courier"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- what executives should know -->
+  <section>
+    <div class="section-head">
+      <h2>สิ่งที่ผู้บริหารควรรู้จากข้อมูลนี้</h2>
+    </div>
+    <div class="panel">
+      <div class="insight-list">
+        <div class="insight"><div class="num">1</div><p><strong>ตัวเลขดิบหลอกได้ — ต้องดูเป็น % ต่อยอดขาย</strong> UNIT15/UNIT9/UNIT12 ตีกลับ “จำนวนมากที่สุด” ก็จริง แต่นั่นเพราะเป็นยูนิตที่ขายเยอะที่สุดในบริษัท เมื่อคิดเป็นอัตรา % แล้วอยู่ใกล้เคียงค่าเฉลี่ย (3.4%) ตัวจริงที่ควรเป็นห่วงคือ <strong>UNIT23 (12.7%)</strong> และ <strong>UNIT18 (8.3%)</strong> ซึ่งตีกลับสูงกว่าค่าเฉลี่ย 2–4 เท่า ทั้งที่ปริมาณขายไม่ได้เยอะที่สุด — ควรลงไปดู 2 ยูนิตนี้เป็นอันดับแรก</p></div>
+        <div class="insight"><div class="num">2</div><p><strong>เกือบทั้งหมด (94.6%) คือ “ระบบตีกลับอัตโนมัติ”</strong> ไม่ใช่กรณีลูกค้าปฏิเสธรับหน้าประตูโดยตรง (Return 2.5%, RETURNED 1.8%, deliver_failed 1.0%) — ความหมายคือพัสดุถูกคูเรียร์ “พักไว้” จนครบกำหนดเวลาโดยไม่มีการติดต่อสำเร็จ ปัญหาอาจอยู่ที่ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลา มากกว่าคุณภาพสินค้าเอง</p></div>
+        <div class="insight"><div class="num">3</div><p><strong>คูเรียร์เครือเดียวครองเกือบทั้งหมด (95%)</strong> — Flash Express (ทุกเขตรวมกัน) เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ปริมาณงานส่วนใหญ่จึงวิ่งผ่าน Flash เป็นปกติ ตัวเลข 95% นี้จึงยังฟันธงไม่ได้ว่า Flash มีอัตราตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น เพราะยังไม่มีสัดส่วนงานที่แต่ละคูเรียร์ขนส่งจริงมาเทียบ (มีแต่ตัวเลขระดับยูนิต ไม่ได้แยกตามคูเรียร์)</p></div>
+        <div class="insight"><div class="num">4</div><p><strong>มูลค่าความเสียหายที่เห็นเป็นแค่ “ราคาขาย”</strong> — ฿1,704,627 คือราคาสินค้าที่ตีกลับ ยังไม่รวมค่าส่งไป+ค่าส่งกลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ตัวเลขขาดทุนจริงต่อเดือนจึงสูงกว่านี้อีก</p></div>
+        <div class="insight"><div class="num">5</div><p><strong>แนวโน้มรายวันค่อนข้างคงที่ตลอดเดือน</strong> (76–149 ออเดอร์/วัน) ไม่มีวันไหนพุ่งผิดปกติแบบเหตุการณ์เดี่ยว ๆ (เช่น ระบบล่ม หรือโปรโมชันเจาะจงวันเดียว) แปลว่าสาเหตุหลักน่าจะเป็นปัญหาเชิงโครงสร้าง (ขั้นตอนงาน/ยูนิต/คูเรียร์) มากกว่าเหตุการณ์ผิดปกติในบางวัน</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- data gaps -->
+  <div class="gap-panel">
+    <div class="section-head">
+      <h2>ข้อมูลเพียงพอไหม — จุดที่ควรเพิ่ม</h2>
+    </div>
+    <div class="insight-list">
+      <div class="gap-item">
+        <span class="chip critical">Critical</span>
+        <p><strong>ไม่มีคอลัมน์ “สาเหตุการตีกลับ”</strong> — มีแต่สถานะขนส่ง (SYSTEM_AUTO_RETURN / Return / RETURNED / deliver_failed) ซึ่งบอกแค่ “กลไก” ไม่บอก “สาเหตุ” เช่น ลูกค้าปฏิเสธรับ, ติดต่อไม่ได้, ที่อยู่ผิด, สินค้าเสียหาย, เปลี่ยนใจ ยืนยันแล้วว่าไม่มีคอลัมน์นี้ในฐานข้อมูลเต็มทั้ง 3,188 แถวเช่นกัน — ถ้าไม่มีข้อมูลนี้จะแก้ปัญหาที่ต้นตอไม่ได้ ควรให้คูเรียร์/ทีมขายบันทึกสาเหตุทุกครั้งที่ตีกลับ</p>
+      </div>
+      <div class="gap-item">
+        <span class="chip good">แก้ไขแล้ว</span>
+        <p><strong>ตอนนี้มี “ตัวหาร” เฉพาะเดือน ก.ค. แล้ว</strong> — เติมสูตร QUERY กรองช่วงวันที่ในแท็บ Total_Order on Sell (คอลัมน์ AN/AO ในชีต config) ได้ยอดขายจริงเฉพาะ ก.ค. 69 แยกตามยูนิต ครอบคลุม 92,962 ออเดอร์ (~99%+ ของยอดตีกลับที่จับคู่ได้) ทำให้คำนวณ “% อัตราตีกลับต่อยูนิต” ได้จริงแล้ว ตามที่แสดงในกราฟด้านบน — ยังไม่มีเฉพาะแยกตามคูเรียร์ ถ้าต้องการเทียบ Flash vs คูเรียร์อื่นเป็น % ต้องขอยอดส่งจริงแยกตามคูเรียร์เพิ่มอีกชุด</p>
+      </div>
+      <div class="gap-item">
+        <span class="chip warning">ควรเพิ่ม</span>
+        <p><strong>ไม่มีต้นทุนสินค้า (COGS) และค่าขนส่งไป-กลับ</strong> — มีแค่ราคาขาย ทำให้คำนวณ “ผลขาดทุนที่แท้จริง” จากการตีกลับไม่ได้ ควรเชื่อมกับตารางต้นทุนสินค้าและอัตราค่าส่งของแต่ละคูเรียร์</p>
+      </div>
+      <div class="gap-item">
+        <span class="chip warning">ควรเพิ่ม</span>
+        <p><strong>ยังไม่ได้ตรวจ “ลูกค้าซื้อซ้ำ/ตีกลับซ้ำ”</strong> ในฐานข้อมูลเต็ม 3,188 แถว (ตรวจแค่ตัวอย่างย่อยรอบก่อนพบ 1 ราย) — ถ้าเก็บ ID ลูกค้าให้เป็นมาตรฐานเดียวกันทุกช่องทาง จะกรองลูกค้าความเสี่ยงสูงเพื่อสลับวิธีชำระเงินเป็นโอนก่อนได้ เป็นการวิเคราะห์ที่ยังไม่ได้ทำในรอบนี้</p>
+      </div>
+      <div class="gap-item">
+        <span class="chip good">แก้ไขแล้ว</span>
+        <p><strong>ความกังวลเรื่อง “วันสั่งซื้อผิดปกติ” จากรอบก่อนหน้าตกไปแล้ว</strong> — ตอนนั้นใช้ข้อมูลตัวอย่างย่อยเพียง 117 แถวที่ล้วนมีวันที่เดียวกัน ทำให้เข้าใจผิดว่าคอลัมน์วันที่มีบั๊ก แต่ข้อมูลเต็ม 3,188 แถวจากแท็บ Discuse กระจายครบทั้ง 31 วันตามปกติ ยืนยันว่าคอลัมน์วันที่ใช้งานได้ถูกต้อง</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    ที่มา: Google Sheet “สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569” · แท็บ Discuse (ฐานข้อมูลตีกลับเต็ม 3,188 แถว), Total_Order on Sell (ยอดขายจริงกรองเฉพาะ ก.ค.) และแท็บ config (ตารางสรุป) · ตัวเลขทั้งหมดคำนวณจากข้อมูลดิบในไฟล์ ไม่มีการปรับแต่ง
+  </footer>
+
+</div>
+
+<script>
+  const fmt = n => Math.round(n).toLocaleString('en-US');
+  const fmt1 = n => n.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
+
+  function renderBars(containerId, data, color, opts = {}) {
+    const el = document.getElementById(containerId);
+    const max = Math.max(...data.map(d => d.value));
+    const total = opts.total || data.reduce((a,b)=>a+b.value,0);
+    const compact = opts.compact ? ' compact' : '';
+    el.innerHTML = data.map(d => {
+      const pct = (d.value / max) * 100;
+      const share = ((d.value / total) * 100).toFixed(1);
+      const tip = d.tip || `${d.label}: ${fmt(d.value)}`;
+      return `
+        <div class="bar-row${compact}">
+          <div class="rowlabel" title="${d.label}">${d.label}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${pct}%; background:${color};" data-tooltip="${tip}"></div>
+          </div>
+          <div class="rowvalue">${fmt(d.value)} <small>(${share}%)</small></div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderLine(containerId, data, color) {
+    const el = document.getElementById(containerId);
+    const W = 900, H = 200, padL = 30, padR = 10, padT = 14, padB = 24;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const max = Math.max(...data.map(d => d.value));
+    const min = 0;
+    const x = i => padL + (i / (data.length - 1)) * innerW;
+    const y = v => padT + innerH - ((v - min) / (max - min)) * innerH;
+
+    const points = data.map((d, i) => [x(i), y(d.value)]);
+    const linePath = points.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+    const areaPath = linePath + ` L${points[points.length-1][0].toFixed(1)},${(padT+innerH).toFixed(1)} L${points[0][0].toFixed(1)},${(padT+innerH).toFixed(1)} Z`;
+
+    const gridLines = [0, 0.5, 1].map(f => {
+      const yy = padT + innerH * f;
+      const val = Math.round(max * (1 - f));
+      return `<line class="gridline" x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}"></line>
+              <text class="axislabel" x="${padL - 6}" y="${yy + 3}" text-anchor="end">${val}</text>`;
+    }).join('');
+
+    const dots = data.map((d, i) => {
+      const [px, py] = points[i];
+      const isPeak = d.value === max;
+      const showLabel = (i % 5 === 0) || i === data.length - 1;
+      return `
+        <circle class="dot${isPeak ? ' peak' : ''}" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${isPeak ? 4 : 3}">
+          <title>${d.label}: ${fmt(d.value)} ออเดอร์</title>
+        </circle>
+        ${showLabel ? `<text class="axislabel" x="${px.toFixed(1)}" y="${H - 6}" text-anchor="middle">${d.label}</text>` : ''}
+      `;
+    }).join('');
+
+    el.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+        ${gridLines}
+        <line class="baseline" x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}"></line>
+        <path class="area" d="${areaPath}"></path>
+        <path class="line" d="${linePath}"></path>
+        ${dots}
+      </svg>`;
+  }
+
+  function renderRateBars(containerId, data, avg) {
+    const el = document.getElementById(containerId);
+    const max = Math.max(...data.map(d => d.rate), avg * 1.15);
+    el.innerHTML = data.map(d => {
+      const pct = (d.rate / max) * 100;
+      const avgPct = (avg / max) * 100;
+      const color = d.rate >= avg * 2 ? 'var(--critical)' : d.rate >= avg ? 'var(--warning)' : 'var(--blue)';
+      const tip = `${d.label}: ${d.returns} ตีกลับ / ${fmt(d.total)} ออเดอร์`;
+      return `
+        <div class="bar-row">
+          <div class="rowlabel" title="${d.label}">${d.label}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${pct}%; background:${color};" data-tooltip="${tip}"></div>
+            <div style="position:absolute; left:${avgPct}%; top:-3px; bottom:-3px; width:1px; border-left:2px dashed var(--muted);"></div>
+          </div>
+          <div class="rowvalue">${fmt1(d.rate)}%</div>
+        </div>`;
+    }).join('');
+  }
+
+  renderRateBars('chart-rate', [
+    {label:'UNIT23', rate:12.7, returns:108, total:848},
+    {label:'UNIT18', rate:8.3,  returns:81,  total:979},
+    {label:'UNIT8',  rate:6.1,  returns:103, total:1675},
+    {label:'ครีมบัวหิมะ', rate:6.0, returns:20, total:333},
+    {label:'UNIT13', rate:5.9,  returns:227, total:3826},
+    {label:'UNIT5',  rate:5.4,  returns:221, total:4059},
+    {label:'UNIT9',  rate:4.8,  returns:365, total:7615},
+    {label:'UNIT11', rate:4.7,  returns:337, total:7157},
+    {label:'LineOA', rate:4.7,  returns:54,  total:1159},
+    {label:'UNIT15', rate:4.1,  returns:437, total:10539},
+  ], 3.4);
+
+  renderLine('chart-daily', [
+    {label:'1',value:137},{label:'2',value:148},{label:'3',value:117},{label:'4',value:134},
+    {label:'5',value:131},{label:'6',value:117},{label:'7',value:107},{label:'8',value:106},
+    {label:'9',value:107},{label:'10',value:86},{label:'11',value:76},{label:'12',value:94},
+    {label:'13',value:78},{label:'14',value:77},{label:'15',value:86},{label:'16',value:84},
+    {label:'17',value:81},{label:'18',value:103},{label:'19',value:76},{label:'20',value:87},
+    {label:'21',value:96},{label:'22',value:84},{label:'23',value:73},{label:'24',value:82},
+    {label:'25',value:96},{label:'26',value:103},{label:'27',value:124},{label:'28',value:97},
+    {label:'29',value:121},{label:'30',value:149},{label:'31',value:131},
+  ], 'var(--blue)');
+
+  renderBars('chart-unit', [
+    {label:'UNIT15', value:437, tip:'437 ออเดอร์ · มูลค่ารวม ฿253,634'},
+    {label:'UNIT9',  value:365, tip:'365 ออเดอร์ · มูลค่ารวม ฿165,910'},
+    {label:'UNIT12', value:356, tip:'356 ออเดอร์ · มูลค่ารวม ฿188,030'},
+    {label:'UNIT11', value:337, tip:'337 ออเดอร์ · มูลค่ารวม ฿177,100'},
+    {label:'UNIT13', value:227, tip:'227 ออเดอร์ · มูลค่ารวม ฿110,150'},
+    {label:'UNIT5',  value:221, tip:'221 ออเดอร์ · มูลค่ารวม ฿131,290'},
+    {label:'UNIT21', value:145, tip:'145 ออเดอร์ · มูลค่ารวม ฿61,030'},
+    {label:'UNIT23', value:108, tip:'108 ออเดอร์ · มูลค่ารวม ฿49,440'},
+    {label:'UNIT8',  value:103, tip:'103 ออเดอร์ · มูลค่ารวม ฿56,380'},
+    {label:'UNIT7',  value:102, tip:'102 ออเดอร์ · มูลค่ารวม ฿56,980'},
+  ], 'var(--blue)', {total:3188});
+
+  renderBars('chart-product', [
+    {label:'มัลติกรีน เวจจี้ 1 แถม 1', value:379, tip:'379 ออเดอร์ · มูลค่ารวม ฿185,455'},
+    {label:'ชาแม่แย้ม 1 แถม 2',        value:311, tip:'311 ออเดอร์ · มูลค่ารวม ฿121,657'},
+    {label:'ดีเลลลิสเซ่ 1 แถม 1',       value:274, tip:'274 ออเดอร์ · มูลค่ารวม ฿134,592'},
+    {label:'จินเซง 1 แถม 1',           value:174, tip:'174 ออเดอร์ · มูลค่ารวม ฿85,235'},
+    {label:'เจสันเอ็ม 1 แถม 1',         value:169, tip:'169 ออเดอร์ · มูลค่ารวม ฿82,726'},
+    {label:'เจสันเอ็ม 2 กป + Valtora-x 1', value:153, tip:'153 ออเดอร์ · มูลค่ารวม ฿75,570'},
+    {label:'ชาแก้ปวดเมื่อย 1 แถม 2',    value:122, tip:'122 ออเดอร์ · มูลค่ารวม ฿47,985'},
+    {label:'ลูนารี่ 1 แถม 1',           value:116, tip:'116 ออเดอร์ · มูลค่ารวม ฿45,591'},
+    {label:'พลูคาว 1 แถม 1',           value:92,  tip:'92 ออเดอร์ · มูลค่ารวม ฿35,880'},
+    {label:'โพรไบโอวิต้า 1 แถม 1',      value:91,  tip:'91 ออเดอร์ · มูลค่ารวม ฿44,571'},
+  ], 'var(--orange)', {total:3188, compact:true});
+
+  renderBars('chart-region', [
+    {label:'ภาคกลาง',                  value:1283},
+    {label:'ภาคใต้',                   value:533},
+    {label:'ภาคตะวันออกเฉียงเหนือ',     value:521},
+    {label:'ภาคตะวันออก',              value:468},
+    {label:'ภาคเหนือ',                 value:209},
+    {label:'ภาคตะวันตก',               value:171},
+    {label:'ไม่ระบุ',                  value:3},
+  ], 'var(--aqua)', {total:3188, compact:true});
+
+  renderBars('chart-status', [
+    {label:'SYSTEM_AUTO_RETURN', value:3017},
+    {label:'Return',             value:80},
+    {label:'RETURNED',           value:58},
+    {label:'deliver_failed',     value:31},
+    {label:'RETURN_INITIATED',   value:1},
+    {label:'PHONE',              value:1},
+  ], 'var(--violet)', {total:3188, compact:true});
+
+  renderBars('chart-payment', [
+    {label:'COD (เก็บเงินปลายทาง)', value:3016},
+    {label:'COD',                   value:162},
+    {label:'อื่น ๆ (< 5 แถวต่อประเภท)', value:10},
+  ], 'var(--yellow)', {total:3188, compact:true});
+
+  const courierData = [
+    {name:'Flash Express TH_14', n:2665},
+    {name:'Flash Express TH_13', n:286},
+    {name:"J&T Express",         n:80},
+    {name:'Flash Express TH_15', n:67},
+    {name:'SPX Express',         n:54},
+    {name:'LEX TH',              n:25},
+    {name:'Flash Express',       n:11},
+    {name:'PT2',                 n:1},
+  ];
+  document.getElementById('table-courier').innerHTML = courierData.map(c => `
+    <tr>
+      <td class="strong">${c.name}</td>
+      <td class="num">${fmt(c.n)}</td>
+      <td class="num">${((c.n/3188)*100).toFixed(1)}%</td>
+    </tr>`).join('');
+</script>
+</body>
+</html>
