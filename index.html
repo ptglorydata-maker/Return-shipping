@@ -9,15 +9,18 @@
 <style>
   :root{
     color-scheme: light;
-    --page:        #f9f9f7;
+    --page:        #f4f4f1;
     --surface:     #fcfcfb;
     --surface-2:   #f2f1ec;
+    --surface-hero:#0b0b0b;
     --ink:         #0b0b0b;
     --ink-2:       #52514e;
     --muted:       #898781;
     --grid:        #e1e0d9;
     --baseline:    #c3c2b7;
-    --border:      rgba(11,11,11,0.10);
+    --border:      rgba(11,11,11,0.08);
+    --shadow:      0 1px 2px rgba(11,11,11,0.04), 0 8px 24px -12px rgba(11,11,11,0.12);
+    --shadow-hover:0 2px 4px rgba(11,11,11,0.06), 0 16px 32px -12px rgba(11,11,11,0.18);
 
     --blue:    #2a78d6;
     --orange:  #eb6834;
@@ -40,15 +43,18 @@
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       color-scheme: dark;
-      --page:        #0d0d0d;
-      --surface:     #1a1a19;
-      --surface-2:   #201f1d;
+      --page:        #0a0a0a;
+      --surface:     #181817;
+      --surface-2:   #1f1f1d;
+      --surface-hero:#000000;
       --ink:         #ffffff;
       --ink-2:       #c3c2b7;
-      --muted:       #898781;
+      --muted:       #8f8d87;
       --grid:        #2c2c2a;
-      --baseline:    #383835;
-      --border:      rgba(255,255,255,0.10);
+      --baseline:    #3a3a37;
+      --border:      rgba(255,255,255,0.09);
+      --shadow:      0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+      --shadow-hover:0 2px 4px rgba(0,0,0,0.4), 0 20px 40px -12px rgba(0,0,0,0.6);
 
       --blue:    #3987e5;
       --orange:  #d95926;
@@ -68,15 +74,18 @@
   }
   :root[data-theme="dark"]{
     color-scheme: dark;
-    --page:        #0d0d0d;
-    --surface:     #1a1a19;
-    --surface-2:   #201f1d;
+    --page:        #0a0a0a;
+    --surface:     #181817;
+    --surface-2:   #1f1f1d;
+    --surface-hero:#000000;
     --ink:         #ffffff;
     --ink-2:       #c3c2b7;
-    --muted:       #898781;
+    --muted:       #8f8d87;
     --grid:        #2c2c2a;
-    --baseline:    #383835;
-    --border:      rgba(255,255,255,0.10);
+    --baseline:    #3a3a37;
+    --border:      rgba(255,255,255,0.09);
+    --shadow:      0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    --shadow-hover:0 2px 4px rgba(0,0,0,0.4), 0 20px 40px -12px rgba(0,0,0,0.6);
 
     --blue:    #3987e5;
     --orange:  #d95926;
@@ -95,6 +104,7 @@
   }
 
   *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
   body{
     margin:0;
     background:var(--page);
@@ -102,80 +112,196 @@
     font-family:var(--font-body);
     -webkit-font-smoothing:antialiased;
   }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
   .wrap{
-    max-width:1180px;
+    max-width:1240px;
     margin:0 auto;
-    padding:40px 28px 80px;
+    padding:32px 24px 96px;
     display:flex;
     flex-direction:column;
-    gap:36px;
+    gap:40px;
   }
 
-  /* ---- header ---- */
-  header{
+  /* ---- nav ---- */
+  .topnav{
+    position:sticky;
+    top:0;
+    z-index:20;
     display:flex;
-    flex-wrap:wrap;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:16px;
-    padding-bottom:20px;
+    align-items:center;
+    gap:6px;
+    overflow-x:auto;
+    padding:12px 24px;
+    background:color-mix(in srgb, var(--page) 88%, transparent);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
+    scrollbar-width:none;
+  }
+  .topnav::-webkit-scrollbar{ display:none; }
+  .topnav a{
+    flex:none;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink-2);
+    text-decoration:none;
+    padding:7px 13px;
+    border-radius:999px;
+    white-space:nowrap;
+    transition:background .15s ease, color .15s ease;
+  }
+  .topnav a:hover{ background:var(--surface-2); color:var(--ink); }
+  .topnav .brand{
+    font-family:var(--font-display);
+    font-weight:700;
+    color:var(--ink);
+    padding-right:10px;
+    margin-right:4px;
+    border-right:1px solid var(--border);
+  }
+
+  /* ---- header / hero ---- */
+  header.hero{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
   }
   .eyebrow{
     font-family:var(--font-display);
     font-size:12.5px;
     font-weight:600;
-    letter-spacing:.12em;
+    letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--blue);
-    margin:0 0 8px;
+    margin:0;
   }
   h1{
     font-family:var(--font-display);
     font-weight:700;
-    font-size:clamp(26px,3.4vw,38px);
-    line-height:1.15;
+    font-size:clamp(30px,4.4vw,46px);
+    line-height:1.08;
     margin:0;
     text-wrap:balance;
   }
   .subtitle{
-    margin:8px 0 0;
+    margin:6px 0 0;
     color:var(--ink-2);
     font-size:15px;
-    max-width:60ch;
+    max-width:62ch;
   }
-  .meta{
-    text-align:right;
-    font-size:13px;
+  .hero-meta{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-top:10px;
+    font-size:12.5px;
     color:var(--muted);
-    line-height:1.6;
   }
-  .meta strong{ color:var(--ink-2); font-weight:600; }
+  .hero-meta strong{ color:var(--ink-2); font-weight:600; }
+
+  /* ---- headline stat (the one number that matters most) ---- */
+  .headline-stat{
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    background:linear-gradient(135deg, var(--surface-hero) 0%, #1a1310 100%);
+    color:#fff;
+    padding:32px 32px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:24px;
+    box-shadow:var(--shadow);
+  }
+  .headline-stat::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(560px 240px at 88% 12%, color-mix(in srgb, var(--critical) 35%, transparent), transparent 70%);
+    pointer-events:none;
+  }
+  .headline-stat .hs-label{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.65);
+    margin:0 0 8px;
+  }
+  .headline-stat .hs-value{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(44px,7vw,72px);
+    line-height:1;
+    margin:0;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .headline-stat .hs-value .unit{ font-size:0.35em; font-weight:600; color:rgba(255,255,255,0.6); }
+  .headline-stat .hs-desc{
+    margin:12px 0 0;
+    font-size:14px;
+    color:rgba(255,255,255,0.72);
+    max-width:48ch;
+    position:relative;
+  }
+  .headline-side{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    position:relative;
+    min-width:180px;
+  }
+  .hs-mini{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    padding:12px 16px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.10);
+  }
+  .hs-mini .k{ font-size:11px; color:rgba(255,255,255,0.55); font-weight:600; }
+  .hs-mini .v{ font-family:var(--font-display); font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; }
+  @media (max-width:720px){
+    .headline-stat{ grid-template-columns:1fr; }
+  }
 
   /* ---- KPI row ---- */
   .kpi-row{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:14px;
   }
   .kpi{
     background:var(--surface);
     border:1px solid var(--border);
-    border-radius:10px;
-    padding:18px 18px 16px;
+    border-radius:16px;
+    padding:20px 20px 18px;
     display:flex;
     flex-direction:column;
     gap:6px;
+    box-shadow:var(--shadow);
+    transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, border-color .18s ease;
   }
+  .kpi.clickable{ cursor:pointer; }
+  .kpi.clickable:hover{ transform:translateY(-3px); box-shadow:var(--shadow-hover); border-color:var(--border); }
+  .kpi-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
   .kpi .label{
     font-size:12.5px;
     color:var(--muted);
     font-weight:500;
   }
+  .kpi .chev{ color:var(--muted); font-size:15px; opacity:.6; transition:transform .18s ease; }
+  .kpi.clickable:hover .chev{ transform:translateX(2px); opacity:1; }
   .kpi .value{
     font-family:var(--font-display);
     font-weight:700;
-    font-size:28px;
+    font-size:30px;
     font-variant-numeric:tabular-nums;
     line-height:1.1;
   }
@@ -198,6 +324,7 @@
     display:flex;
     flex-direction:column;
     gap:14px;
+    scroll-margin-top:64px;
   }
   .section-head{
     display:flex;
@@ -208,7 +335,7 @@
   }
   .section-head h2{
     font-family:var(--font-display);
-    font-size:18px;
+    font-size:19px;
     font-weight:600;
     margin:0;
   }
@@ -220,29 +347,63 @@
   .panel{
     background:var(--surface);
     border:1px solid var(--border);
-    border-radius:10px;
-    padding:20px 22px;
+    border-radius:16px;
+    padding:22px 24px;
+    box-shadow:var(--shadow);
   }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .panel-head h3{
+    font-family:var(--font-display);
+    font-size:15.5px;
+    font-weight:600;
+    margin:0;
+  }
+  .expand-btn{
+    font-family:var(--font-body);
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--blue);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:4px 2px;
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    transition:gap .15s ease;
+  }
+  .expand-btn:hover{ gap:7px; text-decoration:underline; }
 
   .grid-2{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:16px;
   }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
   @media (max-width:820px){
-    .grid-2{ grid-template-columns:1fr; }
+    .grid-2, .grid-3{ grid-template-columns:1fr; }
   }
 
   /* ---- bar chart (horizontal, css-built) ---- */
-  .chart{ display:flex; flex-direction:column; gap:2px; }
+  .chart{ display:flex; flex-direction:column; gap:3px; }
   .bar-row{
     display:grid;
     grid-template-columns:150px 1fr 100px;
     align-items:center;
     gap:10px;
-    padding:5px 0;
+    padding:6px 0;
   }
-  .bar-row.compact{ grid-template-columns:120px 1fr 78px; }
+  .bar-row.compact{ grid-template-columns:130px 1fr 84px; }
   .bar-row .rowlabel{
     font-size:13px;
     color:var(--ink-2);
@@ -252,16 +413,18 @@
   }
   .bar-track{
     position:relative;
-    height:14px;
+    height:15px;
     background:var(--grid);
-    border-radius:4px;
+    border-radius:5px;
     overflow:visible;
   }
   .bar-fill{
     position:relative;
     height:100%;
-    border-radius:4px;
+    border-radius:5px;
     min-width:4px;
+    width:0;
+    transition:width .7s cubic-bezier(.16,.84,.44,1);
   }
   .bar-fill[data-tooltip]:hover::after{
     content:attr(data-tooltip);
@@ -272,12 +435,13 @@
     color:var(--page);
     font-size:11.5px;
     font-family:var(--font-body);
-    padding:5px 8px;
-    border-radius:6px;
+    padding:5px 9px;
+    border-radius:7px;
     white-space:nowrap;
     z-index:5;
     pointer-events:none;
     font-variant-numeric:tabular-nums;
+    box-shadow:var(--shadow);
   }
   .bar-row .rowvalue{
     font-size:13px;
@@ -295,7 +459,7 @@
   .legend-line{
     font-size:12px;
     color:var(--muted);
-    padding-top:2px;
+    padding-top:4px;
   }
 
   /* ---- line chart (daily trend) ---- */
@@ -304,30 +468,34 @@
   .line-chart .gridline{ stroke:var(--grid); stroke-width:1; }
   .line-chart .baseline{ stroke:var(--baseline); stroke-width:1; }
   .line-chart .area{ fill:var(--blue); opacity:.10; }
-  .line-chart .line{ fill:none; stroke:var(--blue); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
-  .line-chart .dot{ fill:var(--surface); stroke:var(--blue); stroke-width:2; }
+  .line-chart .line{ fill:none; stroke:var(--blue); stroke-width:2.25; stroke-linejoin:round; stroke-linecap:round; }
+  .line-chart .dot{ fill:var(--surface); stroke:var(--blue); stroke-width:2; cursor:pointer; }
   .line-chart .dot.peak{ fill:var(--blue); }
   .line-chart .axislabel{ fill:var(--muted); font-size:10.5px; font-family:var(--font-body); }
 
   /* ---- callout strip (concentration facts) ---- */
   .fact-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
     gap:14px;
   }
   .fact{
-    border-radius:10px;
-    padding:16px 18px;
+    border-radius:16px;
+    padding:18px 20px;
     border:1px solid var(--border);
     background:var(--surface);
     display:flex;
     flex-direction:column;
     gap:4px;
+    box-shadow:var(--shadow);
+    transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease;
   }
+  .fact.clickable{ cursor:pointer; }
+  .fact.clickable:hover{ transform:translateY(-3px); box-shadow:var(--shadow-hover); }
   .fact .big{
     font-family:var(--font-display);
     font-weight:700;
-    font-size:24px;
+    font-size:25px;
     font-variant-numeric:tabular-nums;
   }
   .fact .big.critical{ color:var(--critical); }
@@ -349,6 +517,9 @@
     letter-spacing:.03em;
     padding:8px 10px;
     border-bottom:1px solid var(--baseline);
+    position:sticky;
+    top:0;
+    background:var(--surface);
   }
   tbody td{
     padding:9px 10px;
@@ -356,9 +527,11 @@
     color:var(--ink-2);
   }
   tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover td{ background:var(--surface-2); }
   td.num, th.num{ text-align:right; font-variant-numeric:tabular-nums; }
   td.strong{ color:var(--ink); font-weight:600; }
   .table-wrap{ overflow-x:auto; }
+  .table-wrap.scroll-y{ max-height:420px; overflow-y:auto; }
 
   /* ---- insight list ---- */
   .insight-list{
@@ -378,7 +551,7 @@
     font-size:13px;
     color:var(--blue);
     background:var(--surface-2);
-    border-radius:6px;
+    border-radius:8px;
     height:24px;
     width:24px;
     display:flex;
@@ -392,8 +565,8 @@
   .gap-panel{
     border:1px solid var(--critical);
     background:var(--crit-bg);
-    border-radius:10px;
-    padding:20px 22px;
+    border-radius:16px;
+    padding:22px 24px;
     display:flex;
     flex-direction:column;
     gap:14px;
@@ -411,7 +584,7 @@
     font-weight:700;
     letter-spacing:.04em;
     padding:3px 8px;
-    border-radius:5px;
+    border-radius:6px;
     white-space:nowrap;
     height:fit-content;
     text-transform:uppercase;
@@ -428,56 +601,150 @@
     padding-top:14px;
     border-top:1px solid var(--border);
   }
-</style>
 
+  /* ---- modal ---- */
+  dialog#modal{
+    border:none;
+    border-radius:20px;
+    padding:0;
+    width:min(760px, 92vw);
+    max-height:82vh;
+    background:var(--surface);
+    color:var(--ink);
+    box-shadow:var(--shadow-hover);
+  }
+  dialog#modal::backdrop{
+    background:rgba(10,10,10,0.55);
+    backdrop-filter:blur(2px);
+  }
+  dialog#modal[open]{ animation: modal-in .22s cubic-bezier(.2,.8,.2,1); }
+  @keyframes modal-in{
+    from{ opacity:0; transform:translateY(10px) scale(.98); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+  .modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:20px 24px;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    background:var(--surface);
+    border-radius:20px 20px 0 0;
+  }
+  .modal-head h3{
+    font-family:var(--font-display);
+    font-size:17px;
+    font-weight:600;
+    margin:0;
+  }
+  .modal-close{
+    background:var(--surface-2);
+    border:none;
+    color:var(--ink-2);
+    width:30px;
+    height:30px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:14px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .15s ease, color .15s ease;
+  }
+  .modal-close:hover{ background:var(--critical); color:#fff; }
+  .modal-body{
+    padding:18px 24px 24px;
+    overflow-y:auto;
+    max-height:calc(82vh - 68px);
+  }
+  .modal-note{
+    font-size:12.5px;
+    color:var(--muted);
+    margin:0 0 14px;
+    padding:10px 12px;
+    background:var(--surface-2);
+    border-radius:10px;
+  }
+</style>
 </head>
 <body>
+
+<nav class="topnav">
+  <span class="brand">Return · ก.ค.</span>
+  <a href="#overview">ภาพรวม</a>
+  <a href="#rate">อัตราตีกลับ</a>
+  <a href="#daily">รายวัน</a>
+  <a href="#unit">ยูนิต</a>
+  <a href="#product">สินค้า</a>
+  <a href="#region">ภูมิภาค</a>
+  <a href="#courier">ขนส่ง</a>
+  <a href="#insights">สรุปให้ผู้บริหาร</a>
+  <a href="#gaps">ข้อมูลที่ควรเพิ่ม</a>
+</nav>
+
 <div class="wrap">
 
-  <header>
-    <div>
-      <p class="eyebrow">รายงานสินค้าตีกลับ · Return Insight</p>
-      <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
-      <p class="subtitle">สรุปจากแท็บ “Discuse” (ฐานข้อมูลตีกลับเต็มทั้งเดือน) ในไฟล์ “สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569” · ครอบคลุมทั้ง 31 วันของเดือน</p>
-    </div>
-    <div class="meta">
-      อัปเดตข้อมูล: <strong>22 ส.ค. 2569</strong><br>
-      จำนวนแถวข้อมูล: <strong>3,188 ออเดอร์</strong>
+  <header class="hero" id="overview">
+    <p class="eyebrow">รายงานสินค้าตีกลับ · Return Insight</p>
+    <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
+    <p class="subtitle">สรุปจากแท็บ “Discuse” (ฐานข้อมูลตีกลับเต็มทั้งเดือน) ในไฟล์ “สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569” · ครอบคลุมทั้ง 31 วันของเดือน เทียบกับยอดขายจริงจากแท็บ Total_Order on Sell</p>
+    <div class="hero-meta">
+      <span>อัปเดตข้อมูล: <strong>22 ส.ค. 2569</strong></span>
+      <span>ฐานข้อมูลตีกลับ: <strong>3,188 แถว</strong></span>
+      <span>ฐานข้อมูลยอดขายอ้างอิง: <strong>92,962 ออเดอร์</strong></span>
     </div>
   </header>
+
+  <!-- headline stat -->
+  <div class="headline-stat">
+    <div>
+      <p class="hs-label">อัตราตีกลับเฉลี่ยทั้งบริษัท เดือน ก.ค. 2569</p>
+      <p class="hs-value">3.4<span class="unit">%</span></p>
+      <p class="hs-desc">3,188 ออเดอร์ตีกลับ จากยอดขายจริง 92,962 ออเดอร์ (ครอบคลุม 99%+ ของยอดขายทั้งบริษัท) — ยูนิตที่หลุดเกณฑ์นี้ชัดเจนคือ UNIT23 (12.7%) และ UNIT18 (8.3%)</p>
+    </div>
+    <div class="headline-side">
+      <div class="hs-mini"><div class="k">ยอดขายทั้งหมด ก.ค.</div><div class="v">92,962</div></div>
+      <div class="hs-mini"><div class="k">ออเดอร์ตีกลับ</div><div class="v">3,188</div></div>
+      <div class="hs-mini"><div class="k">มูลค่าตีกลับ</div><div class="v">฿1.70M</div></div>
+    </div>
+  </div>
 
   <!-- KPI -->
   <section>
     <div class="kpi-row">
-      <div class="kpi accent-blue">
-        <div class="label">ออเดอร์ตีกลับทั้งหมด</div>
+      <div class="kpi accent-blue clickable" onclick="showRateModal()">
+        <div class="kpi-top"><div class="label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div><span class="chev">›</span></div>
+        <div class="value">92,962 <small>ออเดอร์</small></div>
+        <div class="note">ฐานสำหรับคำนวณ % ตีกลับ · กดดูแยกตามยูนิต</div>
+      </div>
+      <div class="kpi clickable" onclick="showDailyModal()">
+        <div class="kpi-top"><div class="label">ออเดอร์ตีกลับทั้งหมด</div><span class="chev">›</span></div>
         <div class="value">3,188 <small>ออเดอร์</small></div>
-        <div class="note">ทั้งเดือน ก.ค. 2569 (1–31 ก.ค.)</div>
+        <div class="note">ทั้งเดือน ก.ค. 2569 (1–31 ก.ค.) · กดดูรายวัน</div>
       </div>
-      <div class="kpi">
-        <div class="label">มูลค่าสินค้าตีกลับ (ราคาขาย)</div>
+      <div class="kpi clickable" onclick="showUnitValueModal()">
+        <div class="kpi-top"><div class="label">มูลค่าสินค้าตีกลับ (ราคาขาย)</div><span class="chev">›</span></div>
         <div class="value">฿1,704,627</div>
-        <div class="note">เฉลี่ย ฿535 / ออเดอร์</div>
+        <div class="note">เฉลี่ย ฿535 / ออเดอร์ · กดดูแยกตามยูนิต</div>
       </div>
-      <div class="kpi accent-blue">
-        <div class="label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
-        <div class="value">3.4%</div>
-        <div class="note">3,188 ตีกลับ / 92,962 ออเดอร์ ก.ค. (ครอบคลุม 99%+ ของยอดขาย)</div>
-      </div>
-      <div class="kpi">
-        <div class="label">เป็นการชำระแบบ COD</div>
+      <div class="kpi clickable" onclick="showPaymentModal()">
+        <div class="kpi-top"><div class="label">เป็นการชำระแบบ COD</div><span class="chev">›</span></div>
         <div class="value">99.7%</div>
-        <div class="note crit">แทบทั้งหมดเป็น COD</div>
+        <div class="note crit">แทบทั้งหมดเป็น COD · กดดูรายละเอียด</div>
       </div>
-      <div class="kpi">
-        <div class="label">ตีกลับผ่านเครือ Flash Express</div>
+      <div class="kpi clickable" onclick="showCourierModal()">
+        <div class="kpi-top"><div class="label">ตีกลับผ่านเครือ Flash Express</div><span class="chev">›</span></div>
         <div class="value">95.0%</div>
-        <div class="note">3,029 / 3,188 ออเดอร์ (รวมทุกเขต)</div>
+        <div class="note">3,029 / 3,188 ออเดอร์ · กดดูทุกคูเรียร์</div>
       </div>
-      <div class="kpi">
-        <div class="label">ระบบตีกลับอัตโนมัติ</div>
+      <div class="kpi clickable" onclick="showStatusModal()">
+        <div class="kpi-top"><div class="label">ระบบตีกลับอัตโนมัติ</div><span class="chev">›</span></div>
         <div class="value">94.6%</div>
-        <div class="note crit">สถานะขนส่ง SYSTEM_AUTO_RETURN</div>
+        <div class="note crit">สถานะขนส่ง SYSTEM_AUTO_RETURN · กดดูทั้งหมด</div>
       </div>
     </div>
   </section>
@@ -489,19 +756,19 @@
       <span class="hint">คิดเป็น % เทียบยอดขายของตัวเอง ไม่ใช่แค่จำนวนดิบ</span>
     </div>
     <div class="fact-grid">
-      <div class="fact">
+      <div class="fact clickable" onclick="showRateModal()">
         <div class="big critical">UNIT23 = 12.7%</div>
         <div class="desc">อัตราตีกลับสูงสุดในบริษัท (108/848 ออเดอร์) สูงกว่าค่าเฉลี่ยบริษัท (3.4%) เกือบ <strong>4 เท่า</strong> — ทั้งที่ปริมาณขายไม่ได้เยอะที่สุด</div>
       </div>
-      <div class="fact">
+      <div class="fact clickable" onclick="showRateModal()">
         <div class="big warning">UNIT18 = 8.3%</div>
         <div class="desc">อันดับ 2 ของอัตราตีกลับ (81/979 ออเดอร์) — สูงกว่าค่าเฉลี่ยกว่า 2 เท่า</div>
       </div>
-      <div class="fact">
+      <div class="fact clickable" onclick="showRateModal()">
         <div class="big">UNIT15/UNIT9 ~4-4.8%</div>
         <div class="desc">ยูนิตที่ตีกลับ “จำนวนมากที่สุด” ดิบ ๆ (UNIT15, UNIT9) จริง ๆ แล้วอัตรา % สูงกว่าค่าเฉลี่ยแค่เล็กน้อย เพราะเป็นยูนิตที่ขายเยอะที่สุดด้วย</div>
       </div>
-      <div class="fact">
+      <div class="fact clickable" onclick="showStatusModal()">
         <div class="big critical">94.6% Auto-return</div>
         <div class="desc">เกือบทั้งหมดเป็นสถานะ “ระบบตีกลับอัตโนมัติ” ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง</div>
       </div>
@@ -509,59 +776,67 @@
   </section>
 
   <!-- return rate by unit -->
-  <section>
-    <div class="section-head">
-      <h2>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h2>
-      <span class="hint">10 ยูนิตอัตราสูงสุด (เฉพาะยูนิตที่มียอดขาย ≥ 300 ออเดอร์/เดือน กันตัวอย่างเล็กเกินไปจนตีความผิด) · เส้นประ = ค่าเฉลี่ยบริษัท 3.4%</span>
-    </div>
+  <section id="rate">
     <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h3>
+          <div class="legend-line" style="padding-top:2px;">10 ยูนิตอัตราสูงสุด (ยอดขาย ≥ 300 ออเดอร์/เดือน) · เส้นประ = ค่าเฉลี่ยบริษัท 3.4%</div>
+        </div>
+        <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด 34 ยูนิต →</button>
+      </div>
       <div class="chart" id="chart-rate"></div>
       <div class="legend-line">สีแดง = สูงกว่าค่าเฉลี่ยเกิน 2 เท่า · สีเหลือง = สูงกว่าค่าเฉลี่ย · สีน้ำเงิน = ใกล้เคียงค่าเฉลี่ย</div>
     </div>
   </section>
 
   <!-- daily trend -->
-  <section>
-    <div class="section-head">
-      <h2>แนวโน้มรายวันตลอดเดือน ก.ค.</h2>
-      <span class="hint">จำนวนออเดอร์ที่ตีกลับ แยกตามวันที่สั่งซื้อ (31 วัน)</span>
-    </div>
+  <section id="daily">
     <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>แนวโน้มรายวันตลอดเดือน ก.ค.</h3>
+          <div class="legend-line" style="padding-top:2px;">จำนวนออเดอร์ที่ตีกลับ แยกตามวันที่สั่งซื้อ (31 วัน)</div>
+        </div>
+        <button class="expand-btn" onclick="showDailyModal()">ดูตัวเลขรายวัน →</button>
+      </div>
       <div class="line-chart" id="chart-daily"></div>
-      <div class="legend-line">ชี้เมาส์ที่จุดเพื่อดูจำนวนออเดอร์ของวันนั้น · เส้นค่อนข้างคงที่ตลอดเดือน ไม่มีวันใดพุ่งผิดปกติเดี่ยว ๆ</div>
+      <div class="legend-line">ชี้เมาส์/แตะที่จุดเพื่อดูจำนวนออเดอร์ของวันนั้น · เส้นค่อนข้างคงที่ตลอดเดือน ไม่มีวันใดพุ่งผิดปกติเดี่ยว ๆ</div>
     </div>
   </section>
 
-  <!-- charts -->
-  <section>
-    <div class="section-head">
-      <h2>ตีกลับตามร้าน/ยูนิตขาย (จำนวนดิบ)</h2>
-      <span class="hint">10 อันดับแรกตาม “จำนวน” — ดูเพื่อวางแผนกำลังคน ไม่ใช่เพื่อชี้ว่ายูนิตไหนมีปัญหา (ดู % ด้านบนแทน)</span>
-    </div>
+  <!-- unit raw count -->
+  <section id="unit">
     <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>ตีกลับตามร้าน/ยูนิตขาย (จำนวนดิบ)</h3>
+          <div class="legend-line" style="padding-top:2px;">10 อันดับแรกตาม “จำนวน” — ดูเพื่อวางแผนกำลังคน ไม่ใช่ชี้ปัญหา (ดู % ด้านบนแทน)</div>
+        </div>
+        <button class="expand-btn" onclick="showUnitCountModal()">ดูทั้งหมด 40 ยูนิต →</button>
+      </div>
       <div class="chart" id="chart-unit"></div>
       <div class="legend-line">แถบสีน้ำเงิน = จำนวนออเดอร์ตีกลับ · ชี้เมาส์เพื่อดูมูลค่ารวม</div>
     </div>
   </section>
 
-  <section>
+  <section id="product">
     <div class="grid-2">
       <div>
-        <div class="section-head">
-          <h2>สินค้าที่ถูกตีกลับบ่อยที่สุด</h2>
-        </div>
         <div class="panel">
+          <div class="panel-head">
+            <h3>สินค้าที่ถูกตีกลับบ่อยที่สุด</h3>
+            <button class="expand-btn" onclick="showProductModal()">ดูทั้งหมด →</button>
+          </div>
           <div class="chart" id="chart-product"></div>
           <div class="legend-line">10 อันดับแรก จาก 3,188 ออเดอร์</div>
         </div>
       </div>
-      <div>
-        <div class="section-head">
-          <h2>ตีกลับตามภูมิภาค</h2>
-        </div>
+      <div id="region">
         <div class="panel">
+          <div class="panel-head"><h3>ตีกลับตามภูมิภาค</h3></div>
           <div class="chart" id="chart-region"></div>
-          <div class="legend-line">เรียงจากมากไปน้อย</div>
+          <div class="legend-line">เรียงจากมากไปน้อย — ครบทุกภูมิภาคแล้ว</div>
         </div>
       </div>
     </div>
@@ -570,28 +845,24 @@
   <section>
     <div class="grid-2">
       <div>
-        <div class="section-head">
-          <h2>สถานะขนส่ง (ตัวแทนสาเหตุที่มี)</h2>
-        </div>
         <div class="panel">
+          <div class="panel-head"><h3>สถานะขนส่ง (ตัวแทนสาเหตุที่มี)</h3></div>
           <div class="chart" id="chart-status"></div>
           <div class="legend-line">นี่คือฟิลด์ที่ใกล้เคียง “สาเหตุ” ที่สุดที่มีอยู่ตอนนี้ — ยังไม่ใช่สาเหตุที่แท้จริง</div>
         </div>
       </div>
       <div>
-        <div class="section-head">
-          <h2>วิธีการชำระเงิน</h2>
-        </div>
         <div class="panel">
+          <div class="panel-head"><h3>วิธีการชำระเงิน</h3></div>
           <div class="chart" id="chart-payment"></div>
-          <div class="legend-line">COD ครองเกือบทั้งหมด ส่วนที่เหลือมีเพียงหลักหน่วยออเดอร์</div>
+          <div class="legend-line">COD ครองเกือบทั้งหมด ส่วนที่เหลือมีเพียงหลักหน่วยออเดอร์ — แสดงครบทุกประเภทแล้ว</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- courier table -->
-  <section>
+  <section id="courier">
     <div class="section-head">
       <h2>ตีกลับตามบริษัทขนส่ง</h2>
     </div>
@@ -610,7 +881,7 @@
   </section>
 
   <!-- what executives should know -->
-  <section>
+  <section id="insights">
     <div class="section-head">
       <h2>สิ่งที่ผู้บริหารควรรู้จากข้อมูลนี้</h2>
     </div>
@@ -618,26 +889,26 @@
       <div class="insight-list">
         <div class="insight"><div class="num">1</div><p><strong>ตัวเลขดิบหลอกได้ — ต้องดูเป็น % ต่อยอดขาย</strong> UNIT15/UNIT9/UNIT12 ตีกลับ “จำนวนมากที่สุด” ก็จริง แต่นั่นเพราะเป็นยูนิตที่ขายเยอะที่สุดในบริษัท เมื่อคิดเป็นอัตรา % แล้วอยู่ใกล้เคียงค่าเฉลี่ย (3.4%) ตัวจริงที่ควรเป็นห่วงคือ <strong>UNIT23 (12.7%)</strong> และ <strong>UNIT18 (8.3%)</strong> ซึ่งตีกลับสูงกว่าค่าเฉลี่ย 2–4 เท่า ทั้งที่ปริมาณขายไม่ได้เยอะที่สุด — ควรลงไปดู 2 ยูนิตนี้เป็นอันดับแรก</p></div>
         <div class="insight"><div class="num">2</div><p><strong>เกือบทั้งหมด (94.6%) คือ “ระบบตีกลับอัตโนมัติ”</strong> ไม่ใช่กรณีลูกค้าปฏิเสธรับหน้าประตูโดยตรง (Return 2.5%, RETURNED 1.8%, deliver_failed 1.0%) — ความหมายคือพัสดุถูกคูเรียร์ “พักไว้” จนครบกำหนดเวลาโดยไม่มีการติดต่อสำเร็จ ปัญหาอาจอยู่ที่ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลา มากกว่าคุณภาพสินค้าเอง</p></div>
-        <div class="insight"><div class="num">3</div><p><strong>คูเรียร์เครือเดียวครองเกือบทั้งหมด (95%)</strong> — Flash Express (ทุกเขตรวมกัน) เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ปริมาณงานส่วนใหญ่จึงวิ่งผ่าน Flash เป็นปกติ ตัวเลข 95% นี้จึงยังฟันธงไม่ได้ว่า Flash มีอัตราตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น เพราะยังไม่มีสัดส่วนงานที่แต่ละคูเรียร์ขนส่งจริงมาเทียบ (มีแต่ตัวเลขระดับยูนิต ไม่ได้แยกตามคูเรียร์)</p></div>
+        <div class="insight"><div class="num">3</div><p><strong>คูเรียร์เครือเดียวครองเกือบทั้งหมด (95%)</strong> — Flash Express (ทุกเขตรวมกัน) เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ปริมาณงานส่วนใหญ่จึงวิ่งผ่าน Flash เป็นปกติ ตัวเลข 95% นี้จึงยังฟันธงไม่ได้ว่า Flash มีอัตราตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น เพราะยังไม่มีสัดส่วนงานที่แต่ละคูเรียร์ขนส่งจริงมาเทียบ</p></div>
         <div class="insight"><div class="num">4</div><p><strong>มูลค่าความเสียหายที่เห็นเป็นแค่ “ราคาขาย”</strong> — ฿1,704,627 คือราคาสินค้าที่ตีกลับ ยังไม่รวมค่าส่งไป+ค่าส่งกลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ตัวเลขขาดทุนจริงต่อเดือนจึงสูงกว่านี้อีก</p></div>
-        <div class="insight"><div class="num">5</div><p><strong>แนวโน้มรายวันค่อนข้างคงที่ตลอดเดือน</strong> (76–149 ออเดอร์/วัน) ไม่มีวันไหนพุ่งผิดปกติแบบเหตุการณ์เดี่ยว ๆ (เช่น ระบบล่ม หรือโปรโมชันเจาะจงวันเดียว) แปลว่าสาเหตุหลักน่าจะเป็นปัญหาเชิงโครงสร้าง (ขั้นตอนงาน/ยูนิต/คูเรียร์) มากกว่าเหตุการณ์ผิดปกติในบางวัน</p></div>
+        <div class="insight"><div class="num">5</div><p><strong>แนวโน้มรายวันค่อนข้างคงที่ตลอดเดือน</strong> (76–149 ออเดอร์/วัน) ไม่มีวันไหนพุ่งผิดปกติแบบเหตุการณ์เดี่ยว ๆ แปลว่าสาเหตุหลักน่าจะเป็นปัญหาเชิงโครงสร้าง (ขั้นตอนงาน/ยูนิต/คูเรียร์) มากกว่าเหตุการณ์ผิดปกติในบางวัน</p></div>
       </div>
     </div>
   </section>
 
   <!-- data gaps -->
-  <div class="gap-panel">
+  <div class="gap-panel" id="gaps">
     <div class="section-head">
       <h2>ข้อมูลเพียงพอไหม — จุดที่ควรเพิ่ม</h2>
     </div>
     <div class="insight-list">
       <div class="gap-item">
         <span class="chip critical">Critical</span>
-        <p><strong>ไม่มีคอลัมน์ “สาเหตุการตีกลับ”</strong> — มีแต่สถานะขนส่ง (SYSTEM_AUTO_RETURN / Return / RETURNED / deliver_failed) ซึ่งบอกแค่ “กลไก” ไม่บอก “สาเหตุ” เช่น ลูกค้าปฏิเสธรับ, ติดต่อไม่ได้, ที่อยู่ผิด, สินค้าเสียหาย, เปลี่ยนใจ ยืนยันแล้วว่าไม่มีคอลัมน์นี้ในฐานข้อมูลเต็มทั้ง 3,188 แถวเช่นกัน — ถ้าไม่มีข้อมูลนี้จะแก้ปัญหาที่ต้นตอไม่ได้ ควรให้คูเรียร์/ทีมขายบันทึกสาเหตุทุกครั้งที่ตีกลับ</p>
+        <p><strong>ไม่มีคอลัมน์ “สาเหตุการตีกลับ”</strong> — มีแต่สถานะขนส่ง (SYSTEM_AUTO_RETURN / Return / RETURNED / deliver_failed) ซึ่งบอกแค่ “กลไก” ไม่บอก “สาเหตุ” เช่น ลูกค้าปฏิเสธรับ, ติดต่อไม่ได้, ที่อยู่ผิด, สินค้าเสียหาย, เปลี่ยนใจ ยืนยันแล้วว่าไม่มีคอลัมน์นี้ในฐานข้อมูลเต็มทั้ง 3,188 แถวเช่นกัน — ควรให้คูเรียร์/ทีมขายบันทึกสาเหตุทุกครั้งที่ตีกลับ</p>
       </div>
       <div class="gap-item">
         <span class="chip good">แก้ไขแล้ว</span>
-        <p><strong>ตอนนี้มี “ตัวหาร” เฉพาะเดือน ก.ค. แล้ว</strong> — เติมสูตร QUERY กรองช่วงวันที่ในแท็บ Total_Order on Sell (คอลัมน์ AN/AO ในชีต config) ได้ยอดขายจริงเฉพาะ ก.ค. 69 แยกตามยูนิต ครอบคลุม 92,962 ออเดอร์ (~99%+ ของยอดตีกลับที่จับคู่ได้) ทำให้คำนวณ “% อัตราตีกลับต่อยูนิต” ได้จริงแล้ว ตามที่แสดงในกราฟด้านบน — ยังไม่มีเฉพาะแยกตามคูเรียร์ ถ้าต้องการเทียบ Flash vs คูเรียร์อื่นเป็น % ต้องขอยอดส่งจริงแยกตามคูเรียร์เพิ่มอีกชุด</p>
+        <p><strong>ตอนนี้มี “ตัวหาร” เฉพาะเดือน ก.ค. แล้ว</strong> — เติมสูตร QUERY กรองช่วงวันที่ในแท็บ Total_Order on Sell ได้ยอดขายจริงเฉพาะ ก.ค. 69 แยกตามยูนิต ครอบคลุม 92,962 ออเดอร์ (~99%+ ของยอดตีกลับที่จับคู่ได้) ทำให้คำนวณ “% อัตราตีกลับต่อยูนิต” ได้จริงแล้ว — ยังไม่มีแยกตามคูเรียร์ ถ้าต้องการเทียบ Flash vs คูเรียร์อื่นเป็น % ต้องขอยอดส่งจริงแยกตามคูเรียร์เพิ่มอีกชุด</p>
       </div>
       <div class="gap-item">
         <span class="chip warning">ควรเพิ่ม</span>
@@ -645,11 +916,7 @@
       </div>
       <div class="gap-item">
         <span class="chip warning">ควรเพิ่ม</span>
-        <p><strong>ยังไม่ได้ตรวจ “ลูกค้าซื้อซ้ำ/ตีกลับซ้ำ”</strong> ในฐานข้อมูลเต็ม 3,188 แถว (ตรวจแค่ตัวอย่างย่อยรอบก่อนพบ 1 ราย) — ถ้าเก็บ ID ลูกค้าให้เป็นมาตรฐานเดียวกันทุกช่องทาง จะกรองลูกค้าความเสี่ยงสูงเพื่อสลับวิธีชำระเงินเป็นโอนก่อนได้ เป็นการวิเคราะห์ที่ยังไม่ได้ทำในรอบนี้</p>
-      </div>
-      <div class="gap-item">
-        <span class="chip good">แก้ไขแล้ว</span>
-        <p><strong>ความกังวลเรื่อง “วันสั่งซื้อผิดปกติ” จากรอบก่อนหน้าตกไปแล้ว</strong> — ตอนนั้นใช้ข้อมูลตัวอย่างย่อยเพียง 117 แถวที่ล้วนมีวันที่เดียวกัน ทำให้เข้าใจผิดว่าคอลัมน์วันที่มีบั๊ก แต่ข้อมูลเต็ม 3,188 แถวจากแท็บ Discuse กระจายครบทั้ง 31 วันตามปกติ ยืนยันว่าคอลัมน์วันที่ใช้งานได้ถูกต้อง</p>
+        <p><strong>ยังไม่ได้ตรวจ “ลูกค้าซื้อซ้ำ/ตีกลับซ้ำ”</strong> ในฐานข้อมูลเต็ม 3,188 แถว — ถ้าเก็บ ID ลูกค้าให้เป็นมาตรฐานเดียวกันทุกช่องทาง จะกรองลูกค้าความเสี่ยงสูงเพื่อสลับวิธีชำระเงินเป็นโอนก่อนได้</p>
       </div>
     </div>
   </div>
@@ -660,9 +927,104 @@
 
 </div>
 
+<dialog id="modal">
+  <div class="modal-head">
+    <h3 id="modal-title"></h3>
+    <button class="modal-close" onclick="document.getElementById('modal').close()" aria-label="ปิด">✕</button>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</dialog>
+
 <script>
   const fmt = n => Math.round(n).toLocaleString('en-US');
   const fmt1 = n => n.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
+  const money = n => '฿' + fmt(n);
+
+  function openModal(title, bodyHtml) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-body').innerHTML = bodyHtml;
+    document.getElementById('modal').showModal();
+  }
+
+  function tableHtml(headers, rows) {
+    return `<div class="table-wrap scroll-y"><table><thead><tr>${headers.map(h=>`<th${h.num?' class="num"':''}>${h.label}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  /* ---------------- data ---------------- */
+
+  const UNIT_RETURNS = [
+    ['UNIT15',437,253634.00],['UNIT9',365,165910.00],['UNIT12',356,188030.00],['UNIT11',337,177100.00],
+    ['UNIT13',227,110150.00],['UNIT5',221,131290.00],['UNIT21',145,61030.00],['UNIT23',108,49440.00],
+    ['UNIT8',103,56380.00],['UNIT7',102,56980.00],['UNIT14',96,39650.00],['UNIT18',81,36030.00],
+    ['LineOA',54,28960.00],['UNIT16',54,22740.00],["TikTok_D'Lellise",51,31000.00],['UNIT11(CRM)',44,31290.00],
+    ['UNIT13(CRM)',43,24874.00],['Shopee_1',40,30068.00],['UNIT17',39,24620.00],['UNIT12(CRM)',31,21660.00],
+    ['UNIT22',23,11180.00],['UNIT 7(CRM)',22,14960.00],['ครีมบัวหิมะ',20,8820.00],['Shopee_2',19,24327.00],
+    ['UNIT9(CRM)',18,9700.00],['UNIT4',17,9110.00],['UNIT4(CRM)',17,12190.00],['Lazada_2',16,12937.61],
+    ['Lazada_1',15,10149.20],['TikTok_ชาสมุนไพร Le Vonglow',15,6240.00],['UNIT21(CRM)',15,8470.00],['TikTok_Dwawa',14,8740.00],
+    ['UNIT 15 (CRM)',10,7127.00],['UNIT 5 (CRM)',9,5520.00],['UNIT16(CRM)',8,3980.00],['UNIT17(CRM)',6,3740.00],
+    ['UNIT 8 (CRM)',5,4150.00],['UNIT14(CRM)',2,1080.00],['UNIT6',2,980.00],['UNIT10',1,390.00],
+  ];
+
+  const PRODUCTS = [
+    ['มัลติกรีน เวจจี้ 1 แถม 1',379,185454.7],['ชาแม่แย้ม 1 แถม 2',311,121657],['ดีเลลลิสเซ่ 1 แถม 1',274,134592],
+    ['จินเซง 1 แถม 1',174,85235],['เจสันเอ็ม 1 แถม 1',169,82726.43],['เจสันเอ็ม 2 กป + Valtora-x 1',153,75570],
+    ['ชาแก้ปวดเมื่อย 1 แถม 2',122,47985.28],['ลูนารี่ 1 แถม 1',116,45591],['พลูคาว 1 แถม 1',92,35880],
+    ['โพรไบโอวิต้า 1 แถม 1',91,44571],['เวนอร์ร่า กลูต้า พลัส 2 ห่อ',90,35100],['วีมีวิสตร้า 1 แถม 1',89,43910],
+    ['ลูนารี่ไบโอ เมล่อนเอส 1 แถม 1',69,26910],['ชาแม่แย้ม 4',62,30380],['น้ำชงลูนารี่ไฟเบอร์ 1 แถม 1',59,23110],
+    ['มัลติกรีน เวจจี้ 5',56,55944],['Valtora-X',38,19020],['กาแฟต่อมลูกหมาก 1 แถม 1',34,16650],
+    ['ชาแม่แย้ม 2 แถม 4',28,21000],['ดีเลลลิสเซ่ 2 แถม 2',28,23210],['ชาแก้ปวดเมื่อย 4',23,11270],
+    ['โพรไบโอวิต้า 1',22,6580],['ดีเลลลิสเซ่ 1 + โพรไบโอวิต้า 1',21,10290],['ลูนารี่ 2 แถม 2',21,14310],
+    ['ดีเลลลิสเซ่ 2 + โพรไบโอวิต้า 2',20,15745],['โพรไบโอวิต้า 2 ห่อ',20,9800],['โพรไบโอวิต้า 1 + ดีเลลลิสเซ่ 1',20,9800],
+    ['จินเซง 4 + ชาแม่แย้มห่อเล็ก 1',18,14220],['ครีมบัวหิมะ 2 กระปุก',17,6630],['จินเซง 5 + แผ่นทอง 1',17,15130],
+    ['โอเรนจิพลัส 1 แถม 2',17,6630],['ครีม 1 แถม 1',16,6450],['เวนอร์ร่า กลูต้า พลัส 4 ห่อ',16,11160],
+    ['โพรไบโอวิต้า 2 แถม 2',14,11060],['เจสันเอ็ม 4 กป + Valtora-x 1 (790)',13,10270],['ลูนารี่ 5',12,11060],
+    ['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 1',12,8280],['มัลติกรีน เวจจี้ 3 แถม 4',11,15290],['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 2',11,8690],
+    ['ดีเลลลิสเซ่ 1 + วีมีวิสตร้า 1',10,4850],['ชาต่อมลูกหมาก 4',9,4410],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (650)',9,5850],
+    ['จินเซง 2 แถม 3',8,7120],['ลูนารี่(แดง) 1 + ลูนารี่(ส้ม) 1',8,3120],['วีมีวิสตร้า 4 กระปุก',8,6800],
+    ['เจสันเอ็ม 2 แถม 2',8,7120],['ชาแก้ปวด 1 แถม 2',7,2730],['เจสันเอ็ม 5 กป + Valtora-x 1',7,7000],
+    ['เวอร์น่าพลัส 1 แถม 1',7,3430],['กาแฟต่อมลูกหมาก 2 แถม 2',6,4940],['จินเซง 3 แถม 3',6,6000],
+    ['ชาแม่แย้ม 4 แถม 8',6,28750],['ดีเลลลิสเซ่ 5 + กระบอกน้ำ My Bottle 1',6,6000],['มัลติกรีน เวจจี้ 2 แถม 2',6,5590],
+    ['ลูนารี่ไบโอ เมล่อนเอส',6,2544],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (690)',6,4850],
+  ];
+
+  const RATES = [
+    ['UNIT23',12.7,108,848],['UNIT18',8.3,81,979],['UNIT8',6.1,103,1675],['ครีมบัวหิมะ',6.0,20,333],
+    ['UNIT13',5.9,227,3826],['UNIT5',5.4,221,4059],['UNIT9',4.8,365,7615],['UNIT11',4.7,337,7157],
+    ['LineOA',4.7,54,1159],['UNIT15',4.1,437,10539],['UNIT12',3.9,356,9048],['UNIT14',3.9,96,2486],
+    ['UNIT7',3.8,102,2663],['UNIT16',3.8,54,1437],['UNIT17',3.2,39,1222],['UNIT21',3.1,145,4617],
+    ['UNIT 7(CRM)',2.6,22,837],['UNIT4',2.5,17,667],['UNIT11(CRM)',2.5,44,1776],['UNIT13(CRM)',2.4,43,1783],
+    ['UNIT 5 (CRM)',2.1,9,428],['Lazada_2',1.9,16,854],['UNIT12(CRM)',1.4,31,2218],['UNIT21(CRM)',1.4,15,1083],
+    ['UNIT4(CRM)',1.3,17,1284],['TikTok_Dwawa',1.3,14,1067],['UNIT17(CRM)',1.2,6,492],["TikTok_D'Lellise",1.2,51,4229],
+    ['UNIT9(CRM)',1.2,18,1540],['Lazada_1',0.9,15,1714],['Shopee_2',0.8,19,2307],['TikTok_ชาสมุนไพร Le Vonglow',0.8,15,1847],
+    ['Shopee_1',0.7,40,5786],['UNIT 15 (CRM)',0.6,10,1633],
+  ];
+
+  const REGIONS = [
+    ['ภาคกลาง',1283],['ภาคใต้',533],['ภาคตะวันออกเฉียงเหนือ',521],['ภาคตะวันออก',468],
+    ['ภาคเหนือ',209],['ภาคตะวันตก',171],['ไม่ระบุ',3],
+  ];
+
+  const STATUSES = [
+    ['SYSTEM_AUTO_RETURN',3017],['Return',80],['RETURNED',58],['deliver_failed',31],['RETURN_INITIATED',1],['PHONE',1],
+  ];
+
+  const PAYMENTS = [
+    ['COD (เก็บเงินปลายทาง)',3016],['COD',162],['Credit Card/Debit Card',2],['COD (เก็บเงินปลายทาง), PT2',1],
+    ['Mbanking',1],['PAY_LATER',1],['PROMPTPAY',1],['PT2',1],['SPayLater',1],['ShopeePay Balance',1],['ShopeePay Linked Bank Account',1],
+  ];
+
+  const COURIERS = [
+    ['Flash Express TH_14',2665],['Flash Express TH_13',286],["J&T Express",80],['Flash Express TH_15',67],
+    ['SPX Express',54],['LEX TH',25],['Flash Express',11],['PT2',1],
+  ];
+
+  const DAILY = [
+    137,148,117,134,131,117,107,106,107,86,76,94,78,77,86,84,81,103,76,87,96,84,73,82,96,103,124,97,121,149,131
+  ];
+
+  const TOTAL_RETURNS = 3188;
+
+  /* ---------------- chart renderers ---------------- */
 
   function renderBars(containerId, data, color, opts = {}) {
     const el = document.getElementById(containerId);
@@ -670,23 +1032,48 @@
     const total = opts.total || data.reduce((a,b)=>a+b.value,0);
     const compact = opts.compact ? ' compact' : '';
     el.innerHTML = data.map(d => {
-      const pct = (d.value / max) * 100;
       const share = ((d.value / total) * 100).toFixed(1);
       const tip = d.tip || `${d.label}: ${fmt(d.value)}`;
       return `
         <div class="bar-row${compact}">
           <div class="rowlabel" title="${d.label}">${d.label}</div>
           <div class="bar-track">
-            <div class="bar-fill" style="width:${pct}%; background:${color};" data-tooltip="${tip}"></div>
+            <div class="bar-fill" data-w="${(d.value/max)*100}" style="background:${color};" data-tooltip="${tip}"></div>
           </div>
           <div class="rowvalue">${fmt(d.value)} <small>(${share}%)</small></div>
         </div>`;
     }).join('');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+    }));
   }
 
-  function renderLine(containerId, data, color) {
+  function renderRateBars(containerId, data, avg) {
     const el = document.getElementById(containerId);
-    const W = 900, H = 200, padL = 30, padR = 10, padT = 14, padB = 24;
+    const max = Math.max(...data.map(d => d.rate), avg * 1.15);
+    el.innerHTML = data.map(d => {
+      const avgPct = (avg / max) * 100;
+      const color = d.rate >= avg * 2 ? 'var(--critical)' : d.rate >= avg ? 'var(--warning)' : 'var(--blue)';
+      const tip = `${d.label}: ${d.returns} ตีกลับ / ${fmt(d.total)} ออเดอร์`;
+      return `
+        <div class="bar-row">
+          <div class="rowlabel" title="${d.label}">${d.label}</div>
+          <div class="bar-track">
+            <div class="bar-fill" data-w="${(d.rate/max)*100}" style="background:${color};" data-tooltip="${tip}"></div>
+            <div style="position:absolute; left:${avgPct}%; top:-3px; bottom:-3px; width:1px; border-left:2px dashed var(--muted);"></div>
+          </div>
+          <div class="rowvalue">${fmt1(d.rate)}%</div>
+        </div>`;
+    }).join('');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+    }));
+  }
+
+  function renderLine(containerId, values, color) {
+    const el = document.getElementById(containerId);
+    const data = values.map((v,i) => ({label:String(i+1), value:v}));
+    const W = 900, H = 210, padL = 32, padR = 10, padT = 14, padB = 24;
     const innerW = W - padL - padR, innerH = H - padT - padB;
     const max = Math.max(...data.map(d => d.value));
     const min = 0;
@@ -710,7 +1097,7 @@
       const showLabel = (i % 5 === 0) || i === data.length - 1;
       return `
         <circle class="dot${isPeak ? ' peak' : ''}" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${isPeak ? 4 : 3}">
-          <title>${d.label}: ${fmt(d.value)} ออเดอร์</title>
+          <title>วันที่ ${d.label} ก.ค.: ${fmt(d.value)} ออเดอร์</title>
         </circle>
         ${showLabel ? `<text class="axislabel" x="${px.toFixed(1)}" y="${H - 6}" text-anchor="middle">${d.label}</text>` : ''}
       `;
@@ -726,117 +1113,111 @@
       </svg>`;
   }
 
-  function renderRateBars(containerId, data, avg) {
-    const el = document.getElementById(containerId);
-    const max = Math.max(...data.map(d => d.rate), avg * 1.15);
-    el.innerHTML = data.map(d => {
-      const pct = (d.rate / max) * 100;
-      const avgPct = (avg / max) * 100;
-      const color = d.rate >= avg * 2 ? 'var(--critical)' : d.rate >= avg ? 'var(--warning)' : 'var(--blue)';
-      const tip = `${d.label}: ${d.returns} ตีกลับ / ${fmt(d.total)} ออเดอร์`;
-      return `
-        <div class="bar-row">
-          <div class="rowlabel" title="${d.label}">${d.label}</div>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:${pct}%; background:${color};" data-tooltip="${tip}"></div>
-            <div style="position:absolute; left:${avgPct}%; top:-3px; bottom:-3px; width:1px; border-left:2px dashed var(--muted);"></div>
-          </div>
-          <div class="rowvalue">${fmt1(d.rate)}%</div>
-        </div>`;
-    }).join('');
+  /* ---------------- initial render (top N on-page) ---------------- */
+
+  renderRateBars('chart-rate', RATES.slice(0,10).map(r => ({label:r[0], rate:r[1], returns:r[2], total:r[3]})), 3.4);
+  renderLine('chart-daily', DAILY, 'var(--blue)');
+  renderBars('chart-unit', UNIT_RETURNS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--blue)', {total:TOTAL_RETURNS});
+  renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--orange)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-region', REGIONS.map(r => ({label:r[0], value:r[1]})), 'var(--aqua)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[1]})), 'var(--violet)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1]})), 'var(--yellow)', {total:TOTAL_RETURNS, compact:true});
+
+  document.getElementById('table-courier').innerHTML = COURIERS.map(c => `
+    <tr>
+      <td class="strong">${c[0]}</td>
+      <td class="num">${fmt(c[1])}</td>
+      <td class="num">${((c[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td>
+    </tr>`).join('');
+
+  /* ---------------- modals (full data) ---------------- */
+
+  function showRateModal() {
+    const rows = RATES.map(r => `
+      <tr>
+        <td class="strong">${r[0]}</td>
+        <td class="num">${fmt1(r[1])}%</td>
+        <td class="num">${fmt(r[2])}</td>
+        <td class="num">${fmt(r[3])}</td>
+      </tr>`).join('');
+    const body = `<p class="modal-note">อัตราตีกลับต่อยูนิต เฉพาะยูนิตที่มียอดขาย ≥ 300 ออเดอร์/เดือน (กันตัวอย่างเล็กเกินไปจนตีความผิด) เรียงจากอัตราสูงสุด · ค่าเฉลี่ยบริษัท = 3.4%</p>
+      ${tableHtml([{label:'ยูนิต'},{label:'อัตราตีกลับ',num:true},{label:'ตีกลับ',num:true},{label:'ยอดขาย ก.ค.',num:true}], rows)}`;
+    openModal('อัตราตีกลับ (%) ต่อยูนิต — ทั้งหมด 34 ยูนิต', body);
   }
 
-  renderRateBars('chart-rate', [
-    {label:'UNIT23', rate:12.7, returns:108, total:848},
-    {label:'UNIT18', rate:8.3,  returns:81,  total:979},
-    {label:'UNIT8',  rate:6.1,  returns:103, total:1675},
-    {label:'ครีมบัวหิมะ', rate:6.0, returns:20, total:333},
-    {label:'UNIT13', rate:5.9,  returns:227, total:3826},
-    {label:'UNIT5',  rate:5.4,  returns:221, total:4059},
-    {label:'UNIT9',  rate:4.8,  returns:365, total:7615},
-    {label:'UNIT11', rate:4.7,  returns:337, total:7157},
-    {label:'LineOA', rate:4.7,  returns:54,  total:1159},
-    {label:'UNIT15', rate:4.1,  returns:437, total:10539},
-  ], 3.4);
+  function showUnitCountModal() {
+    const rows = UNIT_RETURNS.map(r => `
+      <tr>
+        <td class="strong">${r[0]}</td>
+        <td class="num">${fmt(r[1])}</td>
+        <td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td>
+        <td class="num">${money(r[2])}</td>
+      </tr>`).join('');
+    const body = tableHtml([{label:'ยูนิต'},{label:'จำนวนตีกลับ',num:true},{label:'สัดส่วน',num:true},{label:'มูลค่ารวม',num:true}], rows);
+    openModal('ตีกลับตามร้าน/ยูนิต — ทั้งหมด 40 ยูนิต', body);
+  }
 
-  renderLine('chart-daily', [
-    {label:'1',value:137},{label:'2',value:148},{label:'3',value:117},{label:'4',value:134},
-    {label:'5',value:131},{label:'6',value:117},{label:'7',value:107},{label:'8',value:106},
-    {label:'9',value:107},{label:'10',value:86},{label:'11',value:76},{label:'12',value:94},
-    {label:'13',value:78},{label:'14',value:77},{label:'15',value:86},{label:'16',value:84},
-    {label:'17',value:81},{label:'18',value:103},{label:'19',value:76},{label:'20',value:87},
-    {label:'21',value:96},{label:'22',value:84},{label:'23',value:73},{label:'24',value:82},
-    {label:'25',value:96},{label:'26',value:103},{label:'27',value:124},{label:'28',value:97},
-    {label:'29',value:121},{label:'30',value:149},{label:'31',value:131},
-  ], 'var(--blue)');
+  function showUnitValueModal() {
+    const sorted = [...UNIT_RETURNS].sort((a,b) => b[2]-a[2]);
+    const rows = sorted.map(r => `
+      <tr>
+        <td class="strong">${r[0]}</td>
+        <td class="num">${money(r[2])}</td>
+        <td class="num">${fmt(r[1])}</td>
+      </tr>`).join('');
+    const body = `<p class="modal-note">เรียงตามมูลค่ารวมของสินค้าตีกลับ (ราคาขาย) มากไปน้อย — รวม ฿1,704,627</p>
+      ${tableHtml([{label:'ยูนิต'},{label:'มูลค่ารวม',num:true},{label:'จำนวนออเดอร์',num:true}], rows)}`;
+    openModal('มูลค่าสินค้าตีกลับ — แยกตามยูนิต', body);
+  }
 
-  renderBars('chart-unit', [
-    {label:'UNIT15', value:437, tip:'437 ออเดอร์ · มูลค่ารวม ฿253,634'},
-    {label:'UNIT9',  value:365, tip:'365 ออเดอร์ · มูลค่ารวม ฿165,910'},
-    {label:'UNIT12', value:356, tip:'356 ออเดอร์ · มูลค่ารวม ฿188,030'},
-    {label:'UNIT11', value:337, tip:'337 ออเดอร์ · มูลค่ารวม ฿177,100'},
-    {label:'UNIT13', value:227, tip:'227 ออเดอร์ · มูลค่ารวม ฿110,150'},
-    {label:'UNIT5',  value:221, tip:'221 ออเดอร์ · มูลค่ารวม ฿131,290'},
-    {label:'UNIT21', value:145, tip:'145 ออเดอร์ · มูลค่ารวม ฿61,030'},
-    {label:'UNIT23', value:108, tip:'108 ออเดอร์ · มูลค่ารวม ฿49,440'},
-    {label:'UNIT8',  value:103, tip:'103 ออเดอร์ · มูลค่ารวม ฿56,380'},
-    {label:'UNIT7',  value:102, tip:'102 ออเดอร์ · มูลค่ารวม ฿56,980'},
-  ], 'var(--blue)', {total:3188});
+  function showProductModal() {
+    const rows = PRODUCTS.map(r => `
+      <tr>
+        <td class="strong">${r[0]}</td>
+        <td class="num">${fmt(r[1])}</td>
+        <td class="num">${money(r[2])}</td>
+      </tr>`).join('');
+    const body = `<p class="modal-note">รายการสินค้าที่มีข้อมูลตีกลับตั้งแต่ 6 ออเดอร์ขึ้นไป (${PRODUCTS.length} รายการ) ยังมีสินค้าปลีกย่อยอื่น ๆ ที่ตีกลับน้อยกว่า 6 ออเดอร์ไม่ได้แสดงในลิสต์นี้</p>
+      ${tableHtml([{label:'สินค้า'},{label:'จำนวนตีกลับ',num:true},{label:'มูลค่ารวม',num:true}], rows)}`;
+    openModal('สินค้าที่ถูกตีกลับ — รายละเอียด', body);
+  }
 
-  renderBars('chart-product', [
-    {label:'มัลติกรีน เวจจี้ 1 แถม 1', value:379, tip:'379 ออเดอร์ · มูลค่ารวม ฿185,455'},
-    {label:'ชาแม่แย้ม 1 แถม 2',        value:311, tip:'311 ออเดอร์ · มูลค่ารวม ฿121,657'},
-    {label:'ดีเลลลิสเซ่ 1 แถม 1',       value:274, tip:'274 ออเดอร์ · มูลค่ารวม ฿134,592'},
-    {label:'จินเซง 1 แถม 1',           value:174, tip:'174 ออเดอร์ · มูลค่ารวม ฿85,235'},
-    {label:'เจสันเอ็ม 1 แถม 1',         value:169, tip:'169 ออเดอร์ · มูลค่ารวม ฿82,726'},
-    {label:'เจสันเอ็ม 2 กป + Valtora-x 1', value:153, tip:'153 ออเดอร์ · มูลค่ารวม ฿75,570'},
-    {label:'ชาแก้ปวดเมื่อย 1 แถม 2',    value:122, tip:'122 ออเดอร์ · มูลค่ารวม ฿47,985'},
-    {label:'ลูนารี่ 1 แถม 1',           value:116, tip:'116 ออเดอร์ · มูลค่ารวม ฿45,591'},
-    {label:'พลูคาว 1 แถม 1',           value:92,  tip:'92 ออเดอร์ · มูลค่ารวม ฿35,880'},
-    {label:'โพรไบโอวิต้า 1 แถม 1',      value:91,  tip:'91 ออเดอร์ · มูลค่ารวม ฿44,571'},
-  ], 'var(--orange)', {total:3188, compact:true});
+  function showDailyModal() {
+    const rows = DAILY.map((v,i) => `
+      <tr>
+        <td class="strong">${i+1} ก.ค. 2569</td>
+        <td class="num">${fmt(v)}</td>
+      </tr>`).join('');
+    const avg = (DAILY.reduce((a,b)=>a+b,0)/DAILY.length).toFixed(1);
+    const body = `<p class="modal-note">เฉลี่ย ${avg} ออเดอร์/วัน · ต่ำสุด ${Math.min(...DAILY)} (วันที่ ${DAILY.indexOf(Math.min(...DAILY))+1}) · สูงสุด ${Math.max(...DAILY)} (วันที่ ${DAILY.indexOf(Math.max(...DAILY))+1})</p>
+      ${tableHtml([{label:'วันที่'},{label:'จำนวนตีกลับ',num:true}], rows)}`;
+    openModal('แนวโน้มรายวัน — ตัวเลขทั้ง 31 วัน', body);
+  }
 
-  renderBars('chart-region', [
-    {label:'ภาคกลาง',                  value:1283},
-    {label:'ภาคใต้',                   value:533},
-    {label:'ภาคตะวันออกเฉียงเหนือ',     value:521},
-    {label:'ภาคตะวันออก',              value:468},
-    {label:'ภาคเหนือ',                 value:209},
-    {label:'ภาคตะวันตก',               value:171},
-    {label:'ไม่ระบุ',                  value:3},
-  ], 'var(--aqua)', {total:3188, compact:true});
+  function showRegionModal() {
+    const rows = REGIONS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
+    openModal('ตีกลับตามภูมิภาค', tableHtml([{label:'ภูมิภาค'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows));
+  }
 
-  renderBars('chart-status', [
-    {label:'SYSTEM_AUTO_RETURN', value:3017},
-    {label:'Return',             value:80},
-    {label:'RETURNED',           value:58},
-    {label:'deliver_failed',     value:31},
-    {label:'RETURN_INITIATED',   value:1},
-    {label:'PHONE',              value:1},
-  ], 'var(--violet)', {total:3188, compact:true});
+  function showStatusModal() {
+    const rows = STATUSES.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
+    const body = `<p class="modal-note">ฟิลด์นี้คือ “สถานะขนส่ง” ซึ่งเป็นตัวแทนใกล้เคียง “สาเหตุ” ที่สุดที่มีอยู่ในข้อมูลตอนนี้ ยังไม่ใช่สาเหตุที่แท้จริงของการตีกลับ</p>
+      ${tableHtml([{label:'สถานะขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
+    openModal('สถานะขนส่ง — รายละเอียดทั้งหมด', body);
+  }
 
-  renderBars('chart-payment', [
-    {label:'COD (เก็บเงินปลายทาง)', value:3016},
-    {label:'COD',                   value:162},
-    {label:'อื่น ๆ (< 5 แถวต่อประเภท)', value:10},
-  ], 'var(--yellow)', {total:3188, compact:true});
+  function showPaymentModal() {
+    const rows = PAYMENTS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
+    openModal('วิธีการชำระเงิน — รายละเอียดทั้งหมด', tableHtml([{label:'วิธีชำระเงิน'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows));
+  }
 
-  const courierData = [
-    {name:'Flash Express TH_14', n:2665},
-    {name:'Flash Express TH_13', n:286},
-    {name:"J&T Express",         n:80},
-    {name:'Flash Express TH_15', n:67},
-    {name:'SPX Express',         n:54},
-    {name:'LEX TH',              n:25},
-    {name:'Flash Express',       n:11},
-    {name:'PT2',                 n:1},
-  ];
-  document.getElementById('table-courier').innerHTML = courierData.map(c => `
-    <tr>
-      <td class="strong">${c.name}</td>
-      <td class="num">${fmt(c.n)}</td>
-      <td class="num">${((c.n/3188)*100).toFixed(1)}%</td>
-    </tr>`).join('');
+  function showCourierModal() {
+    const rows = COURIERS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
+    const body = `<p class="modal-note">เครือ Flash Express (ทุกเขตรวมกัน) = 3,029 ออเดอร์ (95.0%)</p>
+      ${tableHtml([{label:'บริษัทขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
+    openModal('ตีกลับตามบริษัทขนส่ง — รายละเอียดทั้งหมด', body);
+  }
 </script>
+
 </body>
 </html>
