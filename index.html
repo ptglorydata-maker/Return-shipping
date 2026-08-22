@@ -8,29 +8,29 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap">
 <style>
   :root{
-    color-scheme: light;
-    --bg:          #f2f1ec;
-    --panel:       #ffffff;
-    --panel-2:     #f6f5f0;
-    --raised:      #ebe9e2;
-    --ink:         #1c1b18;
-    --ink-2:       #5c594f;
-    --muted:       #918d80;
-    --grid:        #eae8e1;
-    --baseline:    #d8d5c9;
-    --border:      #e4e1d7;
+    color-scheme: dark;
+    --bg:        #0e0f14;
+    --sidebar:   #14161d;
+    --panel:     #191b23;
+    --panel-2:   #20222c;
+    --raised:    #282b37;
+    --ink:       #f2f2f5;
+    --ink-2:     #a2a5b3;
+    --muted:     #6d7182;
+    --grid:      #262834;
+    --baseline:  #323644;
+    --border:    #23252f;
 
-    --amber:   #b8600a;
-    --blue:    #2a6fd6;
-    --orange:  #d85a20;
-    --teal:    #128a5e;
-    --yellow:  #a3720b;
-    --magenta: #c14a80;
-    --violet:  #5a45c9;
+    --blue:    #4d7cff;
+    --green:   #24d17e;
+    --purple:  #9b6bf2;
+    --pink:    #ef5da8;
+    --orange:  #ff9142;
+    --teal:    #24c1c7;
 
-    --good:     #0ca30c;
-    --warning:  #a3720b;
-    --critical: #c9382f;
+    --good:     #24d17e;
+    --warning:  #f2a93b;
+    --critical: #f2515e;
 
     --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
     --font-body: "Prompt", "Noto Sans Thai", system-ui, sans-serif;
@@ -44,357 +44,241 @@
   }
   body{
     margin:0;
-    background:
-      radial-gradient(1100px 480px at 84% -8%, color-mix(in srgb, var(--amber) 7%, transparent), transparent 60%),
-      radial-gradient(900px 420px at 8% 6%, color-mix(in srgb, var(--blue) 6%, transparent), transparent 60%),
-      var(--bg);
+    background:var(--bg);
     color:var(--ink);
     font-family:var(--font-body);
     -webkit-font-smoothing:antialiased;
   }
   .mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  a{ color:inherit; }
 
-  .wrap{
-    max-width:1360px;
-    margin:0 auto;
-    padding:0 20px 80px;
+  /* ---- shell ---- */
+  .shell{ display:flex; min-height:100vh; }
+
+  /* ---- sidebar ---- */
+  .sidebar{
+    flex:none;
+    width:250px;
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    padding:22px 16px;
     display:flex;
     flex-direction:column;
-    gap:22px;
-  }
-
-  /* ---- nav ---- */
-  .topnav{
+    gap:26px;
     position:sticky;
     top:0;
-    z-index:30;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sb-brand{
     display:flex;
     align-items:center;
-    gap:2px;
-    overflow-x:auto;
-    padding:14px 20px;
-    background:color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    scrollbar-width:none;
-  }
-  .topnav::-webkit-scrollbar{ display:none; }
-  .topnav a{
-    flex:none;
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    color:var(--muted);
-    text-decoration:none;
-    padding:7px 12px;
-    border-radius:6px;
-    white-space:nowrap;
-    transition:background .15s ease, color .15s ease;
-  }
-  .topnav a:hover{ background:var(--panel-2); color:var(--ink); }
-  .topnav .brand{
-    font-family:var(--font-mono);
-    font-weight:700;
-    font-size:13px;
-    color:var(--amber);
-    letter-spacing:.02em;
-    padding:6px 14px 6px 0;
-    margin-right:6px;
-    border-right:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    gap:7px;
-  }
-  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--good); box-shadow:0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
-
-  /* ---- ticker ---- */
-  .ticker{
-    position:sticky;
-    top:49px;
-    z-index:25;
-    display:flex;
-    gap:0;
-    overflow-x:auto;
-    background:var(--panel);
-    border-bottom:1px solid var(--border);
-    scrollbar-width:none;
-  }
-  .ticker::-webkit-scrollbar{ display:none; }
-  .tick{
-    flex:none;
-    display:flex;
-    align-items:baseline;
-    gap:8px;
-    padding:11px 20px;
-    border-right:1px solid var(--border);
-    cursor:pointer;
-    transition:background .15s ease;
-  }
-  .tick:hover{ background:var(--panel-2); }
-  .tick .tk-label{ font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
-  .tick .tk-value{ font-family:var(--font-mono); font-size:15px; font-weight:600; }
-  .tick .tk-delta{ font-family:var(--font-mono); font-size:11px; font-weight:600; padding:1px 5px; border-radius:4px; }
-  .tk-delta.up{ color:var(--critical); background:color-mix(in srgb, var(--critical) 16%, transparent); }
-  .tk-delta.down{ color:var(--good); background:color-mix(in srgb, var(--good) 16%, transparent); }
-  .tk-delta.flat{ color:var(--muted); background:var(--panel-2); }
-
-  /* ---- header ---- */
-  header.hero{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    padding-top:24px;
-  }
-  .eyebrow{
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--amber);
-    margin:0;
-  }
-  h1{
-    font-family:var(--font-body);
-    font-weight:700;
-    font-size:clamp(26px,3.6vw,38px);
-    line-height:1.12;
-    margin:0;
-    text-wrap:balance;
-    color:var(--ink);
-  }
-  .subtitle{
-    margin:4px 0 0;
-    color:var(--ink-2);
-    font-size:14.5px;
-    max-width:70ch;
-  }
-
-  /* ---- section shell ---- */
-  section{
-    display:flex;
-    flex-direction:column;
     gap:12px;
-    scroll-margin-top:110px;
+    padding:2px 8px;
   }
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
+  .sb-brand .mark{
+    width:38px; height:38px; border-radius:11px;
+    background:linear-gradient(135deg, var(--orange), var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:14px; color:#1a1112;
+    flex:none;
   }
-  .section-head h2{
+  .sb-brand .name{ font-weight:600; font-size:14.5px; color:var(--ink); line-height:1.3; }
+  .sb-brand .sub{ font-size:11.5px; color:var(--muted); }
+
+  .sb-label{
     font-family:var(--font-mono);
-    font-size:13px;
+    font-size:10.5px;
     font-weight:600;
     letter-spacing:.08em;
     text-transform:uppercase;
-    color:var(--ink-2);
-    margin:0;
+    color:var(--muted);
+    padding:0 10px;
+  }
+  .sb-nav{ display:flex; flex-direction:column; gap:2px; }
+  .sb-nav a{
     display:flex;
     align-items:center;
-    gap:8px;
-  }
-  .section-head h2::before{ content:""; width:3px; height:14px; background:var(--amber); border-radius:2px; }
-  .section-head .hint{ font-size:12px; color:var(--muted); }
-
-  /* ---- bento grid ---- */
-  .bento{
-    display:grid;
-    grid-template-columns:repeat(12, 1fr);
     gap:12px;
+    padding:10px 12px;
+    border-radius:10px;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink-2);
+    text-decoration:none;
+    transition:background .15s ease, color .15s ease;
   }
-  .span-8{ grid-column:span 8; }
-  .span-4{ grid-column:span 4; }
-  .span-6{ grid-column:span 6; }
-  .span-12{ grid-column:span 12; }
-  .span-3{ grid-column:span 3; }
-  @media (max-width:980px){
-    .span-8,.span-4,.span-6,.span-3{ grid-column:span 12; }
+  .sb-nav a:hover{ background:var(--panel-2); color:var(--ink); }
+  .sb-nav a.active{ background:var(--panel-2); color:var(--ink); box-shadow:inset 2.5px 0 0 var(--orange); }
+  .sb-nav .ic{
+    width:26px; height:26px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+    background:var(--panel-2);
+    color:var(--ink-2);
+  }
+  .sb-nav a.active .ic{ background:color-mix(in srgb, var(--orange) 22%, transparent); color:var(--orange); }
+  .sb-nav svg{ width:14px; height:14px; }
+
+  .sb-foot{
+    margin-top:auto;
+    padding:12px 10px;
+    border-top:1px solid var(--border);
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.6;
   }
 
-  .panel{
-    position:relative;
+  @media (max-width:900px){
+    .shell{ flex-direction:column; }
+    .sidebar{
+      position:static; width:100%; height:auto; flex-direction:row;
+      align-items:center; gap:14px; overflow-x:auto; padding:14px 16px;
+    }
+    .sb-label{ display:none; }
+    .sb-nav{ flex-direction:row; }
+    .sb-nav a{ white-space:nowrap; }
+    .sb-foot{ display:none; }
+  }
+
+  /* ---- content ---- */
+  .content{ flex:1; min-width:0; }
+  .content-inner{
+    max-width:1320px;
+    margin:0 auto;
+    padding:26px 28px 90px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .page-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .page-head h1{ font-size:22px; font-weight:600; margin:0; color:var(--ink); }
+  .page-head .desc{ font-size:13px; color:var(--ink-2); margin-top:4px; max-width:64ch; }
+  .page-head .meta{ font-size:11.5px; color:var(--muted); font-family:var(--font-mono); text-align:right; line-height:1.7; }
+
+  /* ---- grid ---- */
+  .grid{ display:grid; gap:16px; }
+  .grid-4{ grid-template-columns:repeat(4,1fr); }
+  .grid-3{ grid-template-columns:repeat(3,1fr); }
+  .grid-2{ grid-template-columns:1.15fr 0.85fr; }
+  @media (max-width:1100px){ .grid-4{ grid-template-columns:repeat(2,1fr); } .grid-3{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:760px){ .grid-4,.grid-3,.grid-2{ grid-template-columns:1fr; } }
+
+  /* ---- card base ---- */
+  .card{
     background:var(--panel);
     border:1px solid var(--border);
-    border-radius:10px;
-    padding:18px 20px;
-    overflow:hidden;
+    border-radius:18px;
+    padding:20px;
   }
-  .panel::before{
-    content:"";
-    position:absolute;
-    left:0; top:0; bottom:0;
-    width:3px;
-    background:var(--accent, var(--amber));
-  }
-  .panel-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:14px;
-  }
-  .panel-head h3{
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    font-weight:600;
-    letter-spacing:.03em;
-    text-transform:uppercase;
-    color:var(--ink-2);
-    margin:0;
-  }
-  .expand-btn{
-    font-family:var(--font-mono);
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:.03em;
-    color:var(--amber);
-    background:none;
-    border:1px solid var(--border);
-    border-radius:6px;
-    cursor:pointer;
-    padding:5px 10px;
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    transition:border-color .15s ease, background .15s ease;
-    white-space:nowrap;
-  }
-  .expand-btn:hover{ border-color:var(--amber); background:color-mix(in srgb, var(--amber) 8%, transparent); }
 
-  /* ---- stat tile (clickable) ---- */
-  .stat{
-    cursor:pointer;
-    transition:transform .15s cubic-bezier(.2,.8,.2,1), border-color .15s ease;
-  }
-  .stat:hover{ transform:translateY(-2px); border-color:var(--baseline); }
-  .stat .st-label{
-    font-family:var(--font-mono);
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    color:var(--muted);
+  /* ---- stat card (top row style) ---- */
+  .stat-card{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
+    flex-direction:column;
+    gap:10px;
+    cursor:pointer;
+    transition:transform .16s cubic-bezier(.2,.8,.2,1), border-color .16s ease;
   }
-  .stat .st-label .chev{ color:var(--muted); font-size:14px; }
-  .stat:hover .st-label .chev{ color:var(--amber); }
-  .stat .st-value{
-    font-family:var(--font-mono);
-    font-weight:700;
-    font-size:30px;
-    line-height:1.15;
-    margin-top:6px;
-    color:var(--ink);
+  .stat-card:hover{ transform:translateY(-3px); border-color:var(--baseline); }
+  .stat-top{ display:flex; align-items:flex-start; justify-content:space-between; }
+  .stat-value-row{ display:flex; align-items:baseline; gap:9px; }
+  .stat-value{ font-family:var(--font-body); font-weight:700; font-size:26px; color:var(--ink); }
+  .stat-delta{
+    display:inline-flex; align-items:center; gap:3px;
+    font-family:var(--font-mono); font-size:12px; font-weight:600;
+    padding:2px 7px; border-radius:999px;
   }
-  .stat .st-value small{ font-family:var(--font-body); font-weight:500; font-size:13px; color:var(--ink-2); margin-left:4px; }
-  .stat .st-note{ font-size:12px; color:var(--ink-2); margin-top:6px; line-height:1.5; }
-  .stat .st-note.crit{ color:var(--critical); }
+  .stat-delta.up{ color:var(--critical); background:color-mix(in srgb, var(--critical) 18%, transparent); }
+  .stat-delta.down{ color:var(--good); background:color-mix(in srgb, var(--good) 18%, transparent); }
+  .stat-label{ font-size:12.5px; color:var(--ink-2); }
+  .icon-badge{
+    width:38px; height:38px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .icon-badge svg{ width:17px; height:17px; }
+
+  /* ---- donut ---- */
+  .donut-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 0 4px; }
+  .donut-center{ font-family:var(--font-body); }
+  .donut-center .n{ font-size:24px; font-weight:700; color:var(--ink); }
+  .donut-center .l{ font-size:11.5px; color:var(--muted); }
+  .donut-legend{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .donut-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:9px 0; border-bottom:1px solid var(--grid);
+  }
+  .donut-row:last-child{ border-bottom:none; }
+  .donut-row .dl{ display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink-2); }
+  .donut-row .sw{ width:9px; height:9px; border-radius:3px; flex:none; }
+  .donut-row .dv{ font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink); }
+
+  /* ---- list card (project-list style) ---- */
+  .list-row{
+    display:flex; align-items:center; gap:14px;
+    padding:13px 0; border-bottom:1px solid var(--grid);
+    cursor:pointer;
+  }
+  .list-row:last-child{ border-bottom:none; }
+  .list-row:hover .lr-title{ color:var(--orange); }
+  .lr-icon{
+    width:38px; height:38px; border-radius:11px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:12px; color:#fff;
+  }
+  .lr-body{ flex:1; min-width:0; }
+  .lr-title{ font-size:13.5px; font-weight:600; color:var(--ink); transition:color .15s ease; }
+  .lr-sub{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .lr-meta{ text-align:right; flex:none; }
+  .lr-meta .m1{ font-family:var(--font-mono); font-size:13.5px; font-weight:700; }
+  .lr-meta .m2{ font-size:11px; color:var(--muted); margin-top:2px; }
+
+  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px; }
+  .card-head h3{ font-size:14.5px; font-weight:600; margin:0; color:var(--ink); }
+  .card-head .tag{ font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
+  .expand-btn{
+    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--orange);
+    background:none; border:1px solid var(--border); border-radius:7px; cursor:pointer;
+    padding:5px 10px; white-space:nowrap; transition:border-color .15s ease, background .15s ease;
+  }
+  .expand-btn:hover{ border-color:var(--orange); background:color-mix(in srgb, var(--orange) 10%, transparent); }
 
   /* ---- bar chart ---- */
   .chart{ display:flex; flex-direction:column; gap:2px; }
-  .bar-row{
-    display:grid;
-    grid-template-columns:150px 1fr 96px;
-    align-items:center;
-    gap:10px;
-    padding:6px 0;
-  }
+  .bar-row{ display:grid; grid-template-columns:150px 1fr 96px; align-items:center; gap:10px; padding:6px 0; }
   .bar-row.compact{ grid-template-columns:130px 1fr 78px; }
-  .bar-row .rowlabel{
-    font-size:12.5px;
-    color:var(--ink-2);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .bar-track{
-    position:relative;
-    height:13px;
-    background:var(--panel-2);
-    border-radius:3px;
-    overflow:visible;
-    border:1px solid var(--border);
-  }
-  .bar-fill{
-    position:relative;
-    height:100%;
-    border-radius:2px;
-    min-width:3px;
-    width:0;
-    transition:width .8s cubic-bezier(.16,.84,.44,1);
-  }
+  .bar-row .rowlabel{ font-size:12.5px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-track{ position:relative; height:12px; background:var(--panel-2); border-radius:4px; overflow:visible; }
+  .bar-fill{ position:relative; height:100%; border-radius:4px; min-width:3px; width:0; transition:width .8s cubic-bezier(.16,.84,.44,1); }
   .bar-fill[data-tooltip]:hover::after{
-    content:attr(data-tooltip);
-    position:absolute;
-    left:0;
-    bottom:calc(100% + 6px);
-    background:var(--raised);
-    border:1px solid var(--baseline);
-    color:var(--ink);
-    font-size:11px;
-    font-family:var(--font-mono);
-    padding:5px 9px;
-    border-radius:6px;
-    white-space:nowrap;
-    z-index:5;
-    pointer-events:none;
+    content:attr(data-tooltip); position:absolute; left:0; bottom:calc(100% + 6px);
+    background:var(--raised); border:1px solid var(--baseline); color:var(--ink);
+    font-size:11px; font-family:var(--font-mono); padding:5px 9px; border-radius:7px;
+    white-space:nowrap; z-index:5; pointer-events:none;
   }
-  .bar-row .rowvalue{
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    font-weight:600;
-    text-align:right;
-    color:var(--ink);
-  }
+  .bar-row .rowvalue{ font-family:var(--font-mono); font-size:12.5px; font-weight:600; text-align:right; color:var(--ink); }
   .bar-row .rowvalue small{ font-weight:400; color:var(--muted); font-size:11px; }
-
-  .legend-line{ font-size:11.5px; color:var(--muted); padding-top:6px; font-family:var(--font-mono); }
+  .legend-line{ font-size:11.5px; color:var(--muted); padding-top:8px; font-family:var(--font-mono); }
 
   /* ---- line chart ---- */
   .line-chart{ width:100%; }
   .line-chart svg{ width:100%; height:auto; display:block; overflow:visible; }
   .line-chart .gridline{ stroke:var(--grid); stroke-width:1; }
   .line-chart .baseline{ stroke:var(--baseline); stroke-width:1; }
-  .line-chart .area{ fill:var(--amber); opacity:.08; }
-  .line-chart .line{ fill:none; stroke:var(--amber); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
-  .line-chart .dot{ fill:var(--panel); stroke:var(--amber); stroke-width:2; cursor:pointer; }
-  .line-chart .dot.peak{ fill:var(--amber); }
+  .line-chart .area{ fill:var(--orange); opacity:.12; }
+  .line-chart .line{ fill:none; stroke:var(--orange); stroke-width:2.25; stroke-linejoin:round; stroke-linecap:round; }
+  .line-chart .dot{ fill:var(--panel); stroke:var(--orange); stroke-width:2; cursor:pointer; }
+  .line-chart .dot.peak{ fill:var(--orange); }
   .line-chart .axislabel{ fill:var(--muted); font-size:10px; font-family:var(--font-mono); }
-
-  /* ---- callout facts ---- */
-  .fact{
-    cursor:pointer;
-    transition:transform .15s cubic-bezier(.2,.8,.2,1), border-color .15s ease;
-  }
-  .fact:hover{ transform:translateY(-2px); border-color:var(--baseline); }
-  .fact .big{ font-family:var(--font-mono); font-weight:700; font-size:22px; }
-  .fact .big.critical{ color:var(--critical); }
-  .fact .big.warning{ color:var(--warning); }
-  .fact .desc{ font-size:12.5px; color:var(--ink-2); margin-top:6px; line-height:1.55; }
 
   /* ---- table ---- */
   table{ width:100%; border-collapse:collapse; font-size:13px; }
   thead th{
-    text-align:left;
-    font-family:var(--font-mono);
-    font-weight:600;
-    font-size:10.5px;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    padding:8px 10px;
-    border-bottom:1px solid var(--baseline);
-    position:sticky;
-    top:0;
-    background:var(--panel);
+    text-align:left; font-family:var(--font-mono); font-weight:600; font-size:10.5px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.04em; padding:8px 10px; border-bottom:1px solid var(--baseline);
+    position:sticky; top:0; background:var(--panel);
   }
   tbody td{ padding:8px 10px; border-bottom:1px solid var(--grid); color:var(--ink-2); font-size:12.5px; }
   tbody tr:last-child td{ border-bottom:none; }
@@ -404,46 +288,15 @@
   .table-wrap{ overflow-x:auto; }
   .table-wrap.scroll-y{ max-height:440px; overflow-y:auto; }
 
-  /* ---- insight list ---- */
-  .insight-list{ display:flex; flex-direction:column; gap:0; }
-  .insight{
-    display:grid;
-    grid-template-columns:56px 1fr;
-    gap:12px;
-    align-items:flex-start;
-    padding:14px 0;
-    border-bottom:1px solid var(--grid);
-  }
-  .insight:last-child{ border-bottom:none; }
-  .insight .num{
-    font-family:var(--font-mono);
-    font-weight:700;
-    font-size:11px;
-    color:var(--amber);
-    letter-spacing:.02em;
-  }
-  .insight p{ margin:0; font-size:13.5px; line-height:1.65; color:var(--ink-2); }
-  .insight p strong{ color:var(--ink); }
-
   footer{
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--muted);
-    padding-top:16px;
-    margin-top:10px;
-    border-top:1px solid var(--border);
-    line-height:1.7;
+    font-family:var(--font-mono); font-size:11px; color:var(--muted);
+    padding-top:16px; margin-top:6px; border-top:1px solid var(--border); line-height:1.7;
   }
 
   /* ---- modal ---- */
   dialog#modal{
-    border:1px solid var(--baseline);
-    border-radius:12px;
-    padding:0;
-    width:min(780px, 92vw);
-    max-height:82vh;
-    background:var(--panel);
-    color:var(--ink);
+    border:1px solid var(--baseline); border-radius:16px; padding:0;
+    width:min(780px, 92vw); max-height:82vh; background:var(--panel); color:var(--ink);
   }
   dialog#modal::backdrop{ background:rgba(0,0,0,0.65); backdrop-filter:blur(2px); }
   dialog#modal[open]{ animation: modal-in .18s cubic-bezier(.2,.8,.2,1); }
@@ -451,12 +304,12 @@
   .modal-head{
     display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding:16px 20px; border-bottom:1px solid var(--border);
-    position:sticky; top:0; background:var(--panel); border-radius:12px 12px 0 0;
+    position:sticky; top:0; background:var(--panel); border-radius:16px 16px 0 0;
   }
-  .modal-head h3{ font-family:var(--font-mono); font-size:13.5px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin:0; color:var(--ink); }
+  .modal-head h3{ font-size:15px; font-weight:600; margin:0; color:var(--ink); }
   .modal-close{
     background:var(--panel-2); border:1px solid var(--border); color:var(--ink-2);
-    width:28px; height:28px; border-radius:7px; cursor:pointer; font-size:13px;
+    width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:13px;
     display:flex; align-items:center; justify-content:center; transition:all .15s ease;
   }
   .modal-close:hover{ border-color:var(--critical); color:var(--critical); }
@@ -469,185 +322,217 @@
 </head>
 <body>
 
-<nav class="topnav">
-  <span class="brand"><span class="dot"></span>RETURN·JUL26</span>
-  <a href="#overview">ภาพรวม</a>
-  <a href="#rate">อัตราตีกลับ</a>
-  <a href="#daily">รายวัน</a>
-  <a href="#unit">ยูนิต</a>
-  <a href="#product">สินค้า</a>
-  <a href="#region">ภูมิภาค/ขนส่ง</a>
-  <a href="#insights">สรุปสำหรับผู้บริหาร</a>
-</nav>
+<div class="shell">
 
-<div class="ticker" id="ticker"></div>
-
-<div class="wrap">
-
-  <header class="hero" id="overview">
-    <p class="eyebrow">// Return Insight Terminal</p>
-    <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
-    <p class="subtitle">สรุปจากแท็บ “Discuse” (ฐานข้อมูลตีกลับเต็มทั้งเดือน) เทียบกับยอดขายจริงจากแท็บ Total_Order on Sell · ครอบคลุมทั้ง 31 วันของเดือน · อัปเดต 22 ส.ค. 2569</p>
-  </header>
-
-  <!-- KPI bento -->
-  <section>
-    <div class="bento">
-      <div class="panel stat span-4" style="--accent:var(--amber)" onclick="showRateModal()">
-        <div class="st-label">อัตราตีกลับเฉลี่ยทั้งบริษัท <span class="chev">↗</span></div>
-        <div class="st-value">3.4<small>%</small></div>
-        <div class="st-note">3,188 ตีกลับ / 92,962 ออเดอร์ ก.ค. — คลิกดูอัตราต่อยูนิต</div>
-      </div>
-      <div class="panel stat span-4" style="--accent:var(--blue)" onclick="showDailyModal()">
-        <div class="st-label">ยอดขายทั้งหมด ก.ค. (บริษัท) <span class="chev">↗</span></div>
-        <div class="st-value">92,962</div>
-        <div class="st-note">ฐานสำหรับคำนวณ % ตีกลับ ครอบคลุม 99%+ ของยอดขาย</div>
-      </div>
-      <div class="panel stat span-4" style="--accent:var(--teal)" onclick="showUnitValueModal()">
-        <div class="st-label">มูลค่าสินค้าตีกลับ <span class="chev">↗</span></div>
-        <div class="st-value">฿1.70M</div>
-        <div class="st-note">3,188 ออเดอร์ · เฉลี่ย ฿535/ออเดอร์ — คลิกดูตามยูนิต</div>
-      </div>
-      <div class="panel stat span-3" style="--accent:var(--critical)" onclick="showPaymentModal()">
-        <div class="st-label">ชำระแบบ COD <span class="chev">↗</span></div>
-        <div class="st-value">99.7<small>%</small></div>
-        <div class="st-note crit">แทบทั้งหมดเป็น COD</div>
-      </div>
-      <div class="panel stat span-3" style="--accent:var(--violet)" onclick="showCourierModal()">
-        <div class="st-label">ผ่านเครือ Flash Express <span class="chev">↗</span></div>
-        <div class="st-value">95.0<small>%</small></div>
-        <div class="st-note">3,029 / 3,188 ออเดอร์</div>
-      </div>
-      <div class="panel stat span-3" style="--accent:var(--critical)" onclick="showStatusModal()">
-        <div class="st-label">ระบบตีกลับอัตโนมัติ <span class="chev">↗</span></div>
-        <div class="st-value">94.6<small>%</small></div>
-        <div class="st-note crit">SYSTEM_AUTO_RETURN</div>
-      </div>
-      <div class="panel stat span-3" style="--accent:var(--yellow)" onclick="showRateModal()">
-        <div class="st-label">ยูนิตอัตราสูงสุด <span class="chev">↗</span></div>
-        <div class="st-value">UNIT23</div>
-        <div class="st-note crit">12.7% — สูงกว่าค่าเฉลี่ย ~4 เท่า</div>
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="mark">PT</div>
+      <div>
+        <div class="name">PT Glory</div>
+        <div class="sub">Return Report · ก.ค. 69</div>
       </div>
     </div>
-  </section>
 
-  <!-- return rate by unit + daily -->
-  <section id="rate">
-    <div class="bento">
-      <div class="panel span-8" style="--accent:var(--amber)">
-        <div class="panel-head">
-          <h3>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h3>
-          <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด 34 →</button>
+    <div>
+      <div class="sb-label">เมนู</div>
+      <nav class="sb-nav">
+        <a href="#overview" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>ภาพรวม</a>
+        <a href="#rate"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>อัตราตีกลับ</a>
+        <a href="#daily"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg></span>รายวัน</a>
+        <a href="#unit"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></span>ยูนิต</a>
+        <a href="#product"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg></span>สินค้า</a>
+        <a href="#region"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/></svg></span>ภูมิภาค/ขนส่ง</a>
+      </nav>
+    </div>
+
+    <div class="sb-foot">
+      อัปเดตข้อมูล 22 ส.ค. 2569<br>
+      ที่มา: Discuse · Total_Order on Sell
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+
+      <div class="page-head" id="overview">
+        <div>
+          <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
+          <p class="desc">สรุปจากฐานข้อมูลตีกลับเต็มทั้งเดือน (3,188 ออเดอร์) เทียบกับยอดขายจริง 92,962 ออเดอร์</p>
         </div>
-        <div class="chart" id="chart-rate"></div>
-        <div class="legend-line">RED &gt; 2× AVG · YELLOW &gt; AVG · BLUE ≈ AVG (3.4%) — ยอดขาย ≥ 300 ออเดอร์/เดือนเท่านั้น</div>
+        <div class="meta">31 วัน · 1–31 ก.ค. 2569<br>ครอบคลุมยอดขาย 99%+</div>
       </div>
-      <div class="panel span-4" id="daily" style="--accent:var(--blue)">
-        <div class="panel-head">
-          <h3>แนวโน้มรายวัน</h3>
-          <button class="expand-btn" onclick="showDailyModal()">31 วัน →</button>
+
+      <!-- top stat row -->
+      <div class="grid grid-4">
+        <div class="card stat-card" onclick="showRateModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-value-row"><span class="stat-value">3.4%</span><span class="stat-delta up">↗ AVG</span></div>
+              <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--orange) 20%, transparent); color:var(--orange);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+            </div>
+          </div>
         </div>
-        <div class="line-chart" id="chart-daily"></div>
-        <div class="legend-line">AVG ~103/DAY · NO SINGLE-DAY SPIKE</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- facts -->
-  <section>
-    <div class="section-head"><h2>Signal — ใครตีกลับผิดปกติจริง</h2></div>
-    <div class="bento">
-      <div class="panel fact span-3" style="--accent:var(--critical)" onclick="showRateModal()">
-        <div class="big critical">UNIT23 · 12.7%</div>
-        <div class="desc">สูงกว่าค่าเฉลี่ยบริษัทเกือบ 4 เท่า (108/848) ทั้งที่ปริมาณขายไม่ได้เยอะที่สุด</div>
-      </div>
-      <div class="panel fact span-3" style="--accent:var(--warning)" onclick="showRateModal()">
-        <div class="big warning">UNIT18 · 8.3%</div>
-        <div class="desc">อันดับ 2 (81/979) สูงกว่าค่าเฉลี่ยกว่า 2 เท่า</div>
-      </div>
-      <div class="panel fact span-3" style="--accent:var(--blue)" onclick="showRateModal()">
-        <div class="big">UNIT15/9 · ~4-4.8%</div>
-        <div class="desc">ตีกลับดิบเยอะสุด แต่จริง ๆ อัตราใกล้เคียงค่าเฉลี่ย เพราะขายเยอะที่สุดด้วย</div>
-      </div>
-      <div class="panel fact span-3" style="--accent:var(--critical)" onclick="showStatusModal()">
-        <div class="big critical">94.6% · Auto-return</div>
-        <div class="desc">ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง — ระบบตีกลับเองหลังครบกำหนด</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- unit + product -->
-  <section id="unit">
-    <div class="bento">
-      <div class="panel span-6" style="--accent:var(--blue)">
-        <div class="panel-head">
-          <h3>ตีกลับตามยูนิต (จำนวนดิบ)</h3>
-          <button class="expand-btn" onclick="showUnitCountModal()">ดูทั้งหมด 40 →</button>
+        <div class="card stat-card" onclick="showDailyModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-value-row"><span class="stat-value">92,962</span></div>
+              <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--blue) 20%, transparent); color:var(--blue);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18"/></svg>
+            </div>
+          </div>
         </div>
-        <div class="chart" id="chart-unit"></div>
-        <div class="legend-line">สำหรับวางแผนกำลังคน — ดู % ที่หัวข้อ Signal เพื่อชี้ปัญหา</div>
-      </div>
-      <div class="panel span-6" id="product" style="--accent:var(--orange)">
-        <div class="panel-head">
-          <h3>สินค้าที่ถูกตีกลับบ่อยที่สุด</h3>
-          <button class="expand-btn" onclick="showProductModal()">ดูทั้งหมด →</button>
+        <div class="card stat-card" onclick="showUnitValueModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-value-row"><span class="stat-value">฿1.70M</span><span class="stat-delta up">3,188</span></div>
+              <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--green) 20%, transparent); color:var(--green);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+          </div>
         </div>
-        <div class="chart" id="chart-product"></div>
-        <div class="legend-line">10 อันดับแรก จาก 3,188 ออเดอร์</div>
+        <div class="card stat-card" onclick="showStatusModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-value-row"><span class="stat-value">94.6%</span><span class="stat-delta up">↗</span></div>
+              <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--critical) 20%, transparent); color:var(--critical);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- donut + watchlist -->
+      <div class="grid grid-2">
+        <div class="card" id="region">
+          <div class="card-head"><h3>ตีกลับตามภูมิภาค</h3><span class="tag">3,188 ออเดอร์</span></div>
+          <div class="donut-wrap">
+            <svg width="180" height="180" viewBox="0 0 180 180" id="donut-svg"></svg>
+          </div>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+
+        <div class="card" id="rate">
+          <div class="card-head">
+            <h3>ยูนิตที่ต้องจับตา</h3>
+            <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด →</button>
+          </div>
+          <div id="watchlist"></div>
+        </div>
+      </div>
+
+      <!-- secondary stat row -->
+      <div class="grid grid-3">
+        <div class="card stat-card" onclick="showCourierModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-label" style="margin-bottom:8px;">เครือ Flash Express</div>
+              <div class="stat-value-row"><span class="stat-value">95.0%</span><span class="stat-delta up">3,029</span></div>
+              <div class="stat-label" style="margin-top:6px;">ของออเดอร์ตีกลับทั้งหมด</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--purple) 20%, transparent); color:var(--purple);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="14" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="card stat-card" onclick="showPaymentModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-label" style="margin-bottom:8px;">ชำระแบบ COD</div>
+              <div class="stat-value-row"><span class="stat-value">99.7%</span><span class="stat-delta up">3,178</span></div>
+              <div class="stat-label" style="margin-top:6px;">ของออเดอร์ตีกลับทั้งหมด</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--teal) 20%, transparent); color:var(--teal);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="card stat-card" onclick="showUnitCountModal()">
+          <div class="stat-top">
+            <div>
+              <div class="stat-label" style="margin-bottom:8px;">ยูนิตตีกลับสูงสุด (ดิบ)</div>
+              <div class="stat-value-row"><span class="stat-value">UNIT15</span><span class="stat-delta down">437</span></div>
+              <div class="stat-label" style="margin-top:6px;">13.7% ของยอดตีกลับทั้งหมด</div>
+            </div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--pink) 20%, transparent); color:var(--pink);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- rate by unit + daily -->
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h3>
+            <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด 34 →</button>
+          </div>
+          <div class="chart" id="chart-rate"></div>
+          <div class="legend-line">แดง &gt; 2× ค่าเฉลี่ย · เหลือง &gt; ค่าเฉลี่ย · น้ำเงิน ≈ ค่าเฉลี่ย (3.4%) — ยอดขาย ≥ 300 ออเดอร์/เดือน</div>
+        </div>
+        <div class="card" id="daily">
+          <div class="card-head">
+            <h3>แนวโน้มรายวัน</h3>
+            <button class="expand-btn" onclick="showDailyModal()">31 วัน →</button>
+          </div>
+          <div class="line-chart" id="chart-daily"></div>
+          <div class="legend-line">เฉลี่ย ~103 ออเดอร์/วัน · ไม่มีวันพุ่งผิดปกติ</div>
+        </div>
+      </div>
+
+      <!-- unit + product -->
+      <div class="grid grid-2">
+        <div class="card" id="unit">
+          <div class="card-head">
+            <h3>ตีกลับตามยูนิต (จำนวนดิบ)</h3>
+            <button class="expand-btn" onclick="showUnitCountModal()">ดูทั้งหมด 40 →</button>
+          </div>
+          <div class="chart" id="chart-unit"></div>
+          <div class="legend-line">สำหรับวางแผนกำลังคน — ไม่ใช่ตัวชี้ปัญหา ดู % ด้านบนแทน</div>
+        </div>
+        <div class="card" id="product">
+          <div class="card-head">
+            <h3>สินค้าที่ถูกตีกลับบ่อยที่สุด</h3>
+            <button class="expand-btn" onclick="showProductModal()">ดูทั้งหมด →</button>
+          </div>
+          <div class="chart" id="chart-product"></div>
+          <div class="legend-line">10 อันดับแรก จาก 3,188 ออเดอร์</div>
+        </div>
+      </div>
+
+      <!-- status / payment / courier -->
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-head"><h3>สถานะขนส่ง</h3></div>
+          <div class="chart" id="chart-status"></div>
+          <div class="legend-line">ตัวแทน “สาเหตุ” ที่ใกล้เคียงที่สุดที่มี</div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>วิธีชำระเงิน</h3></div>
+          <div class="chart" id="chart-payment"></div>
+          <div class="legend-line">ครบทุกประเภทแล้ว</div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>บริษัทขนส่ง</h3></div>
+          <div class="table-wrap"><table><tbody id="table-courier"></tbody></table></div>
+        </div>
+      </div>
+
+      <footer>
+        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.
+      </footer>
+
     </div>
-  </section>
-
-  <!-- region / status / payment -->
-  <section id="region">
-    <div class="bento">
-      <div class="panel span-4" style="--accent:var(--teal)">
-        <div class="panel-head"><h3>ตามภูมิภาค</h3></div>
-        <div class="chart" id="chart-region"></div>
-        <div class="legend-line">ครบทุกภูมิภาคแล้ว</div>
-      </div>
-      <div class="panel span-4" style="--accent:var(--violet)">
-        <div class="panel-head"><h3>สถานะขนส่ง</h3></div>
-        <div class="chart" id="chart-status"></div>
-        <div class="legend-line">ตัวแทน “สาเหตุ” ที่ใกล้เคียงที่สุดที่มี</div>
-      </div>
-      <div class="panel span-4" style="--accent:var(--yellow)">
-        <div class="panel-head"><h3>วิธีชำระเงิน</h3></div>
-        <div class="chart" id="chart-payment"></div>
-        <div class="legend-line">COD ครองเกือบทั้งหมด — ครบทุกประเภท</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- courier table -->
-  <section>
-    <div class="section-head"><h2>ตีกลับตามบริษัทขนส่ง</h2></div>
-    <div class="panel table-wrap" style="--accent:var(--magenta)">
-      <table>
-        <thead><tr><th>บริษัทขนส่ง</th><th class="num">จำนวนตีกลับ</th><th class="num">สัดส่วน</th></tr></thead>
-        <tbody id="table-courier"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- insights -->
-  <section id="insights">
-    <div class="section-head"><h2>สิ่งที่ผู้บริหารควรรู้จากข้อมูลนี้</h2></div>
-    <div class="panel" style="--accent:var(--amber)">
-      <div class="insight-list">
-        <div class="insight"><div class="num">01</div><p><strong>ตัวเลขดิบหลอกได้ — ต้องดูเป็น % ต่อยอดขาย</strong> UNIT15/UNIT9/UNIT12 ตีกลับ “จำนวนมากที่สุด” ก็จริง แต่เพราะเป็นยูนิตที่ขายเยอะที่สุด เมื่อคิดเป็น % แล้วใกล้เคียงค่าเฉลี่ย (3.4%) ตัวจริงที่ควรเป็นห่วงคือ <strong>UNIT23 (12.7%)</strong> และ <strong>UNIT18 (8.3%)</strong> สูงกว่าค่าเฉลี่ย 2–4 เท่า — ควรลงไปดู 2 ยูนิตนี้ก่อน</p></div>
-        <div class="insight"><div class="num">02</div><p><strong>เกือบทั้งหมด (94.6%) คือ “ระบบตีกลับอัตโนมัติ”</strong> ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง — พัสดุถูกคูเรียร์พักไว้จนครบกำหนดโดยไม่มีการติดต่อสำเร็จ ปัญหาอาจอยู่ที่ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลา มากกว่าคุณภาพสินค้าเอง</p></div>
-        <div class="insight"><div class="num">03</div><p><strong>คูเรียร์เครือเดียวครองเกือบทั้งหมด (95%)</strong> — Flash Express เป็นคูเรียร์หลักของบริษัทอยู่แล้ว จึงยังฟันธงไม่ได้ว่ามีอัตราตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น เพราะยังไม่มีสัดส่วนงานจริงของแต่ละคูเรียร์มาเทียบ</p></div>
-        <div class="insight"><div class="num">04</div><p><strong>มูลค่าความเสียหายที่เห็นเป็นแค่ “ราคาขาย”</strong> — ฿1,704,627 ยังไม่รวมค่าส่งไป-กลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ตัวเลขขาดทุนจริงต่อเดือนจึงสูงกว่านี้อีก</p></div>
-        <div class="insight"><div class="num">05</div><p><strong>แนวโน้มรายวันค่อนข้างคงที่ตลอดเดือน</strong> (76–149 ออเดอร์/วัน) ไม่มีวันไหนพุ่งผิดปกติแบบเหตุการณ์เดี่ยว ๆ แปลว่าสาเหตุหลักน่าจะเป็นปัญหาเชิงโครงสร้าง มากกว่าเหตุการณ์ผิดปกติในบางวัน</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.
-  </footer>
-
+  </main>
 </div>
 
 <dialog id="modal">
@@ -722,8 +607,8 @@
   ];
 
   const REGIONS = [
-    ['ภาคกลาง',1283],['ภาคใต้',533],['ภาคตะวันออกเฉียงเหนือ',521],['ภาคตะวันออก',468],
-    ['ภาคเหนือ',209],['ภาคตะวันตก',171],['ไม่ระบุ',3],
+    ['ภาคกลาง',1283,'var(--orange)'],['ภาคใต้',533,'var(--blue)'],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)'],
+    ['ภาคตะวันออก',468,'var(--purple)'],['ภาคเหนือ',209,'var(--pink)'],['ภาคตะวันตก',171,'var(--teal)'],['ไม่ระบุ',3,'var(--muted)'],
   ];
 
   const STATUSES = [
@@ -746,23 +631,52 @@
 
   const TOTAL_RETURNS = 3188;
 
-  /* ---------------- ticker ---------------- */
-  const TICKS = [
-    {label:'RATE', value:'3.4%', delta:'AVG', dir:'flat', fn:'showRateModal'},
-    {label:'ORDERS', value:'3,188', delta:'JUL', dir:'flat', fn:'showDailyModal'},
-    {label:'VALUE', value:'฿1.70M', delta:'', dir:'flat', fn:'showUnitValueModal'},
-    {label:'COD', value:'99.7%', delta:'', dir:'up', fn:'showPaymentModal'},
-    {label:'FLASH', value:'95.0%', delta:'', dir:'up', fn:'showCourierModal'},
-    {label:'AUTO-RETURN', value:'94.6%', delta:'', dir:'up', fn:'showStatusModal'},
-    {label:'UNIT23 RATE', value:'12.7%', delta:'▲3.7×', dir:'up', fn:'showRateModal'},
-    {label:'TOTAL SALES JUL', value:'92,962', delta:'', dir:'flat', fn:'showRateModal'},
-  ];
-  document.getElementById('ticker').innerHTML = TICKS.map(t => `
-    <div class="tick" onclick="${t.fn}()">
-      <span class="tk-label">${t.label}</span>
-      <span class="tk-value">${t.value}</span>
-      ${t.delta ? `<span class="tk-delta ${t.dir}">${t.delta}</span>` : ''}
-    </div>`).join('');
+  /* ---------------- donut ---------------- */
+  function renderDonut() {
+    const total = REGIONS.reduce((a,b)=>a+b[1],0);
+    const cx=90, cy=90, r=68, sw=22;
+    const C = 2*Math.PI*r;
+    let offset = 0;
+    const segs = REGIONS.map(r0 => {
+      const frac = r0[1]/total;
+      const len = frac*C;
+      const seg = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${r0[2]}" stroke-width="${sw}"
+        stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"></circle>`;
+      offset += len;
+      return seg;
+    }).join('');
+    document.getElementById('donut-svg').innerHTML = `
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--panel-2)" stroke-width="${sw}"></circle>
+      ${segs}
+      <text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="Prompt" font-weight="700" font-size="22" fill="var(--ink)">${fmt(total)}</text>
+      <text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="Prompt" font-size="11" fill="var(--muted)">ออเดอร์ตีกลับ</text>
+    `;
+    document.getElementById('donut-legend').innerHTML = REGIONS.map(r0 => `
+      <div class="donut-row">
+        <div class="dl"><span class="sw" style="background:${r0[2]}"></span>${r0[0]}</div>
+        <div class="dv">${((r0[1]/total)*100).toFixed(1)}%</div>
+      </div>`).join('');
+  }
+  renderDonut();
+
+  /* ---------------- watchlist ---------------- */
+  function renderWatchlist() {
+    const top = RATES.slice(0,5);
+    const colors = ['var(--critical)','var(--warning)','var(--orange)','var(--purple)','var(--blue)'];
+    document.getElementById('watchlist').innerHTML = top.map((r,i) => `
+      <div class="list-row" onclick="showRateModal()">
+        <div class="lr-icon" style="background:${colors[i]};">${r[0].replace(/[^A-Z0-9]/g,'').slice(0,2) || '??'}</div>
+        <div class="lr-body">
+          <div class="lr-title">${r[0]}</div>
+          <div class="lr-sub">${r[2]} ตีกลับ จาก ${fmt(r[3])} ออเดอร์</div>
+        </div>
+        <div class="lr-meta">
+          <div class="m1" style="color:${colors[i]}">${fmt1(r[1])}%</div>
+          <div class="m2">×${(r[1]/3.4).toFixed(1)} เฉลี่ย</div>
+        </div>
+      </div>`).join('');
+  }
+  renderWatchlist();
 
   /* ---------------- chart renderers ---------------- */
 
@@ -856,12 +770,11 @@
   /* ---------------- initial render ---------------- */
 
   renderRateBars('chart-rate', RATES.slice(0,10).map(r => ({label:r[0], rate:r[1], returns:r[2], total:r[3]})), 3.4);
-  renderLine('chart-daily', DAILY, 'var(--amber)');
+  renderLine('chart-daily', DAILY, 'var(--orange)');
   renderBars('chart-unit', UNIT_RETURNS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--blue)', {total:TOTAL_RETURNS});
   renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--orange)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-region', REGIONS.map(r => ({label:r[0], value:r[1]})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[1]})), 'var(--violet)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1]})), 'var(--yellow)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[1]})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1]})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
 
   document.getElementById('table-courier').innerHTML = COURIERS.map(c => `
     <tr>
