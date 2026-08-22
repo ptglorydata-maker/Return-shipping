@@ -318,9 +318,62 @@
     font-size:12px; color:var(--muted); margin:0 0 12px; padding:9px 12px;
     background:var(--panel-2); border:1px solid var(--border); border-radius:8px; font-family:var(--font-mono);
   }
+
+  /* ---- email gate ---- */
+  .gate{
+    position:fixed; inset:0; z-index:100;
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-card{
+    width:min(380px, 100%);
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:32px 28px;
+    display:flex; flex-direction:column; gap:16px;
+    text-align:center;
+  }
+  .gate-mark{
+    width:44px; height:44px; border-radius:13px; margin:0 auto;
+    background:linear-gradient(135deg, var(--orange), var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:16px; color:#1a1112;
+  }
+  .gate-card h2{ font-size:17px; font-weight:600; margin:0; color:var(--ink); }
+  .gate-card p{ font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.6; }
+  .gate-card input{
+    width:100%; padding:11px 14px; border-radius:10px;
+    background:var(--panel-2); border:1px solid var(--border); color:var(--ink);
+    font-family:var(--font-body); font-size:14px; text-align:center;
+    outline:none;
+  }
+  .gate-card input:focus{ border-color:var(--orange); }
+  .gate-card button{
+    width:100%; padding:11px 14px; border-radius:10px; border:none; cursor:pointer;
+    background:var(--orange); color:#1a1112; font-family:var(--font-body); font-weight:600; font-size:14px;
+    transition:opacity .15s ease;
+  }
+  .gate-card button:hover{ opacity:.9; }
+  .gate-error{ font-size:12px; color:var(--critical); min-height:16px; }
+  .gate.hidden{ display:none; }
 </style>
 </head>
 <body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-mark">PT</div>
+    <h2>Return Report · ก.ค. 69</h2>
+    <p>หน้านี้จำกัดเฉพาะอีเมลที่ได้รับอนุญาต<br>กรอกอีเมลของคุณเพื่อเข้าดูแดชบอร์ด</p>
+    <form id="gate-form" autocomplete="off">
+      <input type="email" id="gate-email" placeholder="you@example.com" required>
+      <div class="gate-error" id="gate-error"></div>
+      <button type="submit">เข้าดูแดชบอร์ด</button>
+    </form>
+  </div>
+</div>
 
 <div class="shell">
 
@@ -544,6 +597,44 @@
 </dialog>
 
 <script>
+  /* ---------------- email gate ----------------
+     Client-side allow-list only — this does NOT verify identity,
+     it just checks the typed string against a known list. Anyone
+     who reads the page source can see the list and any of these
+     addresses. Use for casual deterrence only, not real security. */
+  const ALLOWED_EMAILS = [
+    'boomericz@gmail.com',
+    'phongphuy@gmail.com',
+    'ptglorydata02@gmail.com',
+    'supervisorsalefbptgrory9@gmail.com',
+  ];
+  const GATE_KEY = 'return_report_jul69_auth';
+
+  (function initGate() {
+    const gate = document.getElementById('gate');
+    const form = document.getElementById('gate-form');
+    const input = document.getElementById('gate-email');
+    const err = document.getElementById('gate-error');
+
+    const saved = localStorage.getItem(GATE_KEY);
+    if (saved && ALLOWED_EMAILS.includes(saved)) {
+      gate.classList.add('hidden');
+      return;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value.trim().toLowerCase();
+      if (ALLOWED_EMAILS.includes(val)) {
+        localStorage.setItem(GATE_KEY, val);
+        gate.classList.add('hidden');
+      } else {
+        err.textContent = 'อีเมลนี้ไม่มีสิทธิ์เข้าดูหน้านี้';
+        input.focus();
+      }
+    });
+  })();
+
   const fmt = n => Math.round(n).toLocaleString('en-US');
   const fmt1 = n => n.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
   const money = n => '฿' + fmt(n);
