@@ -384,6 +384,67 @@
   .table-wrap{ overflow-x:auto; }
   .table-wrap.scroll-y{ max-height:440px; overflow-y:auto; }
 
+  /* ---- insight page ---- */
+  .exec-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+  }
+  @media (max-width:900px){ .exec-strip{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .exec-strip{ grid-template-columns:1fr; } }
+  .exec-tile{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px; display:flex; flex-direction:column; gap:4px;
+    border-left:3px solid var(--accent, var(--border));
+  }
+  .exec-tile .n{ font-family:var(--font-mono); font-weight:700; font-size:22px; color:var(--ink); }
+  .exec-tile .l{ font-size:12px; color:var(--ink-2); line-height:1.4; }
+
+  .decision-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:1100px){ .decision-grid{ grid-template-columns:1fr; } }
+  .decision-card{
+    display:flex; flex-direction:column; gap:10px;
+    border-top:3px solid var(--accent, var(--border));
+  }
+  .decision-card .dc-rank{
+    font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.06em;
+    color:var(--accent, var(--muted)); text-transform:uppercase;
+  }
+  .decision-card h4{ margin:0; font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.35; }
+  .decision-card .finding{ font-size:12.5px; color:var(--ink-2); line-height:1.6; }
+  .decision-card .finding strong{ color:var(--ink); }
+  .decision-card .impact{
+    font-family:var(--font-mono); font-weight:700; font-size:19px; color:var(--accent, var(--ink));
+    padding-top:2px;
+  }
+  .decision-card .impact small{ font-family:var(--font-body); font-weight:500; font-size:11.5px; color:var(--muted); display:block; margin-top:1px; }
+  .chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
+  .chip{
+    font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.02em;
+    padding:3px 8px; border-radius:999px; white-space:nowrap;
+  }
+  .chip.effort-low{ color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--panel)); }
+  .chip.effort-med{ color:var(--warning); background:color-mix(in srgb, var(--warning) 14%, var(--panel)); }
+  .chip.effort-high{ color:var(--critical); background:color-mix(in srgb, var(--critical) 14%, var(--panel)); }
+  .chip.conf-high{ color:var(--blue); background:color-mix(in srgb, var(--blue) 12%, var(--panel)); }
+  .chip.conf-med{ color:var(--ink-2); background:var(--panel-2); }
+
+  .insight-list{ display:flex; flex-direction:column; gap:14px; }
+  .insight-row{ display:grid; grid-template-columns:30px 1fr; gap:12px; align-items:flex-start; }
+  .insight-row .num{
+    width:30px; height:30px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:12.5px;
+    background:color-mix(in srgb, var(--accent, var(--muted)) 16%, var(--panel-2)); color:var(--accent, var(--ink-2));
+    flex:none;
+  }
+  .insight-row p{ margin:0; font-size:13.5px; line-height:1.7; color:var(--ink-2); }
+  .insight-row p strong{ color:var(--ink); }
+
+  .gap-note{
+    border:1px dashed var(--baseline); border-radius:12px; padding:14px 16px;
+    font-size:12.5px; color:var(--ink-2); line-height:1.6; background:var(--panel-2);
+  }
+  .gap-note strong{ color:var(--ink); }
+
   footer{
     font-family:var(--font-mono); font-size:11px; color:var(--muted);
     padding-top:16px; margin-top:6px; border-top:1px solid var(--border); line-height:1.7;
@@ -489,12 +550,8 @@
     <div>
       <div class="sb-label">เมนู</div>
       <nav class="sb-nav">
-        <a href="#overview" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>ภาพรวม</a>
-        <a href="#rate"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>อัตราตีกลับ</a>
-        <a href="#daily"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg></span>รายวัน</a>
-        <a href="#unit"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></span>ยูนิต</a>
-        <a href="#product"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg></span>สินค้า</a>
-        <a href="#region"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/></svg></span>ภูมิภาค/ขนส่ง</a>
+        <a href="#dashboard" data-page="dashboard" class="active" onclick="showPage('dashboard');return false;"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>Dashboard</a>
+        <a href="#insight" data-page="insight" onclick="showPage('insight');return false;"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.74V17a1 1 0 001 1h6a1 1 0 001-1v-2.26A7 7 0 0012 2z"/><path d="M9 21h6M10 18h4"/></svg></span>Insight</a>
       </nav>
     </div>
 
@@ -505,7 +562,7 @@
   </aside>
 
   <main class="content">
-    <div class="content-inner">
+    <div class="content-inner" id="page-dashboard">
 
       <div class="page-head" id="overview">
         <div>
@@ -660,6 +717,88 @@
       </footer>
 
     </div>
+
+    <div class="content-inner" id="page-insight" style="display:none;">
+
+      <div class="page-head">
+        <div>
+          <h1>Insight — ข้อเสนอเชิงตัดสินใจ</h1>
+          <p class="desc">สรุปจากข้อมูลตีกลับเดือน ก.ค. 2569 (3,188 ออเดอร์) แปลงเป็นทางเลือกที่ผู้บริหารตัดสินใจได้ พร้อมมูลค่าผลกระทบโดยประมาณจากข้อมูลจริง</p>
+        </div>
+        <div class="meta">อัปเดต 22 ส.ค. 2569<br>ที่มา: Discuse · Total_Order on Sell</div>
+      </div>
+
+      <div class="exec-strip">
+        <div class="exec-tile" style="--accent:var(--critical);">
+          <div class="n">~฿68,000<span style="font-size:13px;">/เดือน</span></div>
+          <div class="l">มูลค่าที่อาจกู้คืนได้ ถ้า UNIT23 และ UNIT18 กลับมาตีกลับที่อัตราเฉลี่ยบริษัท (3.4%)</div>
+        </div>
+        <div class="exec-tile" style="--accent:var(--warning);">
+          <div class="n">94.6%</div>
+          <div class="l">ของออเดอร์ตีกลับ "ไม่ทราบสาเหตุจริง" — ขนส่งไม่บันทึกเหตุผลจากผู้รับ</div>
+        </div>
+        <div class="exec-tile" style="--accent:var(--blue);">
+          <div class="n">1 ใน 5</div>
+          <div class="l">ของออเดอร์ตีกลับทั้งประเทศ มาจากกรุงเทพมหานครจังหวัดเดียว (491/3,188)</div>
+        </div>
+        <div class="exec-tile" style="--accent:var(--muted);">
+          <div class="n">0 แถว</div>
+          <div class="l">มีข้อมูล "พนักงานขาย" ผูกกับออเดอร์ตีกลับ — วิเคราะห์ระดับบุคคลยังทำไม่ได้</div>
+        </div>
+      </div>
+
+      <div class="section-head" style="display:flex; align-items:baseline; justify-content:space-between; margin-top:6px;">
+        <h3 style="margin:0; font-size:16px; font-weight:600;">3 เรื่องที่ควรตัดสินใจก่อน</h3>
+      </div>
+      <div class="decision-grid">
+        <div class="card decision-card" style="--accent:var(--critical);">
+          <div class="dc-rank">ลำดับ 1 · ผลกระทบชัดเจนสุด</div>
+          <h4>ลงไปตรวจ UNIT23 และ UNIT18 ก่อนหน่วยงานอื่น</h4>
+          <p class="finding">อัตราตีกลับ UNIT23 = <strong>12.7%</strong> (108/848) และ UNIT18 = <strong>8.3%</strong> (81/979) สูงกว่าค่าเฉลี่ยบริษัท (3.4%) ถึง 2–4 เท่า ทั้งที่ปริมาณขายไม่ได้เยอะที่สุดในบริษัท — ไม่ใช่ปัญหาเชิงปริมาณ แต่เป็นปัญหาเฉพาะจุดที่ควรสอบทันที (สคริปต์ขาย/การยืนยันออเดอร์/พื้นที่จัดส่งของ 2 ยูนิตนี้)</p>
+          <div class="impact">~฿68,000 <small>มูลค่าออเดอร์ส่วนเกินจากค่าเฉลี่ย ~127 ออเดอร์/เดือน</small></div>
+          <div class="chip-row"><span class="chip effort-low">Effort: ต่ำ</span><span class="chip conf-high">Confidence: สูง</span></div>
+        </div>
+        <div class="card decision-card" style="--accent:var(--warning);">
+          <div class="dc-rank">ลำดับ 2 · ฐานใหญ่สุด</div>
+          <h4>ปรับขั้นตอนติดต่อลูกค้าก่อนพัสดุหมดเวลา</h4>
+          <p class="finding"><strong>94.6%</strong> ของตีกลับทั้งหมด (3,017 ออเดอร์ · ฿1,580,875) เป็นสถานะ "ตีกลับอัตโนมัติ" — เกิดเมื่อคูเรียร์พักพัสดุไว้จนครบกำหนดโดยไม่มีการติดต่อสำเร็จ ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง ปัญหาน่าจะอยู่ที่ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลา มากกว่าคุณภาพสินค้า</p>
+          <div class="impact">~฿15,800 <small>ต่อทุก 1% ของฐานนี้ที่ลดได้/เดือน</small></div>
+          <div class="chip-row"><span class="chip effort-med">Effort: กลาง</span><span class="chip conf-high">Confidence: สูง</span></div>
+        </div>
+        <div class="card decision-card" style="--accent:var(--teal);">
+          <div class="dc-rank">ลำดับ 3 · ต้องเก็บข้อมูลเพิ่มก่อน</div>
+          <h4>ทดลองโอนเงินก่อนส่งกับลูกค้าความเสี่ยงสูง</h4>
+          <p class="finding">ออเดอร์ตีกลับ <strong>99.7%</strong> เป็น COD — แต่ยังไม่มีสัดส่วน COD ต่อยอดขายทั้งหมดมาเทียบ จึงยังฟันธงไม่ได้ว่า COD ตีกลับสูงกว่าช่องทางอื่นจริงหรือแค่เป็นวิธีชำระเงินหลักของบริษัทอยู่แล้ว แนะนำนำร่องกับลูกค้าที่มีประวัติตีกลับซ้ำก่อน แล้ววัดผล 1 รอบเดือน</p>
+          <div class="impact">รอผลนำร่อง <small>ต้องมี ID ลูกค้ามาตรฐานเดียวกันทุกช่องทางก่อน</small></div>
+          <div class="chip-row"><span class="chip effort-med">Effort: กลาง</span><span class="chip conf-med">Confidence: ปานกลาง</span></div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:6px;">
+        <h3 style="margin:0; font-size:16px; font-weight:600;">รายละเอียดที่ผู้บริหารควรรู้</h3>
+      </div>
+      <div class="card">
+        <div class="insight-list">
+          <div class="insight-row"><div class="num" style="--accent:var(--indigo);">1</div><p><strong>มองเป็นมูลค่าเงิน ไม่ใช่แค่จำนวนออเดอร์ — UNIT15 เป็นอันดับ 1 ทั้งสองมิติ</strong> (437 ออเดอร์ / ฿253,634) นำอันดับ 2 อยู่มาก แปลว่ายูนิตนี้กระทบเงินจริงมากที่สุดในบริษัท ควรอยู่ใน watchlist คู่กับ UNIT23/UNIT18 ที่มีอัตรา % สูงสุด</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--critical);">2</div><p><strong>ตัวเลขดิบหลอกได้ — ต้องดูเป็น % ต่อยอดขาย</strong> UNIT15/UNIT9/UNIT12 ตีกลับ "จำนวนมากที่สุด" ก็จริง แต่เพราะเป็นยูนิตที่ขายเยอะที่สุด เมื่อคิดเป็น % แล้วอยู่ใกล้เคียงค่าเฉลี่ย (3.4%) ตัวจริงที่ควรเป็นห่วงคือ UNIT23 (12.7%) และ UNIT18 (8.3%)</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--warning);">3</div><p><strong>เกือบทั้งหมด (94.6%) คือ "ระบบตีกลับอัตโนมัติ" ไม่ใช่ลูกค้าปฏิเสธรับหน้าประตูโดยตรง</strong> (Return 2.5%, RETURNED 1.8%, deliver_failed 1.0%) ขนส่งไม่ได้บันทึกจากผู้รับสินค้าว่าปฏิเสธรับด้วยเหตุผลอะไร ทำให้ยังสรุป "สาเหตุที่แท้จริง" ไม่ได้</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--purple);">4</div><p><strong>คูเรียร์เครือเดียวครองเกือบทั้งหมด (95%)</strong> — Flash Express เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ปริมาณงานส่วนใหญ่จึงวิ่งผ่าน Flash เป็นปกติ ตัวเลข 95% นี้ยังฟันธงไม่ได้ว่า Flash ตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น เพราะยังไม่มีสัดส่วนงานจริงที่แต่ละคูเรียร์ขนส่งมาเทียบ</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--blue);">5</div><p><strong>ภาคกลาง/กรุงเทพฯ กระจุกตัวสูงสุดทั้งจำนวนและมูลค่า</strong> (1,283 ออเดอร์ · ฿699,985 หรือ ~41% ของมูลค่ารวม) กรุงเทพฯ เพียงจังหวัดเดียวมีสัดส่วนสูงสุดทั้งประเทศ (491 ออเดอร์ ~15%) สอดคล้องกับการเป็นพื้นที่ที่มียอดสั่งซื้อมากที่สุดอยู่แล้ว ยังไม่มีตัวหารยอดขายรายภาค/จังหวัดมาคำนวณเป็น % อัตราตีกลับที่แท้จริง</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--pink);">6</div><p><strong>ช่องทาง FB คือแหล่งตีกลับหลัก</strong> (2,714 จาก 3,188 ออเดอร์ หรือ 85%) เช่นเดียวกับกรณี Flash Express ตัวเลขนี้ยังบอกอะไรไม่ได้มาก เพราะ FB เป็นช่องทางขายหลักของบริษัทอยู่แล้ว ต้องมีสัดส่วนยอดขายจริงต่อช่องทางมาเทียบก่อนถึงจะสรุปได้ว่าช่องทางไหนตีกลับผิดปกติจริง</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--green);">7</div><p><strong>มูลค่าความเสียหายที่เห็นเป็นแค่ "ราคาขาย"</strong> — ฿1,704,627 คือราคาสินค้าที่ตีกลับ ยังไม่รวมค่าส่งไป+ค่าส่งกลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ตัวเลขขาดทุนจริงต่อเดือนจึงสูงกว่านี้อีก</p></div>
+          <div class="insight-row"><div class="num" style="--accent:var(--teal);">8</div><p><strong>แนวโน้มรายวันค่อนข้างคงที่ตลอดเดือน</strong> (76–149 ออเดอร์/วัน) ไม่มีวันไหนพุ่งผิดปกติแบบเหตุการณ์เดี่ยว ๆ แปลว่าสาเหตุหลักน่าจะเป็นปัญหาเชิงโครงสร้าง (ขั้นตอนงาน/ยูนิต/คูเรียร์) มากกว่าเหตุการณ์ผิดปกติในบางวัน — แก้ที่ระบบงาน ไม่ใช่แก้เฉพาะจุด</p></div>
+        </div>
+      </div>
+
+      <div class="gap-note">
+        <strong>ข้อมูลที่ควรเพิ่มก่อนตัดสินใจขั้นถัดไป:</strong> (1) พนักงานขายผูกกับออเดอร์ — เพื่อคำนวณตีกลับ+มูลค่าต่อคน (2) ต้นทุนสินค้า (COGS) และค่าส่งไป-กลับ — เพื่อคำนวณขาดทุนจริง ไม่ใช่แค่ราคาขาย (3) ยอดขายจริงแยกตามคูเรียร์/ช่องทาง/จังหวัด — เพื่อคำนวณ % อัตราตีกลับที่แท้จริงแทนสัดส่วนดิบ (4) ID ลูกค้ามาตรฐานเดียวกันทุกช่องทาง — เพื่อกรองลูกค้าความเสี่ยงสูงสำหรับข้อเสนอที่ 3
+      </div>
+
+      <footer>
+        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — ตัวเลขผลกระทบคำนวณจากข้อมูลดิบโดยตรง เป็นค่าประมาณ (มูลค่าขายเท่านั้น ยังไม่รวม COGS/ค่าส่ง)
+      </footer>
+
+    </div>
   </main>
 </div>
 
@@ -714,6 +853,16 @@
   const fmt = n => Math.round(n).toLocaleString('en-US');
   const fmt1 = n => n.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
   const money = n => '฿' + fmt(n);
+
+  /* ---------------- page switch (Dashboard / Insight) ---------------- */
+  function showPage(name) {
+    document.getElementById('page-dashboard').style.display = name === 'insight' ? 'none' : '';
+    document.getElementById('page-insight').style.display = name === 'insight' ? '' : 'none';
+    document.querySelectorAll('.sb-nav a').forEach(a => a.classList.toggle('active', a.dataset.page === name));
+    if (history.replaceState) history.replaceState(null, '', '#' + name);
+    window.scrollTo(0, 0);
+  }
+  showPage(location.hash === '#insight' ? 'insight' : 'dashboard');
 
   function openModal(title, bodyHtml) {
     document.getElementById('modal-title').textContent = title;
