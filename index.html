@@ -466,7 +466,7 @@
       <!-- donut + watchlist -->
       <div class="grid grid-2">
         <div class="card" id="region">
-          <div class="card-head"><h3>ตีกลับตามภูมิภาค</h3><span class="tag">3,188 ออเดอร์</span></div>
+          <div class="card-head"><h3>ตีกลับตามภูมิภาค</h3><span class="tag">คลิกดูจังหวัด →</span></div>
           <div class="donut-wrap">
             <svg width="180" height="180" viewBox="0 0 180 180" id="donut-svg"></svg>
           </div>
@@ -703,6 +703,38 @@
     ['ภาคตะวันออก',468,'var(--purple)'],['ภาคเหนือ',209,'var(--pink)'],['ภาคตะวันตก',171,'var(--teal)'],['ไม่ระบุ',3,'var(--muted)'],
   ];
 
+  const PROVINCES = {
+    'ภาคกลาง': [
+      ['กรุงเทพมหานคร',491],['สมุทรปราการ',147],['นนทบุรี',120],['ปทุมธานี',104],['นครปฐม',51],['สมุทรสาคร',46],
+      ['พระนครศรีอยุธยา',44],['นครสวรรค์',43],['สระบุรี',42],['สุพรรณบุรี',38],['พิษณุโลก',29],['ลพบุรี',20],
+      ['เพชรบูรณ์',18],['นครนายก',14],['กำแพงเพชร',13],['ชัยนาท',13],['สมุทรสงคราม',13],['สุโขทัย',12],
+      ['พิจิตร',9],['สิงห์บุรี',9],['อ่างทอง',4],['อุทัยธานี',3],
+    ],
+    'ภาคตะวันตก': [
+      ['ราชบุรี',52],['เพชรบุรี',36],['กาญจนบุรี',32],['ประจวบคีรีขันธ์',31],['ตาก',20],
+    ],
+    'ภาคตะวันออก': [
+      ['ชลบุรี',228],['ระยอง',87],['ฉะเชิงเทรา',55],['ปราจีนบุรี',33],['จันทบุรี',31],['สระแก้ว',22],['ตราด',12],
+    ],
+    'ภาคตะวันออกเฉียงเหนือ': [
+      ['นครราชสีมา',81],['ขอนแก่น',51],['อุดรธานี',42],['เลย',40],['อุบลราชธานี',39],['บุรีรัมย์',29],
+      ['หนองคาย',28],['ร้อยเอ็ด',26],['ศรีสะเกษ',26],['นครพนม',25],['กาฬสินธุ์',17],['ชัยภูมิ',17],
+      ['มหาสารคาม',17],['สกลนคร',16],['บึงกาฬ',14],['สุรินทร์',14],['มุกดาหาร',12],['ยโสธร',10],
+      ['อำนาจเจริญ',9],['หนองบัวลำภู',8],
+    ],
+    'ภาคเหนือ': [
+      ['เชียงใหม่',71],['เชียงราย',37],['พะเยา',23],['น่าน',19],['ลำปาง',19],['ลำพูน',13],
+      ['แพร่',10],['อุตรดิตถ์',9],['แม่ฮ่องสอน',8],
+    ],
+    'ภาคใต้': [
+      ['สงขลา',87],['นครศรีธรรมราช',83],['สุราษฎร์ธานี',73],['ภูเก็ต',67],['ชุมพร',40],['กระบี่',39],
+      ['ตรัง',35],['สตูล',25],['ปัตตานี',22],['พัทลุง',16],['พังงา',13],['ยะลา',12],['ระนอง',12],['นราธิวาส',9],
+    ],
+    'ไม่ระบุ': [
+      ['ข้อมูลที่อยู่ไม่สมบูรณ์/พิมพ์ผิด',3],
+    ],
+  };
+
   // [ป้ายที่แสดง, ความหมาย, รหัสระบบเดิม, จำนวน]
   const STATUSES = [
     ['ตีกลับอัตโนมัติ','พัสดุถูกคูเรียร์พักไว้จนครบกำหนดเวลา ไม่มีการติดต่อสำเร็จ ระบบตีกลับให้เอง','SYSTEM_AUTO_RETURN',3017],
@@ -739,7 +771,8 @@
       const frac = r0[1]/total;
       const len = frac*C;
       const seg = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${r0[2]}" stroke-width="${sw}"
-        stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"></circle>`;
+        stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"
+        style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')"><title>${r0[0]}: ${fmt(r0[1])} ออเดอร์ — คลิกดูจังหวัด</title></circle>`;
       offset += len;
       return seg;
     }).join('');
@@ -750,7 +783,7 @@
       <text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="Prompt" font-size="11" fill="var(--muted)">ออเดอร์ตีกลับ</text>
     `;
     document.getElementById('donut-legend').innerHTML = REGIONS.map(r0 => `
-      <div class="donut-row">
+      <div class="donut-row" style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')">
         <div class="dl"><span class="sw" style="background:${r0[2]}"></span>${r0[0]}</div>
         <div class="dv">${((r0[1]/total)*100).toFixed(1)}%</div>
       </div>`).join('');
@@ -925,6 +958,13 @@
     const rows = COURIERS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
     const body = `<p class="modal-note">FLASH EXPRESS รวมทุกเขต/ศูนย์ย่อยเป็นก้อนเดียว = 3,029 ออเดอร์ (95.0%) — ดูรายละเอียดเขตย่อยได้ในชีต Discuse คอลัมน์บริษัทขนส่ง</p>${tableHtml([{label:'บริษัทขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
     openModal('ตีกลับตามบริษัทขนส่ง — รายละเอียดทั้งหมด', body);
+  }
+  function showProvinceModal(region) {
+    const list = PROVINCES[region] || [];
+    const total = list.reduce((a,b) => a+b[1], 0);
+    const rows = list.map(p => `<tr><td class="strong">${p[0]}</td><td class="num">${fmt(p[1])}</td><td class="num">${((p[1]/total)*100).toFixed(1)}%</td></tr>`).join('');
+    const body = `<p class="modal-note">${region.toUpperCase()} — ${list.length} จังหวัด รวม ${fmt(total)} ออเดอร์</p>${tableHtml([{label:'จังหวัด'},{label:'จำนวนตีกลับ',num:true},{label:'สัดส่วนในภาค',num:true}], rows)}`;
+    openModal(`ตีกลับใน${region} — แยกตามจังหวัด`, body);
   }
 </script>
 
