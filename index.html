@@ -562,12 +562,12 @@
         </div>
       </div>
 
-      <!-- status / payment / courier -->
-      <div class="grid grid-3">
+      <!-- status / payment / courier / channel -->
+      <div class="grid grid-4">
         <div class="card">
           <div class="card-head"><h3>สถานะขนส่ง</h3></div>
           <div class="chart" id="chart-status"></div>
-          <div class="legend-line">ตัวแทน “สาเหตุ” ที่ใกล้เคียงที่สุดที่มี</div>
+          <div class="legend-line">ยังไม่ใช่ “สาเหตุ” ที่แท้จริง — ขนส่งไม่บันทึกจากผู้รับว่าปฏิเสธรับด้วยเหตุผลอะไร</div>
         </div>
         <div class="card">
           <div class="card-head"><h3>วิธีชำระเงิน</h3></div>
@@ -578,10 +578,16 @@
           <div class="card-head"><h3>บริษัทขนส่ง</h3></div>
           <div class="table-wrap"><table><tbody id="table-courier"></tbody></table></div>
         </div>
+        <div class="card">
+          <div class="card-head"><h3>ช่องทางขาย</h3></div>
+          <div class="chart" id="chart-channel"></div>
+          <div class="legend-line">FB สูงสุด — แต่เป็นช่องทางขายหลักอยู่แล้ว ยังไม่มียอดขายจริงต่อช่องทางมาเทียบเป็น %</div>
+        </div>
       </div>
 
       <footer>
-        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.
+        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.<br>
+        พนักงานขาย (Sales): ยังไม่มีข้อมูลนี้ผูกกับออเดอร์ในชุดข้อมูลปัจจุบัน อยู่ระหว่างเพิ่มเติม — จะนำมาคำนวณ "ตีกลับ + มูลค่าต่อพนักงานขาย" เมื่อได้ข้อมูลครบ
       </footer>
 
     </div>
@@ -698,9 +704,15 @@
     ['Shopee_1',0.7,40,5786],['UNIT 15 (CRM)',0.6,10,1633],
   ];
 
+  // [ภูมิภาค, จำนวนตีกลับ, สี, มูลค่ารวม]
   const REGIONS = [
-    ['ภาคกลาง',1283,'var(--orange)'],['ภาคใต้',533,'var(--blue)'],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)'],
-    ['ภาคตะวันออก',468,'var(--purple)'],['ภาคเหนือ',209,'var(--pink)'],['ภาคตะวันตก',171,'var(--teal)'],['ไม่ระบุ',3,'var(--muted)'],
+    ['ภาคกลาง',1283,'var(--orange)',699985.32],['ภาคใต้',533,'var(--blue)',269916.00],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)',276921.00],
+    ['ภาคตะวันออก',468,'var(--purple)',248153.49],['ภาคเหนือ',209,'var(--pink)',113660.00],['ภาคตะวันตก',171,'var(--teal)',92471.00],['ไม่ระบุ',3,'var(--muted)',3520.00],
+  ];
+
+  // [ช่องทางขาย (ฝ่ายที่ขาย), จำนวนตีกลับ]
+  const CHANNELS = [
+    ['FB',2714],['CRM',230],['Marketplace',170],['LineOA',74],
   ];
 
   const PROVINCES = {
@@ -782,10 +794,14 @@
       <text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="Prompt" font-weight="700" font-size="22" fill="var(--ink)">${fmt(total)}</text>
       <text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="Prompt" font-size="11" fill="var(--muted)">ออเดอร์ตีกลับ</text>
     `;
+    const totalValue = REGIONS.reduce((a,b)=>a+b[3],0);
     document.getElementById('donut-legend').innerHTML = REGIONS.map(r0 => `
-      <div class="donut-row" style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')">
+      <div class="donut-row" style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')" title="${r0[0]}: ${fmt(r0[1])} ออเดอร์ · ${money(r0[3])} (${((r0[3]/totalValue)*100).toFixed(1)}% ของมูลค่ารวม)">
         <div class="dl"><span class="sw" style="background:${r0[2]}"></span>${r0[0]}</div>
-        <div class="dv">${((r0[1]/total)*100).toFixed(1)}%</div>
+        <div style="text-align:right;">
+          <div class="dv">${((r0[1]/total)*100).toFixed(1)}%</div>
+          <div style="font-size:10.5px; color:var(--muted); font-family:var(--font-mono);">${money(r0[3])}</div>
+        </div>
       </div>`).join('');
   }
   renderDonut();
@@ -906,6 +922,7 @@
   renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--orange)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[3], tip:`${r[0]}: ${r[1]}`})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1]})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-channel', CHANNELS.map(r => ({label:r[0], value:r[1]})), 'var(--pink)', {total:TOTAL_RETURNS, compact:true});
 
   document.getElementById('table-courier').innerHTML = COURIERS.map(c => `
     <tr>
@@ -947,7 +964,7 @@
   }
   function showStatusModal() {
     const rows = STATUSES.map(r => `<tr><td class="strong">${r[0]}</td><td>${r[1]}</td><td class="num">${fmt(r[3])}</td><td class="num">${((r[3]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">ฟิลด์นี้คือสถานะขนส่งดิบ ตีความให้อ่านง่ายขึ้นแล้ว — ยังไม่ใช่ "สาเหตุ" ที่แท้จริงของการตีกลับ (ลูกค้าปฏิเสธรับ/ที่อยู่ผิด/เปลี่ยนใจ ฯลฯ ยังไม่มีคอลัมน์นี้ในข้อมูลต้นทาง)</p>${tableHtml([{label:'สถานะ'},{label:'ความหมาย'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
+    const body = `<p class="modal-note">ฟิลด์นี้คือสถานะขนส่งดิบ ตีความให้อ่านง่ายขึ้นแล้ว — ยังไม่ใช่ "สาเหตุ" ที่แท้จริงของการตีกลับ ขนส่งไม่ได้บันทึกจากผู้รับสินค้าว่าปฏิเสธรับด้วยเหตุผลอะไร (ที่อยู่ผิด/ติดต่อไม่ได้/เปลี่ยนใจ/สินค้าเสียหาย ฯลฯ) ระบบขนส่งจะตีเป็นสถานะ "ตีกลับอัตโนมัติ" ให้เองเมื่อพัสดุพ้นกำหนดเวลาโดยไม่มีการติดต่อสำเร็จ — ยังไม่มีคอลัมน์ระบุสาเหตุจริงในข้อมูลต้นทาง</p>${tableHtml([{label:'สถานะ'},{label:'ความหมาย'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
     openModal('สถานะขนส่ง — รายละเอียดทั้งหมด', body);
   }
   function showPaymentModal() {
