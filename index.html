@@ -410,9 +410,9 @@
       <div class="page-head" id="overview">
         <div>
           <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
-          <p class="desc">สรุปจากฐานข้อมูลตีกลับเต็มทั้งเดือน (3,188 ออเดอร์) เทียบกับยอดขายจริง 92,962 ออเดอร์</p>
+          <p class="desc">สรุปจากฐานข้อมูลตีกลับเต็มทั้งเดือน (3,188 ออเดอร์) เทียบกับยอดขายจริง 93,100 ออเดอร์</p>
         </div>
-        <div class="meta">31 วัน · 1–31 ก.ค. 2569<br>ครอบคลุมยอดขาย 99%+</div>
+        <div class="meta">31 วัน · 1–31 ก.ค. 2569<br>ยอดขายทุกช่องทาง 93,100 ออเดอร์</div>
       </div>
 
       <!-- top stat row -->
@@ -431,7 +431,7 @@
         <div class="card stat-card" onclick="showDailyModal()">
           <div class="stat-top">
             <div>
-              <div class="stat-value-row"><span class="stat-value">92,962</span></div>
+              <div class="stat-value-row"><span class="stat-value">93,100</span></div>
               <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
             </div>
             <div class="icon-badge" style="background:color-mix(in srgb, var(--blue) 20%, transparent); color:var(--blue);">
@@ -703,8 +703,14 @@
     ['ภาคตะวันออก',468,'var(--purple)'],['ภาคเหนือ',209,'var(--pink)'],['ภาคตะวันตก',171,'var(--teal)'],['ไม่ระบุ',3,'var(--muted)'],
   ];
 
+  // [ป้ายที่แสดง, ความหมาย, รหัสระบบเดิม, จำนวน]
   const STATUSES = [
-    ['SYSTEM_AUTO_RETURN',3017],['Return',80],['RETURNED',58],['deliver_failed',31],['RETURN_INITIATED',1],['PHONE',1],
+    ['ตีกลับอัตโนมัติ','พัสดุถูกคูเรียร์พักไว้จนครบกำหนดเวลา ไม่มีการติดต่อสำเร็จ ระบบตีกลับให้เอง','SYSTEM_AUTO_RETURN',3017],
+    ['คูเรียร์ส่งคืนคลัง','คูเรียร์นำพัสดุกลับเข้าคลังต้นทางโดยตรง','Return',80],
+    ['ยืนยันตีกลับแล้ว','ระบบขนส่งยืนยันสถานะตีกลับสมบูรณ์','RETURNED',58],
+    ['จัดส่งไม่สำเร็จ','พยายามส่งแล้วแต่ไม่สำเร็จ (เช่น ที่อยู่ผิด/ติดต่อไม่ได้)','deliver_failed',31],
+    ['เริ่มกระบวนการตีกลับ','อยู่ระหว่างเริ่มขั้นตอนตีกลับ ยังไม่จบ','RETURN_INITIATED',1],
+    ['แจ้งทางโทรศัพท์','บันทึกผ่านการโทรแจ้ง ไม่ผ่านระบบอัตโนมัติ','PHONE',1],
   ];
 
   const PAYMENTS = [
@@ -712,9 +718,9 @@
     ['Mbanking',1],['PAY_LATER',1],['PROMPTPAY',1],['PT2',1],['SPayLater',1],['ShopeePay Balance',1],['ShopeePay Linked Bank Account',1],
   ];
 
+  // เหลือเฉพาะบริษัทขนส่งจริง — รวมทุกเขต/ศูนย์ย่อยของ Flash Express เป็นก้อนเดียว
   const COURIERS = [
-    ['Flash Express TH_14',2665],['Flash Express TH_13',286],["J&T Express",80],['Flash Express TH_15',67],
-    ['SPX Express',54],['LEX TH',25],['Flash Express',11],['PT2',1],
+    ['Flash Express',3029],['J&T Express',80],['SPX Express',54],['LEX Express',25],['อื่นๆ/ไม่ระบุ',1],
   ];
 
   const DAILY = [
@@ -865,7 +871,7 @@
   renderLine('chart-daily', DAILY, 'var(--orange)');
   renderBars('chart-unit', UNIT_RETURNS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--blue)', {total:TOTAL_RETURNS});
   renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--orange)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[1]})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[3], tip:`${r[0]}: ${r[1]}`})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1]})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
 
   document.getElementById('table-courier').innerHTML = COURIERS.map(c => `
@@ -907,8 +913,8 @@
     openModal('แนวโน้มรายวัน — 31 วัน', body);
   }
   function showStatusModal() {
-    const rows = STATUSES.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">CLOSEST FIELD TO "REASON" AVAILABLE TODAY — NOT THE TRUE ROOT CAUSE</p>${tableHtml([{label:'สถานะขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
+    const rows = STATUSES.map(r => `<tr><td class="strong">${r[0]}</td><td>${r[1]}</td><td class="num">${fmt(r[3])}</td><td class="num">${((r[3]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
+    const body = `<p class="modal-note">ฟิลด์นี้คือสถานะขนส่งดิบ ตีความให้อ่านง่ายขึ้นแล้ว — ยังไม่ใช่ "สาเหตุ" ที่แท้จริงของการตีกลับ (ลูกค้าปฏิเสธรับ/ที่อยู่ผิด/เปลี่ยนใจ ฯลฯ ยังไม่มีคอลัมน์นี้ในข้อมูลต้นทาง)</p>${tableHtml([{label:'สถานะ'},{label:'ความหมาย'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
     openModal('สถานะขนส่ง — รายละเอียดทั้งหมด', body);
   }
   function showPaymentModal() {
@@ -917,7 +923,7 @@
   }
   function showCourierModal() {
     const rows = COURIERS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">FLASH EXPRESS (ALL ZONES) = 3,029 (95.0%)</p>${tableHtml([{label:'บริษัทขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
+    const body = `<p class="modal-note">FLASH EXPRESS รวมทุกเขต/ศูนย์ย่อยเป็นก้อนเดียว = 3,029 ออเดอร์ (95.0%) — ดูรายละเอียดเขตย่อยได้ในชีต Discuse คอลัมน์บริษัทขนส่ง</p>${tableHtml([{label:'บริษัทขนส่ง'},{label:'จำนวน',num:true},{label:'สัดส่วน',num:true}], rows)}`;
     openModal('ตีกลับตามบริษัทขนส่ง — รายละเอียดทั้งหมด', body);
   }
 </script>
