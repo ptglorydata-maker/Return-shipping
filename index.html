@@ -25,69 +25,69 @@
     carrying its provenance.
   */
   :root{
-    color-scheme: light;
-    --bg:        #f7f6f3;
-    --sidebar:   #ffffff;
-    --panel:     #ffffff;
-    --panel-2:   #f1efea;
-    --raised:    #e8e5de;
-    --ink:       #1c1b19;
-    --ink-2:     #57534c;
-    --muted:     #79746c;
-    --grid:      #e7e4dd;
-    --baseline:  #d9d5cb;
-    --border:    #e3e0d8;
+    color-scheme: dark;
+    --bg:        #0e0f14;
+    --sidebar:   #14161d;
+    --panel:     #191b23;
+    --panel-2:   #20222c;
+    --raised:    #282b37;
+    --ink:       #f2f2f5;
+    --ink-2:     #a2a5b3;
+    --muted:     #6d7182;
+    --grid:      #262834;
+    --baseline:  #323644;
+    --border:    #262a38;
 
-    --blue:      #35618f;
-    --green:     #1f7a4d;
-    --purple:    #6b4fb0;
-    --pink:      #a83f6c;
-    --orange:    #c2410c;
-    --teal:      #1f7d88;
-    --indigo:    #4a4a9c;
+    --blue:      #4d7cff;
+    --green:     #24d17e;
+    --purple:    #9b6bf2;
+    --pink:      #ef5da8;
+    --orange:    #ff9142;
+    --teal:      #24c1c7;
+    --indigo:    #7c6bf2;
 
-    --good:      #1f7a4d;
-    --warning:   #92600a;
-    --critical:  #b3271c;
+    --good:      #24d17e;
+    --warning:   #f2a93b;
+    --critical:  #f2515e;
 
-    --shadow-sm: 0 1px 2px rgba(28,27,25,.05);
-    --shadow-md: 0 6px 16px -4px rgba(28,27,25,.12), 0 2px 4px -2px rgba(28,27,25,.08);
-    --shadow-lg: 0 20px 44px -12px rgba(28,27,25,.22), 0 4px 10px -4px rgba(28,27,25,.1);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+    --shadow-md: 0 8px 20px -6px rgba(0,0,0,.5), 0 2px 6px -2px rgba(0,0,0,.4);
+    --shadow-lg: 0 24px 56px -16px rgba(0,0,0,.6), 0 6px 16px -6px rgba(0,0,0,.5);
 
     --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
     --font-body: "Prompt", "Noto Sans Thai", system-ui, sans-serif;
   }
 
-  @media (prefers-color-scheme: dark){
-    :root{
-      color-scheme: dark;
-      --bg:        #16130f;
-      --sidebar:   #1c1812;
-      --panel:     #211c15;
-      --panel-2:   #2a231a;
-      --raised:    #372e21;
-      --ink:       #f4efe6;
-      --ink-2:     #b9b0a0;
-      --muted:     #8b8172;
-      --grid:      #302921;
-      --baseline:  #3e3427;
-      --border:    #2b2418;
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      color-scheme: light;
+      --bg:        #f7f6f3;
+      --sidebar:   #ffffff;
+      --panel:     #ffffff;
+      --panel-2:   #f1efea;
+      --raised:    #e8e5de;
+      --ink:       #1c1b19;
+      --ink-2:     #57534c;
+      --muted:     #79746c;
+      --grid:      #e7e4dd;
+      --baseline:  #d9d5cb;
+      --border:    #e3e0d8;
 
-      --blue:      #6e97e0;
-      --green:     #2ed48e;
-      --purple:    #ab8af5;
-      --pink:      #f07eb4;
-      --orange:    #ff9142;
-      --teal:      #4fd2d8;
-      --indigo:    #8b8ef2;
+      --blue:      #2e5fd9;
+      --green:     #0f8f52;
+      --purple:    #7345d1;
+      --pink:      #c93e83;
+      --orange:    #d9540a;
+      --teal:      #0f8f95;
+      --indigo:    #5b45c9;
 
-      --good:      #2ed48e;
-      --warning:   #f2a93b;
-      --critical:  #f2515e;
+      --good:      #0f8f52;
+      --warning:   #92600a;
+      --critical:  #c23434;
 
-      --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
-      --shadow-md: 0 8px 20px -6px rgba(0,0,0,.5), 0 2px 6px -2px rgba(0,0,0,.4);
-      --shadow-lg: 0 24px 56px -16px rgba(0,0,0,.6), 0 6px 16px -6px rgba(0,0,0,.5);
+      --shadow-sm: 0 1px 2px rgba(28,27,25,.05);
+      --shadow-md: 0 6px 16px -4px rgba(28,27,25,.12), 0 2px 4px -2px rgba(28,27,25,.08);
+      --shadow-lg: 0 20px 44px -12px rgba(28,27,25,.22), 0 4px 10px -4px rgba(28,27,25,.1);
     }
   }
 
@@ -139,11 +139,12 @@
     padding:2px 8px;
   }
   .sb-brand .mark{
-    width:36px; height:36px; border-radius:9px;
-    background:var(--orange);
+    width:36px; height:36px; border-radius:10px;
+    background:linear-gradient(135deg, var(--orange), var(--pink));
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:13px; color:#fff;
+    font-family:var(--font-mono); font-weight:700; font-size:13px; color:#1a1112;
     flex:none;
+    box-shadow:0 4px 12px -2px color-mix(in srgb, var(--orange) 45%, transparent);
   }
   .sb-brand .name{ font-weight:600; font-size:14.5px; color:var(--ink); line-height:1.3; }
   .sb-brand .sub{ font-size:11.5px; color:var(--muted); }
@@ -240,11 +241,17 @@
   .stat-card{
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:12px;
     cursor:pointer;
     transition:box-shadow .16s ease, border-color .16s ease, transform .16s cubic-bezier(.2,.8,.2,1);
   }
   .stat-card:hover{ box-shadow:var(--shadow-md); border-color:var(--baseline); transform:translateY(-2px); }
+  .stat-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .icon-badge{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-badge svg{ width:16px; height:16px; }
   .stat-label{
     font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.03em;
     font-variant:small-caps; color:var(--muted);
@@ -418,10 +425,11 @@
     box-shadow:var(--shadow-lg);
   }
   .gate-mark{
-    width:42px; height:42px; border-radius:10px; margin:0 auto;
-    background:var(--orange);
+    width:42px; height:42px; border-radius:11px; margin:0 auto;
+    background:linear-gradient(135deg, var(--orange), var(--pink));
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:15px; color:#fff;
+    font-family:var(--font-mono); font-weight:700; font-size:15px; color:#1a1112;
+    box-shadow:0 4px 14px -2px color-mix(in srgb, var(--orange) 45%, transparent);
   }
   .gate-card h2{ font-size:17px; font-weight:600; margin:0; color:var(--ink); }
   .gate-card p{ font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.6; }
@@ -500,19 +508,31 @@
       <!-- top stat row -->
       <div class="grid grid-4">
         <div class="card stat-card" onclick="showRateModal()">
-          <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+          <div class="stat-top">
+            <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--critical) 20%, transparent); color:var(--critical);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">3.4%</span><span class="stat-delta flag">เฝ้าดู</span></div>
         </div>
         <div class="card stat-card" onclick="showDailyModal()">
-          <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
+          <div class="stat-top">
+            <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--blue) 20%, transparent); color:var(--blue);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">93,100</span><span class="stat-context">ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showUnitValueModal()">
-          <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
+          <div class="stat-top">
+            <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--green) 20%, transparent); color:var(--green);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">฿1.70M</span><span class="stat-delta plain">3,188 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showStatusModal()">
-          <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
+          <div class="stat-top">
+            <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--warning) 20%, transparent); color:var(--warning);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">94.6%</span><span class="stat-delta caveat">ยังไม่ใช่สาเหตุ</span></div>
         </div>
       </div>
@@ -539,15 +559,24 @@
       <!-- secondary stat row -->
       <div class="grid grid-3">
         <div class="card stat-card" onclick="showCourierModal()">
-          <div class="stat-label">เครือ Flash Express · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+          <div class="stat-top">
+            <div class="stat-label">เครือ Flash Express · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--purple) 20%, transparent); color:var(--purple);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="14" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">95.0%</span><span class="stat-delta plain">3,029 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showPaymentModal()">
-          <div class="stat-label">ชำระแบบ COD · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+          <div class="stat-top">
+            <div class="stat-label">ชำระแบบ COD · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--teal) 20%, transparent); color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">99.7%</span><span class="stat-delta plain">3,178 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showUnitCountModal()">
-          <div class="stat-label">ยูนิตตีกลับสูงสุด (ดิบ) · 13.7% ของยอดตีกลับทั้งหมด</div>
+          <div class="stat-top">
+            <div class="stat-label">ยูนิตตีกลับสูงสุด (ดิบ) · 13.7% ของยอดตีกลับทั้งหมด</div>
+            <div class="icon-badge" style="background:color-mix(in srgb, var(--indigo) 20%, transparent); color:var(--indigo);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          </div>
           <div class="stat-value-row"><span class="stat-value">UNIT15</span><span class="stat-delta plain">437 ออเดอร์</span></div>
         </div>
       </div>
