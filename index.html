@@ -7,33 +7,88 @@
 <title>สินค้าตีกลับ กรกฎาคม</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap">
 <style>
+  /*
+    THESIS: precision over decoration — every element earns its place through
+    data clarity, never flourish; refuses the neon-icon-badge SaaS-template
+    default. OWN-WORLD: warm-neutral ground, one accent (rust orange) spent
+    only on meaning, muted categorical hues for charts alone, tabular-mono
+    numerals, hairline borders over shadows. STORY: an executive reads four
+    numbers and one chart in ten seconds; ops drills any row without losing
+    place — confirmation and drill-down, not discovery. FIRST VIEWPORT: page
+    head above a 4-up KPI row, label small-caps over a large tabular value,
+    no icon badges, a delta chip only where it means something.
+    FORM: standing exit (canon) — craft bar Stripe Dashboard + Linear +
+    Notion — chosen over the rolled direction "postal receipt duplicate"
+    (seed 5c211a47, index 4) and pick "courier waybill label".
+    FINISH: unreviewed and undocumented is unfinished; this build ends with
+    the finish review, the verdict, DESIGN.md, and every shipping raster
+    carrying its provenance.
+  */
   :root{
-    color-scheme: dark;
-    --bg:        #0e0f14;
-    --sidebar:   #14161d;
-    --panel:     #191b23;
-    --panel-2:   #20222c;
-    --raised:    #282b37;
-    --ink:       #f2f2f5;
-    --ink-2:     #a2a5b3;
-    --muted:     #6d7182;
-    --grid:      #262834;
-    --baseline:  #323644;
-    --border:    #23252f;
+    color-scheme: light;
+    --bg:        #f7f6f3;
+    --sidebar:   #ffffff;
+    --panel:     #ffffff;
+    --panel-2:   #f1efea;
+    --raised:    #e8e5de;
+    --ink:       #1c1b19;
+    --ink-2:     #57534c;
+    --muted:     #79746c;
+    --grid:      #e7e4dd;
+    --baseline:  #d9d5cb;
+    --border:    #e3e0d8;
 
-    --blue:    #4d7cff;
-    --green:   #24d17e;
-    --purple:  #9b6bf2;
-    --pink:    #ef5da8;
-    --orange:  #ff9142;
-    --teal:    #24c1c7;
+    --blue:      #35618f;
+    --green:     #1f7a4d;
+    --purple:    #6b4fb0;
+    --pink:      #a83f6c;
+    --orange:    #c2410c;
+    --teal:      #1f7d88;
+    --indigo:    #4a4a9c;
 
-    --good:     #24d17e;
-    --warning:  #f2a93b;
-    --critical: #f2515e;
+    --good:      #1f7a4d;
+    --warning:   #92600a;
+    --critical:  #b3271c;
+
+    --shadow-sm: 0 1px 2px rgba(28,27,25,.05);
+    --shadow-md: 0 6px 16px -4px rgba(28,27,25,.12), 0 2px 4px -2px rgba(28,27,25,.08);
+    --shadow-lg: 0 20px 44px -12px rgba(28,27,25,.22), 0 4px 10px -4px rgba(28,27,25,.1);
 
     --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
     --font-body: "Prompt", "Noto Sans Thai", system-ui, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --bg:        #16130f;
+      --sidebar:   #1c1812;
+      --panel:     #211c15;
+      --panel-2:   #2a231a;
+      --raised:    #372e21;
+      --ink:       #f4efe6;
+      --ink-2:     #b9b0a0;
+      --muted:     #8b8172;
+      --grid:      #302921;
+      --baseline:  #3e3427;
+      --border:    #2b2418;
+
+      --blue:      #6e97e0;
+      --green:     #2ed48e;
+      --purple:    #ab8af5;
+      --pink:      #f07eb4;
+      --orange:    #ff9142;
+      --teal:      #4fd2d8;
+      --indigo:    #8b8ef2;
+
+      --good:      #2ed48e;
+      --warning:   #f2a93b;
+      --critical:  #f2515e;
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+      --shadow-md: 0 8px 20px -6px rgba(0,0,0,.5), 0 2px 6px -2px rgba(0,0,0,.4);
+      --shadow-lg: 0 24px 56px -16px rgba(0,0,0,.6), 0 6px 16px -6px rgba(0,0,0,.5);
+    }
   }
 
   *{ box-sizing:border-box; }
@@ -51,6 +106,13 @@
   }
   .mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
   a{ color:inherit; }
+  ::selection{ background:color-mix(in srgb, var(--orange) 30%, transparent); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--orange); outline-offset:2px; border-radius:4px; }
+  button, [role="button"]{ font: inherit; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:var(--baseline); border-radius:999px; border:2px solid var(--bg); }
+  * { scrollbar-color: var(--baseline) transparent; scrollbar-width: thin; }
 
   /* ---- shell ---- */
   .shell{ display:flex; min-height:100vh; }
@@ -77,10 +139,10 @@
     padding:2px 8px;
   }
   .sb-brand .mark{
-    width:38px; height:38px; border-radius:11px;
-    background:linear-gradient(135deg, var(--orange), var(--pink));
+    width:36px; height:36px; border-radius:9px;
+    background:var(--orange);
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:14px; color:#1a1112;
+    font-family:var(--font-mono); font-weight:700; font-size:13px; color:#fff;
     flex:none;
   }
   .sb-brand .name{ font-weight:600; font-size:14.5px; color:var(--ink); line-height:1.3; }
@@ -109,15 +171,15 @@
     transition:background .15s ease, color .15s ease;
   }
   .sb-nav a:hover{ background:var(--panel-2); color:var(--ink); }
-  .sb-nav a.active{ background:var(--panel-2); color:var(--ink); box-shadow:inset 2.5px 0 0 var(--orange); }
+  .sb-nav a.active{ background:var(--panel-2); color:var(--ink); }
+  .sb-nav a.active .ic{ background:var(--orange); color:#fff; }
   .sb-nav .ic{
-    width:26px; height:26px; border-radius:7px;
+    width:24px; height:24px; border-radius:6px;
     display:flex; align-items:center; justify-content:center;
     flex:none;
-    background:var(--panel-2);
-    color:var(--ink-2);
+    color:var(--muted);
+    transition:background .15s ease, color .15s ease;
   }
-  .sb-nav a.active .ic{ background:color-mix(in srgb, var(--orange) 22%, transparent); color:var(--orange); }
   .sb-nav svg{ width:14px; height:14px; }
 
   .sb-foot{
@@ -146,16 +208,16 @@
   .content-inner{
     max-width:1320px;
     margin:0 auto;
-    padding:26px 28px 90px;
+    padding:32px 32px 96px;
     display:flex;
     flex-direction:column;
-    gap:20px;
+    gap:24px;
   }
 
-  .page-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-  .page-head h1{ font-size:22px; font-weight:600; margin:0; color:var(--ink); }
-  .page-head .desc{ font-size:13px; color:var(--ink-2); margin-top:4px; max-width:64ch; }
-  .page-head .meta{ font-size:11.5px; color:var(--muted); font-family:var(--font-mono); text-align:right; line-height:1.7; }
+  .page-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-bottom:4px; border-bottom:1px solid var(--border); }
+  .page-head h1{ font-size:26px; font-weight:700; margin:0 0 6px; color:var(--ink); letter-spacing:-0.01em; }
+  .page-head .desc{ font-size:13.5px; color:var(--ink-2); margin-top:4px; max-width:64ch; line-height:1.55; }
+  .page-head .meta{ font-size:11.5px; color:var(--muted); font-family:var(--font-mono); text-align:right; line-height:1.7; padding-bottom:2px; }
 
   /* ---- grid ---- */
   .grid{ display:grid; gap:16px; }
@@ -169,89 +231,97 @@
   .card{
     background:var(--panel);
     border:1px solid var(--border);
-    border-radius:18px;
+    border-radius:12px;
     padding:20px;
+    box-shadow:var(--shadow-sm);
   }
 
-  /* ---- stat card (top row style) ---- */
+  /* ---- stat card ---- */
   .stat-card{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:8px;
     cursor:pointer;
-    transition:transform .16s cubic-bezier(.2,.8,.2,1), border-color .16s ease;
+    transition:box-shadow .16s ease, border-color .16s ease, transform .16s cubic-bezier(.2,.8,.2,1);
   }
-  .stat-card:hover{ transform:translateY(-3px); border-color:var(--baseline); }
-  .stat-top{ display:flex; align-items:flex-start; justify-content:space-between; }
-  .stat-value-row{ display:flex; align-items:baseline; gap:9px; }
-  .stat-value{ font-family:var(--font-body); font-weight:700; font-size:26px; color:var(--ink); }
+  .stat-card:hover{ box-shadow:var(--shadow-md); border-color:var(--baseline); transform:translateY(-2px); }
+  .stat-label{
+    font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.03em;
+    font-variant:small-caps; color:var(--muted);
+  }
+  .stat-value-row{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
+  .stat-value{ font-family:var(--font-mono); font-weight:700; font-size:28px; color:var(--ink); letter-spacing:-0.01em; }
+  .stat-context{ font-size:12.5px; color:var(--ink-2); }
   .stat-delta{
-    display:inline-flex; align-items:center; gap:3px;
-    font-family:var(--font-mono); font-size:12px; font-weight:600;
-    padding:2px 7px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:var(--font-mono); font-size:11.5px; font-weight:600;
+    padding:2px 7px; border-radius:5px;
   }
-  .stat-delta.up{ color:var(--critical); background:color-mix(in srgb, var(--critical) 18%, transparent); }
-  .stat-delta.down{ color:var(--good); background:color-mix(in srgb, var(--good) 18%, transparent); }
-  .stat-label{ font-size:12.5px; color:var(--ink-2); }
-  .icon-badge{
-    width:38px; height:38px; border-radius:12px;
-    display:flex; align-items:center; justify-content:center;
-    flex:none;
-  }
-  .icon-badge svg{ width:17px; height:17px; }
+  .stat-delta.flag{ color:var(--critical); background:color-mix(in srgb, var(--critical) 12%, var(--panel)); }
+  .stat-delta.caveat{ color:var(--warning); background:color-mix(in srgb, var(--warning) 12%, var(--panel)); }
+  .stat-delta.plain{ color:var(--ink-2); background:var(--panel-2); }
 
   /* ---- donut ---- */
   .donut-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 0 4px; }
-  .donut-center{ font-family:var(--font-body); }
+  .donut-center{ font-family:var(--font-mono); }
   .donut-center .n{ font-size:24px; font-weight:700; color:var(--ink); }
-  .donut-center .l{ font-size:11.5px; color:var(--muted); }
-  .donut-legend{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .donut-center .l{ font-size:11px; font-family:var(--font-body); color:var(--muted); }
+  .donut-legend{ display:flex; flex-direction:column; gap:2px; margin-top:14px; }
   .donut-row{
     display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:9px 0; border-bottom:1px solid var(--grid);
+    padding:8px 6px; border-radius:8px;
+    transition:background .12s ease;
   }
-  .donut-row:last-child{ border-bottom:none; }
+  .donut-row:hover{ background:var(--panel-2); }
   .donut-row .dl{ display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink-2); }
-  .donut-row .sw{ width:9px; height:9px; border-radius:3px; flex:none; }
+  .donut-row .sw{ width:8px; height:8px; border-radius:999px; flex:none; }
   .donut-row .dv{ font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink); }
 
-  /* ---- list card (project-list style) ---- */
+  /* ---- list card ---- */
   .list-row{
-    display:flex; align-items:center; gap:14px;
-    padding:13px 0; border-bottom:1px solid var(--grid);
+    display:flex; align-items:center; gap:12px;
+    padding:11px 6px; border-radius:8px;
     cursor:pointer;
+    transition:background .12s ease;
   }
-  .list-row:last-child{ border-bottom:none; }
+  .list-row:hover{ background:var(--panel-2); }
   .list-row:hover .lr-title{ color:var(--orange); }
-  .lr-icon{
-    width:38px; height:38px; border-radius:11px; flex:none;
+  .lr-rank{
+    width:22px; height:22px; border-radius:6px; flex:none;
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:12px; color:#fff;
+    font-family:var(--font-mono); font-weight:700; font-size:11px;
   }
   .lr-body{ flex:1; min-width:0; }
-  .lr-title{ font-size:13.5px; font-weight:600; color:var(--ink); transition:color .15s ease; }
+  .lr-title{ font-size:13.5px; font-weight:600; color:var(--ink); transition:color .15s ease; font-family:var(--font-mono); }
   .lr-sub{ font-size:12px; color:var(--muted); margin-top:2px; }
   .lr-meta{ text-align:right; flex:none; }
   .lr-meta .m1{ font-family:var(--font-mono); font-size:13.5px; font-weight:700; }
-  .lr-meta .m2{ font-size:11px; color:var(--muted); margin-top:2px; }
+  .lr-meta .m2{ font-size:11px; color:var(--muted); margin-top:2px; font-family:var(--font-mono); }
 
-  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px; }
-  .card-head h3{ font-size:14.5px; font-weight:600; margin:0; color:var(--ink); }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+  .card-head h3{ font-size:14px; font-weight:600; margin:0; color:var(--ink); }
   .card-head .tag{ font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
   .expand-btn{
-    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--orange);
-    background:none; border:1px solid var(--border); border-radius:7px; cursor:pointer;
-    padding:5px 10px; white-space:nowrap; transition:border-color .15s ease, background .15s ease;
+    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--ink-2);
+    background:var(--panel-2); border:1px solid var(--border); border-radius:7px; cursor:pointer;
+    padding:5px 10px; white-space:nowrap; transition:border-color .15s ease, color .15s ease;
   }
-  .expand-btn:hover{ border-color:var(--orange); background:color-mix(in srgb, var(--orange) 10%, transparent); }
+  .expand-btn:hover{ border-color:var(--orange); color:var(--orange); }
 
   /* ---- bar chart ---- */
   .chart{ display:flex; flex-direction:column; gap:2px; }
   .bar-row{ display:grid; grid-template-columns:150px 1fr 96px; align-items:center; gap:10px; padding:6px 0; }
-  .bar-row.compact{ grid-template-columns:130px 1fr 78px; }
   .bar-row .rowlabel{ font-size:12.5px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-row.compact{
+    grid-template-columns:1fr auto;
+    grid-template-areas:"label value" "track track";
+    row-gap:5px; column-gap:10px; padding:7px 0;
+  }
+  .bar-row.compact .rowlabel{ grid-area:label; }
+  .bar-row.compact .rowvalue{ grid-area:value; }
+  .bar-row.compact .bar-track{ grid-area:track; height:6px; }
   .bar-track{ position:relative; height:12px; background:var(--panel-2); border-radius:4px; overflow:visible; }
-  .bar-fill{ position:relative; height:100%; border-radius:4px; min-width:3px; width:0; transition:width .8s cubic-bezier(.16,.84,.44,1); }
+  .bar-fill{ position:relative; height:100%; border-radius:4px; min-width:3px; transform:scaleX(0); transform-origin:left center; transition:transform .8s cubic-bezier(.16,.84,.44,1); }
   .bar-fill[data-tooltip]:hover::after{
     content:attr(data-tooltip); position:absolute; left:0; bottom:calc(100% + 6px);
     background:var(--raised); border:1px solid var(--baseline); color:var(--ink);
@@ -267,11 +337,11 @@
   .line-chart svg{ width:100%; height:auto; display:block; overflow:visible; }
   .line-chart .gridline{ stroke:var(--grid); stroke-width:1; }
   .line-chart .baseline{ stroke:var(--baseline); stroke-width:1; }
-  .line-chart .area{ fill:var(--orange); opacity:.12; }
-  .line-chart .line{ fill:none; stroke:var(--orange); stroke-width:2.25; stroke-linejoin:round; stroke-linecap:round; }
-  .line-chart .dot{ fill:var(--panel); stroke:var(--orange); stroke-width:2; cursor:pointer; }
-  .line-chart .dot.peak{ fill:var(--orange); }
+  .line-chart .area{ opacity:.12; }
+  .line-chart .line{ fill:none; stroke-width:2.25; stroke-linejoin:round; stroke-linecap:round; }
+  .line-chart .dot{ fill:var(--panel); stroke-width:2; cursor:pointer; }
   .line-chart .axislabel{ fill:var(--muted); font-size:10px; font-family:var(--font-mono); }
+  .line-chart .peaklabel{ font-size:11px; font-weight:700; font-family:var(--font-mono); }
 
   /* ---- table ---- */
   table{ width:100%; border-collapse:collapse; font-size:13px; }
@@ -279,11 +349,20 @@
     text-align:left; font-family:var(--font-mono); font-weight:600; font-size:10.5px; color:var(--muted);
     text-transform:uppercase; letter-spacing:.04em; padding:8px 10px; border-bottom:1px solid var(--baseline);
     position:sticky; top:0; background:var(--panel);
+    cursor:pointer; user-select:none; transition:color .12s ease;
   }
+  thead th:hover{ color:var(--ink); }
+  thead th.sort-asc, thead th.sort-desc{ color:var(--orange); }
+  thead th.sort-asc::after, thead th.sort-desc::after{
+    content:""; display:inline-block; margin-left:5px; width:0; height:0;
+    border-left:3px solid transparent; border-right:3px solid transparent;
+  }
+  thead th.sort-asc::after{ border-bottom:4px solid var(--orange); }
+  thead th.sort-desc::after{ border-top:4px solid var(--orange); }
   tbody td{ padding:8px 10px; border-bottom:1px solid var(--grid); color:var(--ink-2); font-size:12.5px; }
   tbody tr:last-child td{ border-bottom:none; }
   tbody tr:hover td{ background:var(--panel-2); }
-  td.num, th.num{ text-align:right; font-family:var(--font-mono); }
+  td.num, th.num{ text-align:right; font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
   td.strong{ color:var(--ink); font-weight:600; }
   .table-wrap{ overflow-x:auto; }
   .table-wrap.scroll-y{ max-height:440px; overflow-y:auto; }
@@ -295,23 +374,25 @@
 
   /* ---- modal ---- */
   dialog#modal{
-    border:1px solid var(--baseline); border-radius:16px; padding:0;
+    border:1px solid var(--border); border-radius:14px; padding:0;
     width:min(780px, 92vw); max-height:82vh; background:var(--panel); color:var(--ink);
+    box-shadow:var(--shadow-lg);
   }
-  dialog#modal::backdrop{ background:rgba(0,0,0,0.65); backdrop-filter:blur(2px); }
+  dialog#modal::backdrop{ background:rgba(20,18,14,0.55); backdrop-filter:blur(2px); }
   dialog#modal[open]{ animation: modal-in .18s cubic-bezier(.2,.8,.2,1); }
   @keyframes modal-in{ from{ opacity:0; transform:translateY(8px) scale(.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
   .modal-head{
     display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding:16px 20px; border-bottom:1px solid var(--border);
-    position:sticky; top:0; background:var(--panel); border-radius:16px 16px 0 0;
+    position:sticky; top:0; background:var(--panel); border-radius:14px 14px 0 0;
   }
   .modal-head h3{ font-size:15px; font-weight:600; margin:0; color:var(--ink); }
   .modal-close{
     background:var(--panel-2); border:1px solid var(--border); color:var(--ink-2);
-    width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:13px;
+    width:28px; height:28px; border-radius:8px; cursor:pointer; padding:0;
     display:flex; align-items:center; justify-content:center; transition:all .15s ease;
   }
+  .modal-close svg{ width:14px; height:14px; }
   .modal-close:hover{ border-color:var(--critical); color:var(--critical); }
   .modal-body{ padding:14px 20px 20px; overflow-y:auto; max-height:calc(82vh - 60px); }
   .modal-note{
@@ -330,16 +411,17 @@
     width:min(380px, 100%);
     background:var(--panel);
     border:1px solid var(--border);
-    border-radius:18px;
+    border-radius:14px;
     padding:32px 28px;
     display:flex; flex-direction:column; gap:16px;
     text-align:center;
+    box-shadow:var(--shadow-lg);
   }
   .gate-mark{
-    width:44px; height:44px; border-radius:13px; margin:0 auto;
-    background:linear-gradient(135deg, var(--orange), var(--pink));
+    width:42px; height:42px; border-radius:10px; margin:0 auto;
+    background:var(--orange);
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:16px; color:#1a1112;
+    font-family:var(--font-mono); font-weight:700; font-size:15px; color:#fff;
   }
   .gate-card h2{ font-size:17px; font-weight:600; margin:0; color:var(--ink); }
   .gate-card p{ font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.6; }
@@ -351,8 +433,8 @@
   }
   .gate-card input:focus{ border-color:var(--orange); }
   .gate-card button{
-    width:100%; padding:11px 14px; border-radius:10px; border:none; cursor:pointer;
-    background:var(--orange); color:#1a1112; font-family:var(--font-body); font-weight:600; font-size:14px;
+    width:100%; padding:11px 14px; border-radius:9px; border:none; cursor:pointer;
+    background:var(--orange); color:#fff; font-family:var(--font-body); font-weight:600; font-size:14px;
     transition:opacity .15s ease;
   }
   .gate-card button:hover{ opacity:.9; }
@@ -418,48 +500,20 @@
       <!-- top stat row -->
       <div class="grid grid-4">
         <div class="card stat-card" onclick="showRateModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-value-row"><span class="stat-value">3.4%</span><span class="stat-delta up">↗ AVG</span></div>
-              <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--orange) 20%, transparent); color:var(--orange);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+          <div class="stat-value-row"><span class="stat-value">3.4%</span><span class="stat-delta flag">เฝ้าดู</span></div>
         </div>
         <div class="card stat-card" onclick="showDailyModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-value-row"><span class="stat-value">93,100</span></div>
-              <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--blue) 20%, transparent); color:var(--blue);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
+          <div class="stat-value-row"><span class="stat-value">93,100</span><span class="stat-context">ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showUnitValueModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-value-row"><span class="stat-value">฿1.70M</span><span class="stat-delta up">3,188</span></div>
-              <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--green) 20%, transparent); color:var(--green);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
+          <div class="stat-value-row"><span class="stat-value">฿1.70M</span><span class="stat-delta plain">3,188 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showStatusModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-value-row"><span class="stat-value">94.6%</span><span class="stat-delta up">↗</span></div>
-              <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--critical) 20%, transparent); color:var(--critical);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
+          <div class="stat-value-row"><span class="stat-value">94.6%</span><span class="stat-delta caveat">ยังไม่ใช่สาเหตุ</span></div>
         </div>
       </div>
 
@@ -485,40 +539,16 @@
       <!-- secondary stat row -->
       <div class="grid grid-3">
         <div class="card stat-card" onclick="showCourierModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-label" style="margin-bottom:8px;">เครือ Flash Express</div>
-              <div class="stat-value-row"><span class="stat-value">95.0%</span><span class="stat-delta up">3,029</span></div>
-              <div class="stat-label" style="margin-top:6px;">ของออเดอร์ตีกลับทั้งหมด</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--purple) 20%, transparent); color:var(--purple);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="14" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">เครือ Flash Express · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+          <div class="stat-value-row"><span class="stat-value">95.0%</span><span class="stat-delta plain">3,029 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showPaymentModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-label" style="margin-bottom:8px;">ชำระแบบ COD</div>
-              <div class="stat-value-row"><span class="stat-value">99.7%</span><span class="stat-delta up">3,178</span></div>
-              <div class="stat-label" style="margin-top:6px;">ของออเดอร์ตีกลับทั้งหมด</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--teal) 20%, transparent); color:var(--teal);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">ชำระแบบ COD · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
+          <div class="stat-value-row"><span class="stat-value">99.7%</span><span class="stat-delta plain">3,178 ออเดอร์</span></div>
         </div>
         <div class="card stat-card" onclick="showUnitCountModal()">
-          <div class="stat-top">
-            <div>
-              <div class="stat-label" style="margin-bottom:8px;">ยูนิตตีกลับสูงสุด (ดิบ)</div>
-              <div class="stat-value-row"><span class="stat-value">UNIT15</span><span class="stat-delta down">437</span></div>
-              <div class="stat-label" style="margin-top:6px;">13.7% ของยอดตีกลับทั้งหมด</div>
-            </div>
-            <div class="icon-badge" style="background:color-mix(in srgb, var(--pink) 20%, transparent); color:var(--pink);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-            </div>
-          </div>
+          <div class="stat-label">ยูนิตตีกลับสูงสุด (ดิบ) · 13.7% ของยอดตีกลับทั้งหมด</div>
+          <div class="stat-value-row"><span class="stat-value">UNIT15</span><span class="stat-delta plain">437 ออเดอร์</span></div>
         </div>
       </div>
 
@@ -597,7 +627,7 @@
 <dialog id="modal">
   <div class="modal-head">
     <h3 id="modal-title"></h3>
-    <button class="modal-close" onclick="document.getElementById('modal').close()" aria-label="ปิด">✕</button>
+    <button class="modal-close" onclick="document.getElementById('modal').close()" aria-label="ปิด"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="modal-body" id="modal-body"></div>
 </dialog>
@@ -650,9 +680,47 @@
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-body').innerHTML = bodyHtml;
     document.getElementById('modal').showModal();
+    enableSort(document.getElementById('modal-body'));
   }
   function tableHtml(headers, rows) {
     return `<div class="table-wrap scroll-y"><table><thead><tr>${headers.map(h=>`<th${h.num?' class="num"':''}>${h.label}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  /* click or Enter/Space a <th> to sort its table by that column; numeric-aware, toggles asc/desc */
+  function enableSort(root) {
+    root.querySelectorAll('table').forEach(table => {
+      const ths = [...table.querySelectorAll('thead th')];
+      ths.forEach((th, colIndex) => {
+        th.tabIndex = 0;
+        th.setAttribute('role', 'columnheader button');
+        th.setAttribute('aria-sort', 'none');
+        const doSort = () => {
+          const tbody = table.querySelector('tbody');
+          const rows = [...tbody.querySelectorAll('tr')];
+          const isNum = th.classList.contains('num');
+          const dir = th.dataset.dir === 'asc' ? 'desc' : 'asc';
+          ths.forEach(h => { delete h.dataset.dir; h.classList.remove('sort-asc', 'sort-desc'); h.setAttribute('aria-sort', 'none'); });
+          th.dataset.dir = dir;
+          th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+          th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
+          rows.sort((a, b) => {
+            const av = a.children[colIndex].textContent.trim();
+            const bv = b.children[colIndex].textContent.trim();
+            if (isNum) {
+              const an = parseFloat(av.replace(/[^0-9.-]/g, '')) || 0;
+              const bn = parseFloat(bv.replace(/[^0-9.-]/g, '')) || 0;
+              return dir === 'asc' ? an - bn : bn - an;
+            }
+            return dir === 'asc' ? av.localeCompare(bv, 'th') : bv.localeCompare(av, 'th');
+          });
+          rows.forEach(r => tbody.appendChild(r));
+        };
+        th.addEventListener('click', doSort);
+        th.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doSort(); }
+        });
+      });
+    });
   }
 
   /* ---------------- data ---------------- */
@@ -706,7 +774,7 @@
 
   // [ภูมิภาค, จำนวนตีกลับ, สี, มูลค่ารวม]
   const REGIONS = [
-    ['ภาคกลาง',1283,'var(--orange)',699985.32],['ภาคใต้',533,'var(--blue)',269916.00],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)',276921.00],
+    ['ภาคกลาง',1283,'var(--indigo)',699985.32],['ภาคใต้',533,'var(--blue)',269916.00],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)',276921.00],
     ['ภาคตะวันออก',468,'var(--purple)',248153.49],['ภาคเหนือ',209,'var(--pink)',113660.00],['ภาคตะวันตก',171,'var(--teal)',92471.00],['ไม่ระบุ',3,'var(--muted)',3520.00],
   ];
 
@@ -810,20 +878,23 @@
 
   /* ---------------- watchlist ---------------- */
   function renderWatchlist() {
+    const avg = 3.4;
     const top = RATES.slice(0,5);
-    const colors = ['var(--critical)','var(--warning)','var(--orange)','var(--purple)','var(--blue)'];
-    document.getElementById('watchlist').innerHTML = top.map((r,i) => `
+    document.getElementById('watchlist').innerHTML = top.map((r,i) => {
+      const c = r[1] >= avg*2 ? 'var(--critical)' : r[1] >= avg ? 'var(--warning)' : 'var(--ink-2)';
+      return `
       <div class="list-row" onclick="showRateModal()">
-        <div class="lr-icon" style="background:${colors[i]};">${r[0].replace(/[^A-Z0-9]/g,'').slice(0,2) || '??'}</div>
+        <div class="lr-rank" style="background:color-mix(in srgb, ${c} 14%, var(--panel)); color:${c};">${i+1}</div>
         <div class="lr-body">
           <div class="lr-title">${r[0]}</div>
           <div class="lr-sub">${r[2]} ตีกลับ จาก ${fmt(r[3])} ออเดอร์</div>
         </div>
         <div class="lr-meta">
-          <div class="m1" style="color:${colors[i]}">${fmt1(r[1])}%</div>
-          <div class="m2">×${(r[1]/3.4).toFixed(1)} เฉลี่ย</div>
+          <div class="m1" style="color:${c}">${fmt1(r[1])}%</div>
+          <div class="m2">×${(r[1]/avg).toFixed(1)} เฉลี่ย</div>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
   renderWatchlist();
 
@@ -841,13 +912,13 @@
         <div class="bar-row${compact}">
           <div class="rowlabel" title="${d.label}">${d.label}</div>
           <div class="bar-track">
-            <div class="bar-fill" data-w="${(d.value/max)*100}" style="background:${color};" data-tooltip="${tip}"></div>
+            <div class="bar-fill" style="background:${color}; width:${(d.value/max)*100}%;" data-tooltip="${tip}"></div>
           </div>
           <div class="rowvalue">${fmt(d.value)} <small>${share}%</small></div>
         </div>`;
     }).join('');
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+      el.querySelectorAll('.bar-fill').forEach(b => b.style.transform = 'scaleX(1)');
     }));
   }
 
@@ -862,14 +933,14 @@
         <div class="bar-row">
           <div class="rowlabel" title="${d.label}">${d.label}</div>
           <div class="bar-track">
-            <div class="bar-fill" data-w="${(d.rate/max)*100}" style="background:${color};" data-tooltip="${tip}"></div>
+            <div class="bar-fill" style="background:${color}; width:${(d.rate/max)*100}%;" data-tooltip="${tip}"></div>
             <div style="position:absolute; left:${avgPct}%; top:-3px; bottom:-3px; width:1px; border-left:2px dashed var(--muted);"></div>
           </div>
           <div class="rowvalue">${fmt1(d.rate)}%</div>
         </div>`;
     }).join('');
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+      el.querySelectorAll('.bar-fill').forEach(b => b.style.transform = 'scaleX(1)');
     }));
   }
 
@@ -899,9 +970,10 @@
       const isPeak = d.value === max;
       const showLabel = (i % 10 === 0) || i === data.length - 1;
       return `
-        <circle class="dot${isPeak ? ' peak' : ''}" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${isPeak ? 3.5 : 2.5}">
+        <circle class="dot${isPeak ? ' peak' : ''}" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${isPeak ? 3.5 : 2.5}" style="${isPeak ? `fill:${color};` : `stroke:${color};`}">
           <title>วันที่ ${d.label} ก.ค.: ${fmt(d.value)} ออเดอร์</title>
         </circle>
+        ${isPeak ? `<text class="peaklabel" x="${px.toFixed(1)}" y="${(py - 9).toFixed(1)}" text-anchor="middle" style="fill:${color};">${fmt(d.value)}</text>` : ''}
         ${showLabel ? `<text class="axislabel" x="${px.toFixed(1)}" y="${H - 4}" text-anchor="middle">${d.label}</text>` : ''}
       `;
     }).join('');
@@ -910,8 +982,8 @@
       <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
         ${gridLines}
         <line class="baseline" x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}"></line>
-        <path class="area" d="${areaPath}"></path>
-        <path class="line" d="${linePath}"></path>
+        <path class="area" d="${areaPath}" style="fill:${color};"></path>
+        <path class="line" d="${linePath}" style="stroke:${color};"></path>
         ${dots}
       </svg>`;
   }
@@ -919,9 +991,9 @@
   /* ---------------- initial render ---------------- */
 
   renderRateBars('chart-rate', RATES.slice(0,10).map(r => ({label:r[0], rate:r[1], returns:r[2], total:r[3]})), 3.4);
-  renderLine('chart-daily', DAILY, 'var(--orange)');
+  renderLine('chart-daily', DAILY, 'var(--blue)');
   renderBars('chart-unit', UNIT_RETURNS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--blue)', {total:TOTAL_RETURNS});
-  renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--orange)', {total:TOTAL_RETURNS, compact:true});
+  renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--indigo)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[3], tip:`${r[0]}: ${r[1]} · ${fmt(r[3])} ออเดอร์ · ${money(r[4])}`})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1], tip:`${r[0]}: ${fmt(r[1])} ออเดอร์ · ${money(r[2])}`})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
   renderBars('chart-channel', CHANNELS.map(r => ({label:r[0], value:r[1], tip:`${r[0]}: ${fmt(r[1])} ออเดอร์ · ${money(r[2])}`})), 'var(--pink)', {total:TOTAL_RETURNS, compact:true});
@@ -933,13 +1005,14 @@
       <td class="num">${money(c[2])}</td>
       <td class="num">${((c[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td>
     </tr>`).join('');
+  enableSort(document.getElementById('table-courier').closest('.card'));
 
   /* ---------------- modals (full data) ---------------- */
 
   function showRateModal() {
     const rows = RATES.map(r => `
       <tr><td class="strong">${r[0]}</td><td class="num">${fmt1(r[1])}%</td><td class="num">${fmt(r[2])}</td><td class="num">${fmt(r[3])}</td></tr>`).join('');
-    const body = `<p class="modal-note">UNITS WITH ≥300 ORDERS/MONTH ONLY · SORTED BY RATE DESC · COMPANY AVG = 3.4%</p>
+    const body = `<p class="modal-note">UNITS WITH ≥300 ORDERS/MONTH ONLY · COMPANY AVG = 3.4% · CLICK A COLUMN HEADER TO SORT</p>
       ${tableHtml([{label:'ยูนิต'},{label:'อัตราตีกลับ',num:true},{label:'ตีกลับ',num:true},{label:'ยอดขาย ก.ค.',num:true}], rows)}`;
     openModal('อัตราตีกลับ (%) ต่อยูนิต — 34 ยูนิต', body);
   }
@@ -951,7 +1024,7 @@
   function showUnitValueModal() {
     const sorted = [...UNIT_RETURNS].sort((a,b) => b[2]-a[2]);
     const rows = sorted.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${money(r[2])}</td><td class="num">${fmt(r[1])}</td></tr>`).join('');
-    const body = `<p class="modal-note">SORTED BY VALUE DESC · TOTAL ฿1,704,627</p>${tableHtml([{label:'ยูนิต'},{label:'มูลค่ารวม',num:true},{label:'จำนวนออเดอร์',num:true}], rows)}`;
+    const body = `<p class="modal-note">TOTAL ฿1,704,627 · CLICK A COLUMN HEADER TO SORT</p>${tableHtml([{label:'ยูนิต'},{label:'มูลค่ารวม',num:true},{label:'จำนวนออเดอร์',num:true}], rows)}`;
     openModal('มูลค่าสินค้าตีกลับ — แยกตามยูนิต', body);
   }
   function showProductModal() {
