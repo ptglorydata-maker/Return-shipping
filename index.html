@@ -5,568 +5,407 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>สินค้าตีกลับ กรกฎาคม</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap">
 <style>
   /*
-    THESIS: precision over decoration — every element earns its place through
-    data clarity, never flourish; refuses the neon-icon-badge SaaS-template
-    default. OWN-WORLD: warm-neutral ground, one accent (rust orange) spent
-    only on meaning, muted categorical hues for charts alone, tabular-mono
-    numerals, hairline borders over shadows. STORY: an executive reads four
-    numbers and one chart in ten seconds; ops drills any row without losing
-    place — confirmation and drill-down, not discovery. FIRST VIEWPORT: page
-    head above a 4-up KPI row, label small-caps over a large tabular value,
-    no icon badges, a delta chip only where it means something.
-    FORM: standing exit (canon) — craft bar Stripe Dashboard + Linear +
-    Notion — chosen over the rolled direction "postal receipt duplicate"
-    (seed 5c211a47, index 4) and pick "courier waybill label".
-    FINISH: unreviewed and undocumented is unfinished; this build ends with
-    the finish review, the verdict, DESIGN.md, and every shipping raster
-    carrying its provenance.
+    REDESIGN NOTE: full UX/UI rebuild (ก.ย. 69) — โทนสดใสทันสมัยมีสีสัน, โครงสร้างนำทางใหม่ทั้งหมด.
+    IA เดิมเป็นหน้าเดียวยาวมาก + คลิกเปิด modal ดูรายละเอียด — เปลี่ยนเป็น 3 แถบหลัก:
+      1) ภาพรวม   — สแกน 10 วินาทีรู้สถานการณ์ (KPI + สัญญาณเตือน + แนวโน้ม + watchlist)
+      2) เจาะลึกข้อมูล — เลือกมิติ (ยูนิต/สินค้า/ภูมิภาค/สถานะ/การชำระเงิน/คูเรียร์/ช่องทาง) ดูกราฟ+ตารางเต็มในหน้าเดียว
+         ไม่ต้องเปิด modal แยกอีกต่อไป — คลิกจากภาพรวมเพื่อกระโดดมาที่มิตินั้นได้เลย
+      3) Insight  — วิเคราะห์สรุปพร้อมนำเสนอผู้บริหาร (เหมือนเดิม แค่รีสกิน)
+    สีที่ใช้ "เข้ารหัสข้อมูล" ในกราฟ (--c-*) ยังคงชุดเดิมที่ผ่านการตรวจสอบ colorblind-safe แล้ว ไม่แตะ —
+    ส่วนที่สดใสขึ้นคือ "โครม" ของหน้า (nav/hero/badge) ผ่านไล่สีม่วง→ฟ้า (--brand-1/--brand-2) เท่านั้น
   */
   :root{
     color-scheme: light;
-    --bg:        #f7f6f3;
-    --sidebar:   #ffffff;
-    --panel:     #ffffff;
-    --panel-2:   #f1efea;
-    --raised:    #e8e5de;
-    --ink:       #1c1b19;
-    --ink-2:     #57534c;
-    --muted:     #79746c;
-    --grid:      #e7e4dd;
-    --baseline:  #d9d5cb;
-    --border:    #e3e0d8;
+    --page:      #f5f3ff;
+    --surface:   #ffffff;
+    --surface-2: #f1edfe;
+    --surface-3: #e8e1fc;
+    --ink:       #1c1533;
+    --ink-2:     #5c5474;
+    --muted:     #8c85a3;
+    --grid:      #ece7fb;
+    --baseline:  #d9d0f5;
+    --border:    rgba(40,20,90,.09);
 
-    --blue:      #35618f;
-    --green:     #1f7a4d;
-    --purple:    #6b4fb0;
-    --pink:      #a83f6c;
-    --orange:    #c2410c;
-    --teal:      #1f7d88;
-    --indigo:    #4a4a9c;
+    --c-blue:    #2a78d6;
+    --c-orange:  #eb6834;
+    --c-aqua:    #1baf7a;
+    --c-yellow:  #eda100;
+    --c-magenta: #e87ba4;
+    --c-violet:  #4a3aa7;
+    --c-green:   #008300;
+    --c-red:     #e34948;
 
-    --good:      #1f7a4d;
-    --warning:   #92600a;
-    --critical:  #b3271c;
+    --good:      #0ca30c;
+    --warning:   #b3760a;
+    --serious:   #c5602f;
+    --critical:  #c5342f;
+    --warn-bg:   #fdf0dc;
+    --crit-bg:   #fbe6e5;
 
-    --shadow-sm: 0 1px 2px rgba(28,27,25,.05);
-    --shadow-md: 0 6px 16px -4px rgba(28,27,25,.12), 0 2px 4px -2px rgba(28,27,25,.08);
-    --shadow-lg: 0 20px 44px -12px rgba(28,27,25,.22), 0 4px 10px -4px rgba(28,27,25,.1);
+    --brand-1:   #7c3aed;
+    --brand-2:   #06b6d4;
+    --brand-soft:#efe9fe;
 
-    /* decorative accent gradient — chrome/nav only, never used to encode chart data */
-    --grad-a:    #6d28d9;
-    --grad-b:    #06b6d4;
+    --shadow-sm: 0 1px 2px rgba(40,20,90,.06);
+    --shadow-md: 0 10px 24px -10px rgba(40,20,90,.22), 0 2px 6px -2px rgba(40,20,90,.1);
+    --shadow-lg: 0 24px 48px -18px rgba(40,20,90,.32), 0 6px 16px -6px rgba(40,20,90,.16);
 
-    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-    --font-body: "Prompt", "Noto Sans Thai", system-ui, sans-serif;
+    --font-display: "Kanit", "Noto Sans Thai", system-ui, sans-serif;
+    --font-body:    "Prompt", "Noto Sans Thai", system-ui, sans-serif;
+    --font-mono:    "Prompt", ui-monospace, "SFMono-Regular", monospace;
   }
-
   @media (prefers-color-scheme: dark){
-    :root{
+    :root:not([data-theme="light"]){
       color-scheme: dark;
-      --bg:        #16130f;
-      --sidebar:   #1c1812;
-      --panel:     #211c15;
-      --panel-2:   #2a231a;
-      --raised:    #372e21;
-      --ink:       #f4efe6;
-      --ink-2:     #b9b0a0;
-      --muted:     #8b8172;
-      --grid:      #302921;
-      --baseline:  #3e3427;
-      --border:    #2b2418;
+      --page:      #100b22;
+      --surface:   #1a1433;
+      --surface-2: #211a3d;
+      --surface-3: #2a2149;
+      --ink:       #f5f2ff;
+      --ink-2:     #c8c1e4;
+      --muted:     #948dbb;
+      --grid:      #2b234a;
+      --baseline:  #3b2f5e;
+      --border:    rgba(255,255,255,.1);
 
-      --blue:      #6e97e0;
-      --green:     #2ed48e;
-      --purple:    #ab8af5;
-      --pink:      #f07eb4;
-      --orange:    #ff9142;
-      --teal:      #4fd2d8;
-      --indigo:    #8b8ef2;
+      --c-blue:    #3987e5;
+      --c-orange:  #d95926;
+      --c-aqua:    #199e70;
+      --c-yellow:  #c98500;
+      --c-magenta: #d55181;
+      --c-violet:  #9085e9;
+      --c-green:   #2ed48e;
+      --c-red:     #e66767;
 
       --good:      #2ed48e;
       --warning:   #f2a93b;
+      --serious:   #ec835a;
       --critical:  #f2515e;
+      --warn-bg:   #2b2412;
+      --crit-bg:   #2c1a19;
 
-      --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
-      --shadow-md: 0 8px 20px -6px rgba(0,0,0,.5), 0 2px 6px -2px rgba(0,0,0,.4);
-      --shadow-lg: 0 24px 56px -16px rgba(0,0,0,.6), 0 6px 16px -6px rgba(0,0,0,.5);
+      --brand-1:   #8b5cf6;
+      --brand-2:   #22d3ee;
+      --brand-soft:#241c42;
 
-      --grad-a:    #8b5cf6;
-      --grad-b:    #22d3ee;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.35);
+      --shadow-md: 0 10px 24px -10px rgba(0,0,0,.55), 0 2px 6px -2px rgba(0,0,0,.4);
+      --shadow-lg: 0 24px 48px -18px rgba(0,0,0,.65), 0 6px 16px -6px rgba(0,0,0,.5);
     }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:      #100b22;
+    --surface:   #1a1433;
+    --surface-2: #211a3d;
+    --surface-3: #2a2149;
+    --ink:       #f5f2ff;
+    --ink-2:     #c8c1e4;
+    --muted:     #948dbb;
+    --grid:      #2b234a;
+    --baseline:  #3b2f5e;
+    --border:    rgba(255,255,255,.1);
+
+    --c-blue:    #3987e5;
+    --c-orange:  #d95926;
+    --c-aqua:    #199e70;
+    --c-yellow:  #c98500;
+    --c-magenta: #d55181;
+    --c-violet:  #9085e9;
+    --c-green:   #2ed48e;
+    --c-red:     #e66767;
+
+    --good:      #2ed48e;
+    --warning:   #f2a93b;
+    --serious:   #ec835a;
+    --critical:  #f2515e;
+    --warn-bg:   #2b2412;
+    --crit-bg:   #2c1a19;
+
+    --brand-1:   #8b5cf6;
+    --brand-2:   #22d3ee;
+    --brand-soft:#241c42;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.35);
+    --shadow-md: 0 10px 24px -10px rgba(0,0,0,.55), 0 2px 6px -2px rgba(0,0,0,.4);
+    --shadow-lg: 0 24px 48px -18px rgba(0,0,0,.65), 0 6px 16px -6px rgba(0,0,0,.5);
   }
 
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto; }
-    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
-  }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.01ms !important; transition-duration:.01ms !important; } }
   body{
     margin:0;
-    background:var(--bg);
+    background:
+      radial-gradient(900px 520px at 105% -8%, color-mix(in srgb, var(--brand-2) 14%, transparent), transparent 60%),
+      radial-gradient(700px 460px at -6% 0%, color-mix(in srgb, var(--brand-1) 13%, transparent), transparent 55%),
+      var(--page);
+    background-attachment:fixed;
     color:var(--ink);
     font-family:var(--font-body);
     -webkit-font-smoothing:antialiased;
   }
-  .mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
   a{ color:inherit; }
-  ::selection{ background:color-mix(in srgb, var(--orange) 30%, transparent); color:var(--ink); }
-  :focus-visible{ outline:2px solid var(--orange); outline-offset:2px; border-radius:4px; }
-  button, [role="button"]{ font: inherit; }
+  ::selection{ background:color-mix(in srgb, var(--brand-1) 30%, transparent); }
+  :focus-visible{ outline:2px solid var(--brand-2); outline-offset:2px; border-radius:4px; }
+  button{ font:inherit; }
   ::-webkit-scrollbar{ width:10px; height:10px; }
   ::-webkit-scrollbar-track{ background:transparent; }
-  ::-webkit-scrollbar-thumb{ background:var(--baseline); border-radius:999px; border:2px solid var(--bg); }
-  * { scrollbar-color: var(--baseline) transparent; scrollbar-width: thin; }
+  ::-webkit-scrollbar-thumb{ background:var(--baseline); border-radius:999px; border:2px solid var(--page); }
 
-  /* ---- shell ---- */
-  .shell{ display:flex; min-height:100vh; }
+  /* ---------- gate ---------- */
+  .gate{ position:fixed; inset:0; z-index:100; background:var(--page); display:flex; align-items:center; justify-content:center; padding:20px; }
+  .gate.hidden{ display:none; }
+  .gate-card{
+    width:min(380px,100%); background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:34px 28px; display:flex; flex-direction:column; gap:16px; text-align:center; box-shadow:var(--shadow-lg);
+  }
+  .gate-mark{
+    width:48px; height:48px; border-radius:14px; margin:0 auto;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2));
+    box-shadow:0 10px 22px -6px color-mix(in srgb, var(--brand-1) 60%, transparent);
+    display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:17px; color:#fff;
+  }
+  .gate-card h2{ font-family:var(--font-display); font-size:19px; font-weight:700; margin:0; }
+  .gate-card p{ font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.6; }
+  .gate-card input{
+    width:100%; padding:12px 14px; border-radius:11px; background:var(--surface-2); border:1px solid var(--border);
+    color:var(--ink); font-family:var(--font-body); font-size:14px; text-align:center; outline:none;
+  }
+  .gate-card input:focus{ border-color:var(--brand-2); }
+  .gate-card button{
+    width:100%; padding:12px 14px; border-radius:11px; border:none; cursor:pointer; color:#fff; font-weight:600; font-size:14px;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); box-shadow:0 10px 20px -8px color-mix(in srgb, var(--brand-1) 60%, transparent);
+    transition:opacity .15s ease;
+  }
+  .gate-card button:hover{ opacity:.92; }
+  .gate-error{ font-size:12px; color:var(--critical); min-height:16px; }
 
-  /* ---- sidebar ---- */
+  /* ---------- shell ---------- */
+  .app{ display:flex; align-items:flex-start; min-height:100vh; }
   .sidebar{
-    flex:none;
-    width:250px;
-    background:var(--sidebar);
-    border-right:1px solid var(--border);
-    padding:22px 16px;
-    display:flex;
-    flex-direction:column;
-    gap:26px;
-    position:sticky;
-    top:0;
-    height:100vh;
-    overflow-y:auto;
+    position:sticky; top:0; height:100vh; width:236px; flex:0 0 236px;
+    background:var(--surface); border-right:1px solid var(--border);
+    display:flex; flex-direction:column; padding:26px 14px; gap:22px; box-shadow:var(--shadow-sm);
   }
-  .sb-brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:2px 8px;
+  .brand{ display:flex; align-items:center; gap:11px; padding:2px 10px; }
+  .brand .mark{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2));
+    box-shadow:0 8px 16px -5px color-mix(in srgb, var(--brand-1) 55%, transparent);
+    display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:13px; color:#fff;
   }
-  .sb-brand .mark{
-    width:36px; height:36px; border-radius:9px;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    box-shadow:0 6px 14px -4px color-mix(in srgb, var(--grad-a) 55%, transparent);
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:13px; color:#fff;
-    flex:none;
-  }
-  .sb-brand .name{ font-weight:600; font-size:14.5px; color:var(--ink); line-height:1.3; }
-  .sb-brand .sub{ font-size:11.5px; color:var(--muted); }
+  .brand .name{ font-family:var(--font-display); font-weight:700; font-size:14.5px; line-height:1.3; }
+  .brand .sub{ font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:1px; }
 
-  .sb-label{
-    font-family:var(--font-mono);
-    font-size:10.5px;
-    font-weight:600;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--muted);
-    padding:0 10px;
+  .nav-group-label{ font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:0 10px; margin-bottom:6px; }
+  .navlist{ display:flex; flex-direction:column; gap:3px; }
+  .navbtn{
+    display:flex; align-items:center; gap:11px; width:100%; border:none; background:transparent; cursor:pointer;
+    color:var(--ink-2); font-family:var(--font-body); font-size:14px; font-weight:500; text-align:left;
+    padding:11px 12px; border-radius:11px; transition:background .15s ease,color .15s ease,transform .15s ease;
   }
-  .sb-nav{ display:flex; flex-direction:column; gap:2px; }
-  .sb-nav a{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:10px 12px;
-    border-radius:10px;
-    font-size:13.5px;
-    font-weight:500;
-    color:var(--ink-2);
-    text-decoration:none;
-    transition:background .15s ease, color .15s ease;
+  .navbtn:hover{ background:var(--surface-2); color:var(--ink); transform:translateX(2px); }
+  .navbtn.active{
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; font-weight:600;
+    box-shadow:0 10px 20px -10px color-mix(in srgb, var(--brand-1) 65%, transparent);
   }
-  .sb-nav a:hover{ background:var(--panel-2); color:var(--ink); }
-  .sb-nav a.active{
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    color:#fff;
-    font-weight:600;
-    box-shadow:0 8px 18px -8px color-mix(in srgb, var(--grad-a) 65%, transparent);
-  }
-  .sb-nav a.active .ic{ background:rgba(255,255,255,.22); color:#fff; }
-  .sb-nav .ic{
-    width:24px; height:24px; border-radius:6px;
-    display:flex; align-items:center; justify-content:center;
-    flex:none;
-    color:var(--muted);
-    transition:background .15s ease, color .15s ease;
-  }
-  .sb-nav svg{ width:14px; height:14px; }
+  .navbtn .ic{ font-size:16px; line-height:1; width:20px; text-align:center; flex:none; }
 
-  .sb-foot{
-    margin-top:auto;
-    padding:12px 10px;
-    border-top:1px solid var(--border);
-    font-size:11px;
-    color:var(--muted);
-    line-height:1.6;
-  }
+  .sb-foot{ margin-top:auto; padding:12px 10px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); line-height:1.7; }
+
+  .main{ flex:1 1 auto; min-width:0; }
+  .wrap{ max-width:1240px; margin:0 auto; padding:34px 30px 90px; display:flex; flex-direction:column; gap:26px; }
+  .view{ display:none; }
+  .view.active{ display:block; }
 
   @media (max-width:900px){
-    .shell{ flex-direction:column; }
-    .sidebar{
-      position:static; width:100%; height:auto; flex-direction:row;
-      align-items:center; gap:14px; overflow-x:auto; padding:14px 16px;
-    }
-    .sb-label{ display:none; }
-    .sb-nav{ flex-direction:row; }
-    .sb-nav a{ white-space:nowrap; }
+    .app{ flex-direction:column; }
+    .sidebar{ position:static; width:100%; height:auto; flex-direction:row; align-items:center; overflow-x:auto; padding:14px 16px; gap:16px; }
+    .brand .sub{ display:none; }
+    .nav-group-label{ display:none; }
+    .navlist{ flex-direction:row; }
+    .navbtn{ white-space:nowrap; }
     .sb-foot{ display:none; }
+    .wrap{ padding:24px 18px 70px; }
   }
 
-  /* ---- content ---- */
-  .content{ flex:1; min-width:0; }
-  .content-inner{
-    max-width:1320px;
-    margin:0 auto;
-    padding:32px 32px 96px;
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-  }
+  /* ---------- page head ---------- */
+  .page-head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; padding:24px 26px; border-radius:18px;
+    background:linear-gradient(120deg, color-mix(in srgb, var(--brand-1) 9%, var(--surface)), color-mix(in srgb, var(--brand-2) 9%, var(--surface)));
+    border:1px solid var(--border); box-shadow:var(--shadow-sm); }
+  .eyebrow{ font-family:var(--font-display); font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; margin:0 0 6px;
+    background:linear-gradient(120deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-head h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.6vw,30px); margin:0; line-height:1.2; }
+  .page-head .desc{ margin:6px 0 0; color:var(--ink-2); font-size:13.5px; max-width:64ch; line-height:1.6; }
+  .page-head .meta{ text-align:right; font-size:12px; color:var(--muted); line-height:1.7; }
+  .page-head .meta b{ color:var(--ink-2); font-weight:600; }
 
-  .page-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-bottom:4px; border-bottom:1px solid var(--border); }
-  .page-head h1{ font-size:26px; font-weight:700; margin:0 0 6px; color:var(--ink); letter-spacing:-0.01em; }
-  .page-head .desc{ font-size:13.5px; color:var(--ink-2); margin-top:4px; max-width:64ch; line-height:1.55; }
-  .page-head .meta{ font-size:11.5px; color:var(--muted); font-family:var(--font-mono); text-align:right; line-height:1.7; padding-bottom:2px; }
+  /* ---------- kpi grid ---------- */
+  .kgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+  .kpi{ position:relative; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:15px; padding:17px 18px 15px;
+    display:flex; flex-direction:column; gap:5px; box-shadow:var(--shadow-sm); transition:transform .18s ease,box-shadow .18s ease; cursor:pointer; }
+  .kpi::before{ content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--brand-1),var(--brand-2)); }
+  .kpi:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  .kpi .lbl{ font-size:12px; color:var(--muted); font-weight:500; }
+  .kpi .val{ font-family:var(--font-display); font-weight:700; font-size:25px; line-height:1.15; }
+  .kpi .val small{ font-family:var(--font-body); font-weight:500; font-size:12.5px; color:var(--ink-2); margin-left:2px; }
+  .kpi .sub{ font-size:11.5px; color:var(--ink-2); }
+  .kpi .sub.warn{ color:var(--warning); font-weight:600; }
+  .kpi .sub.crit{ color:var(--critical); font-weight:600; }
 
-  /* ---- grid ---- */
-  .grid{ display:grid; gap:16px; }
-  .grid-4{ grid-template-columns:repeat(4,1fr); }
-  .grid-3{ grid-template-columns:repeat(3,1fr); }
-  .grid-2{ grid-template-columns:1.15fr 0.85fr; }
-  @media (max-width:1100px){ .grid-4{ grid-template-columns:repeat(2,1fr); } .grid-3{ grid-template-columns:repeat(3,1fr); } }
-  @media (max-width:760px){ .grid-4,.grid-3,.grid-2{ grid-template-columns:1fr; } }
+  /* ---------- section / panel ---------- */
+  section{ display:flex; flex-direction:column; gap:12px; }
+  .shead{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .shead h2{ font-family:var(--font-display); font-size:16.5px; font-weight:600; margin:0; }
+  .shead .hint{ font-size:12px; color:var(--muted); }
+  .panel{ background:var(--surface); border:1px solid var(--border); border-radius:15px; padding:20px 22px; box-shadow:var(--shadow-sm); }
+  .cols2{ display:grid; grid-template-columns:1.3fr .7fr; gap:16px; align-items:start; }
+  .cols2b{ display:grid; grid-template-columns:.85fr 1.15fr; gap:16px; align-items:start; }
+  @media (max-width:900px){ .cols2,.cols2b{ grid-template-columns:1fr; } }
 
-  /* ---- card base ---- */
-  .card{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:20px;
-    box-shadow:var(--shadow-sm);
-  }
+  /* ---------- callout ---------- */
+  .callout{ position:relative; overflow:hidden; border-radius:16px; padding:22px 24px;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; box-shadow:var(--shadow-lg); }
+  .callout::after{ content:""; position:absolute; right:-50px; top:-50px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,.14); }
+  .callout h2{ position:relative; font-family:var(--font-display); font-size:16px; font-weight:700; margin:0 0 4px; }
+  .callout p{ position:relative; margin:0; font-size:13px; line-height:1.6; max-width:78ch; color:rgba(255,255,255,.94); }
+  .callout .chips{ position:relative; display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  .callout .chip{ background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); border-radius:99px; padding:7px 14px; font-size:12.5px; font-weight:600; }
+  .callout .chip b{ font-family:var(--font-display); }
 
-  /* ---- stat card ---- */
-  .stat-card{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    cursor:pointer;
-    transition:box-shadow .16s ease, border-color .16s ease, transform .16s cubic-bezier(.2,.8,.2,1);
-  }
-  .stat-card:hover{ box-shadow:var(--shadow-md); border-color:var(--baseline); transform:translateY(-2px); }
-  .stat-label{
-    font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.03em;
-    font-variant:small-caps; color:var(--muted);
-  }
-  .stat-value-row{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
-  .stat-value{ font-family:var(--font-mono); font-weight:700; font-size:28px; color:var(--ink); letter-spacing:-0.01em; }
-  .stat-context{ font-size:12.5px; color:var(--ink-2); }
-  .stat-delta{
-    display:inline-flex; align-items:center; gap:4px;
-    font-family:var(--font-mono); font-size:11.5px; font-weight:600;
-    padding:2px 7px; border-radius:5px;
-  }
-  .stat-delta.flag{ color:var(--critical); background:color-mix(in srgb, var(--critical) 12%, var(--panel)); }
-  .stat-delta.caveat{ color:var(--warning); background:color-mix(in srgb, var(--warning) 12%, var(--panel)); }
-  .stat-delta.plain{ color:var(--ink-2); background:var(--panel-2); }
+  /* ---------- watchlist ---------- */
+  .wl-row{ display:flex; align-items:center; gap:12px; padding:10px 6px; border-radius:10px; cursor:pointer; transition:background .12s ease; }
+  .wl-row:hover{ background:var(--surface-2); }
+  .wl-row:hover .wl-name{ color:var(--brand-1); }
+  .wl-rank{ width:24px; height:24px; border-radius:7px; flex:none; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:11.5px; }
+  .wl-body{ flex:1; min-width:0; }
+  .wl-name{ font-size:13.5px; font-weight:600; transition:color .15s ease; }
+  .wl-sub{ font-size:11.5px; color:var(--muted); margin-top:1px; }
+  .wl-meta{ text-align:right; flex:none; }
+  .wl-meta .m1{ font-family:var(--font-display); font-size:14px; font-weight:700; }
+  .wl-meta .m2{ font-size:10.5px; color:var(--muted); }
 
-  /* ---- donut ---- */
-  .donut-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 0 4px; }
-  .donut-center{ font-family:var(--font-mono); }
-  .donut-center .n{ font-size:24px; font-weight:700; color:var(--ink); }
-  .donut-center .l{ font-size:11px; font-family:var(--font-body); color:var(--muted); }
-  .donut-legend{ display:flex; flex-direction:column; gap:2px; margin-top:14px; }
-  .donut-row{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:8px 6px; border-radius:8px;
-    transition:background .12s ease;
-  }
-  .donut-row:hover{ background:var(--panel-2); }
-  .donut-row .dl{ display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink-2); }
-  .donut-row .sw{ width:8px; height:8px; border-radius:999px; flex:none; }
-  .donut-row .dv{ font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink); }
-
-  /* ---- list card ---- */
-  .list-row{
-    display:flex; align-items:center; gap:12px;
-    padding:11px 6px; border-radius:8px;
-    cursor:pointer;
-    transition:background .12s ease;
-  }
-  .list-row:hover{ background:var(--panel-2); }
-  .list-row:hover .lr-title{ color:var(--orange); }
-  .lr-rank{
-    width:22px; height:22px; border-radius:6px; flex:none;
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:11px;
-  }
-  .lr-body{ flex:1; min-width:0; }
-  .lr-title{ font-size:13.5px; font-weight:600; color:var(--ink); transition:color .15s ease; font-family:var(--font-mono); }
-  .lr-sub{ font-size:12px; color:var(--muted); margin-top:2px; }
-  .lr-meta{ text-align:right; flex:none; }
-  .lr-meta .m1{ font-family:var(--font-mono); font-size:13.5px; font-weight:700; }
-  .lr-meta .m2{ font-size:11px; color:var(--muted); margin-top:2px; font-family:var(--font-mono); }
-
-  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-  .card-head h3{ font-size:14px; font-weight:600; margin:0; color:var(--ink); }
-  .card-head .tag{ font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
-  .expand-btn{
-    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--ink-2);
-    background:var(--panel-2); border:1px solid var(--border); border-radius:7px; cursor:pointer;
-    padding:5px 10px; white-space:nowrap; transition:border-color .15s ease, color .15s ease;
-  }
-  .expand-btn:hover{ border-color:var(--orange); color:var(--orange); }
-
-  /* ---- bar chart ---- */
+  /* ---------- bar chart ---------- */
   .chart{ display:flex; flex-direction:column; gap:2px; }
-  .bar-row{ display:grid; grid-template-columns:150px 1fr 96px; align-items:center; gap:10px; padding:6px 0; }
+  .bar-row{ display:grid; grid-template-columns:150px 1fr 96px; align-items:center; gap:10px; padding:5px 0; }
+  .bar-row.compact{ grid-template-columns:130px 1fr 84px; }
   .bar-row .rowlabel{ font-size:12.5px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .bar-row.compact{
-    grid-template-columns:1fr auto;
-    grid-template-areas:"label value" "track track";
-    row-gap:5px; column-gap:10px; padding:7px 0;
-  }
-  .bar-row.compact .rowlabel{ grid-area:label; }
-  .bar-row.compact .rowvalue{ grid-area:value; }
-  .bar-row.compact .bar-track{ grid-area:track; height:6px; }
-  .bar-track{ position:relative; height:12px; background:var(--panel-2); border-radius:4px; overflow:visible; }
-  .bar-fill{ position:relative; height:100%; border-radius:4px; min-width:3px; transform:scaleX(0); transform-origin:left center; transition:transform .8s cubic-bezier(.16,.84,.44,1); }
+  .bar-track{ position:relative; height:13px; background:var(--grid); border-radius:7px; overflow:visible; }
+  .bar-fill{ position:relative; height:100%; border-radius:7px; min-width:4px; box-shadow:0 2px 6px -1px color-mix(in srgb, var(--ink) 18%, transparent); transition:filter .15s ease; }
+  .bar-fill:hover{ filter:brightness(1.08); }
   .bar-fill[data-tooltip]:hover::after{
-    content:attr(data-tooltip); position:absolute; left:0; bottom:calc(100% + 6px);
-    background:var(--raised); border:1px solid var(--baseline); color:var(--ink);
-    font-size:11px; font-family:var(--font-mono); padding:5px 9px; border-radius:7px;
-    white-space:nowrap; z-index:5; pointer-events:none;
-  }
-  .bar-row .rowvalue{ font-family:var(--font-mono); font-size:12.5px; font-weight:600; text-align:right; color:var(--ink); }
+    content:attr(data-tooltip); position:absolute; left:0; bottom:calc(100% + 6px); background:var(--ink); color:var(--page);
+    font-size:11px; padding:5px 9px; border-radius:7px; white-space:nowrap; z-index:5; pointer-events:none; }
+  .bar-row .rowvalue{ font-size:12.5px; font-weight:600; text-align:right; }
   .bar-row .rowvalue small{ font-weight:400; color:var(--muted); font-size:11px; }
-  .legend-line{ font-size:11.5px; color:var(--muted); padding-top:8px; font-family:var(--font-mono); }
+  .legend-line{ font-size:11.5px; color:var(--muted); padding-top:8px; }
 
-  /* ---- line chart ---- */
+  /* ---------- line chart ---------- */
   .line-chart{ width:100%; }
   .line-chart svg{ width:100%; height:auto; display:block; overflow:visible; }
   .line-chart .gridline{ stroke:var(--grid); stroke-width:1; }
   .line-chart .baseline{ stroke:var(--baseline); stroke-width:1; }
-  .line-chart .area{ opacity:.12; }
-  .line-chart .line{ fill:none; stroke-width:2.25; stroke-linejoin:round; stroke-linecap:round; }
-  .line-chart .dot{ fill:var(--panel); stroke-width:2; cursor:pointer; }
-  .line-chart .axislabel{ fill:var(--muted); font-size:10px; font-family:var(--font-mono); }
-  .line-chart .peaklabel{ font-size:11px; font-weight:700; font-family:var(--font-mono); }
+  .line-chart .area{ fill:url(#trendGrad); }
+  .line-chart .line{ fill:none; stroke:var(--brand-1); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round;
+    filter:drop-shadow(0 2px 5px color-mix(in srgb, var(--brand-1) 45%, transparent)); }
+  .line-chart .dot{ fill:var(--surface); stroke:var(--brand-1); stroke-width:2.5; cursor:pointer; }
+  .line-chart .dot.peak{ fill:var(--brand-1); }
+  .line-chart .axislabel{ fill:var(--muted); font-size:10px; }
 
-  /* ---- table ---- */
+  /* ---------- donut ---------- */
+  .donut-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:6px 0 2px; }
+  .donut-center .n{ font-family:var(--font-display); font-size:22px; font-weight:700; }
+  .donut-center .l{ font-size:10.5px; color:var(--muted); }
+  .donut-legend{ display:flex; flex-direction:column; gap:2px; margin-top:12px; }
+  .donut-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 6px; border-radius:8px; cursor:pointer; transition:background .12s ease; }
+  .donut-row:hover{ background:var(--surface-2); }
+  .donut-row .dl{ display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-2); }
+  .donut-row .sw{ width:9px; height:9px; border-radius:99px; flex:none; }
+  .donut-row .dv{ font-size:12.5px; font-weight:600; }
+  .donut-row .dv small{ display:block; font-weight:400; color:var(--muted); font-size:10.5px; }
+
+  /* ---------- dimension switcher (Explore) ---------- */
+  .dim-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .dim-btn{
+    display:flex; align-items:center; gap:7px; border:1px solid var(--border); background:var(--surface); color:var(--ink-2);
+    padding:9px 15px; border-radius:99px; font-size:13px; font-weight:500; cursor:pointer; transition:all .15s ease; box-shadow:var(--shadow-sm);
+  }
+  .dim-btn:hover{ border-color:var(--brand-2); color:var(--ink); }
+  .dim-btn.active{ background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; border-color:transparent; box-shadow:0 8px 18px -8px color-mix(in srgb, var(--brand-1) 60%, transparent); }
+
+  /* ---------- table ---------- */
   table{ width:100%; border-collapse:collapse; font-size:13px; }
-  thead th{
-    text-align:left; font-family:var(--font-mono); font-weight:600; font-size:10.5px; color:var(--muted);
-    text-transform:uppercase; letter-spacing:.04em; padding:8px 10px; border-bottom:1px solid var(--baseline);
-    position:sticky; top:0; background:var(--panel);
-    cursor:pointer; user-select:none; transition:color .12s ease;
-  }
-  thead th:hover{ color:var(--ink); }
-  thead th.sort-asc, thead th.sort-desc{ color:var(--orange); }
-  thead th.sort-asc::after, thead th.sort-desc::after{
-    content:""; display:inline-block; margin-left:5px; width:0; height:0;
-    border-left:3px solid transparent; border-right:3px solid transparent;
-  }
-  thead th.sort-asc::after{ border-bottom:4px solid var(--orange); }
-  thead th.sort-desc::after{ border-top:4px solid var(--orange); }
-  tbody td{ padding:8px 10px; border-bottom:1px solid var(--grid); color:var(--ink-2); font-size:12.5px; }
+  thead th{ text-align:left; font-weight:600; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.03em;
+    padding:9px 10px; border-bottom:1px solid var(--baseline); cursor:pointer; user-select:none; transition:color .12s ease; }
+  thead th:hover{ color:var(--brand-1); }
+  thead th.sort-asc, thead th.sort-desc{ color:var(--brand-1); }
+  thead th.sort-asc::after,thead th.sort-desc::after{ content:""; display:inline-block; margin-left:5px; width:0;height:0; border-left:3px solid transparent; border-right:3px solid transparent; }
+  thead th.sort-asc::after{ border-bottom:4px solid var(--brand-1); }
+  thead th.sort-desc::after{ border-top:4px solid var(--brand-1); }
+  tbody td{ padding:9px 10px; border-bottom:1px solid var(--grid); color:var(--ink-2); }
+  tbody tr:hover td{ background:var(--surface-2); }
   tbody tr:last-child td{ border-bottom:none; }
-  tbody tr:hover td{ background:var(--panel-2); }
-  td.num, th.num{ text-align:right; font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  td.num, th.num{ text-align:right; font-variant-numeric:tabular-nums; }
   td.strong{ color:var(--ink); font-weight:600; }
   .table-wrap{ overflow-x:auto; }
-  .table-wrap.scroll-y{ max-height:440px; overflow-y:auto; }
+  .table-wrap.scroll{ max-height:460px; overflow-y:auto; }
 
-  footer{
-    font-family:var(--font-mono); font-size:11px; color:var(--muted);
-    padding-top:16px; margin-top:6px; border-top:1px solid var(--border); line-height:1.7;
-  }
-
-  /* ---- modal ---- */
-  dialog#modal{
-    border:1px solid var(--border); border-radius:14px; padding:0;
-    width:min(780px, 92vw); max-height:82vh; background:var(--panel); color:var(--ink);
-    box-shadow:var(--shadow-lg);
-  }
-  dialog#modal::backdrop{ background:rgba(20,18,14,0.55); backdrop-filter:blur(2px); }
-  dialog#modal[open]{ animation: modal-in .18s cubic-bezier(.2,.8,.2,1); }
-  @keyframes modal-in{ from{ opacity:0; transform:translateY(8px) scale(.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
-  .modal-head{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:16px 20px; border-bottom:1px solid var(--border);
-    position:sticky; top:0; background:var(--panel); border-radius:14px 14px 0 0;
-  }
-  .modal-head h3{ font-size:15px; font-weight:600; margin:0; color:var(--ink); }
-  .modal-close{
-    background:var(--panel-2); border:1px solid var(--border); color:var(--ink-2);
-    width:28px; height:28px; border-radius:8px; cursor:pointer; padding:0;
-    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
-  }
-  .modal-close svg{ width:14px; height:14px; }
-  .modal-close:hover{ border-color:var(--critical); color:var(--critical); }
-  .modal-body{ padding:14px 20px 20px; overflow-y:auto; max-height:calc(82vh - 60px); }
-  .modal-note{
-    font-size:12px; color:var(--muted); margin:0 0 12px; padding:9px 12px;
-    background:var(--panel-2); border:1px solid var(--border); border-radius:8px; font-family:var(--font-mono);
-  }
-
-  /* ---- view switching (Dashboard / Insight) ---- */
-  .view{ display:none; }
-  .view.active{ display:block; }
-
-  /* ---- insight page ---- */
-  .hero-panel{
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    border-radius:16px;
-    padding:28px 26px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    box-shadow:var(--shadow-lg);
-  }
-  .hero-panel::after{
-    content:"";
-    position:absolute; right:-60px; top:-60px;
-    width:220px; height:220px; border-radius:50%;
-    background:rgba(255,255,255,.14);
-  }
-  .hero-panel .quote{ position:relative; color:#fff; font-weight:600; font-size:17px; line-height:1.6; margin:0; text-wrap:balance; }
-  .hero-panel .desc{ position:relative; color:rgba(255,255,255,.92); font-size:13.5px; line-height:1.6; margin:0; max-width:72ch; }
-  .hero-stats{ position:relative; display:flex; flex-wrap:wrap; gap:26px; margin-top:8px; }
-  .hero-stat{ display:flex; flex-direction:column; gap:2px; }
-  .hero-stat .v{ font-family:var(--font-mono); font-weight:700; font-size:22px; color:#fff; }
-  .hero-stat .l{ font-size:11.5px; color:rgba(255,255,255,.82); }
-
+  /* ---------- insight page ---------- */
   .finding-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
-  .finding{
-    background:var(--panel); border:1px solid var(--border); border-radius:12px;
-    padding:18px 20px; display:flex; flex-direction:column; gap:8px;
-    box-shadow:var(--shadow-sm);
-    transition:box-shadow .16s ease, transform .16s ease;
-  }
-  .finding:hover{ box-shadow:var(--shadow-md); transform:translateY(-2px); }
-  .finding .n{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:24px; height:24px; border-radius:7px; flex:none;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    color:#fff; font-family:var(--font-mono); font-weight:700; font-size:12px;
-  }
-  .finding h3{ font-size:14.5px; font-weight:600; margin:0; color:var(--ink); }
+  .finding{ background:var(--surface); border:1px solid var(--border); border-radius:15px; padding:18px 20px; display:flex; flex-direction:column; gap:8px;
+    box-shadow:var(--shadow-sm); transition:transform .16s ease,box-shadow .16s ease; }
+  .finding:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  .finding .n{ display:inline-flex; align-items:center; justify-content:center; width:25px; height:25px; border-radius:8px; flex:none;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; font-family:var(--font-display); font-weight:700; font-size:12.5px; }
+  .finding h3{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:0; }
   .finding p{ margin:0; font-size:12.5px; line-height:1.65; color:var(--ink-2); }
   .finding p strong{ color:var(--ink); }
 
-  .numbered-list{ display:flex; flex-direction:column; gap:12px; }
-  .numbered-item{ display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:flex-start; }
-  .numbered-item .n{
-    display:flex; align-items:center; justify-content:center;
-    width:26px; height:26px; border-radius:50%; flex:none;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    color:#fff; font-family:var(--font-mono); font-weight:700; font-size:12px;
-  }
-  .numbered-item p{ margin:0; font-size:13px; line-height:1.65; color:var(--ink-2); }
-  .numbered-item p strong{ color:var(--ink); }
+  .num-list{ display:flex; flex-direction:column; gap:12px; }
+  .num-item{ display:grid; grid-template-columns:27px 1fr; gap:10px; align-items:flex-start; }
+  .num-item .n{ display:flex; align-items:center; justify-content:center; width:27px; height:27px; border-radius:50%; flex:none;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; font-family:var(--font-display); font-weight:700; font-size:12px; }
+  .num-item p{ margin:0; font-size:13px; line-height:1.65; color:var(--ink-2); }
+  .num-item p strong{ color:var(--ink); }
 
-  .impact-compare{ display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; }
-  @media (max-width:640px){ .impact-compare{ grid-template-columns:1fr; } .impact-compare .eq{ transform:rotate(90deg); } }
-  .impact-card{
-    border:1px solid var(--border); border-radius:12px; padding:16px 18px;
-    display:flex; flex-direction:column; gap:4px; background:var(--panel-2);
-  }
-  .impact-card .tag{ font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); }
-  .impact-card .big{ font-family:var(--font-mono); font-weight:700; font-size:24px; color:var(--ink); }
-  .impact-card.after{ background:color-mix(in srgb, var(--grad-a) 8%, var(--panel)); border-color:transparent; }
-  .impact-card.after .big{
-    background:linear-gradient(120deg, var(--grad-a), var(--grad-b));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
+  .impact-cmp{ display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; }
+  @media (max-width:640px){ .impact-cmp{ grid-template-columns:1fr; } .impact-cmp .eq{ transform:rotate(90deg); } }
+  .impact-card{ border:1px solid var(--border); border-radius:14px; padding:17px 19px; display:flex; flex-direction:column; gap:4px; background:var(--surface-2); }
+  .impact-card .tag{ font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  .impact-card .big{ font-family:var(--font-display); font-weight:700; font-size:24px; }
+  .impact-card.after{ background:color-mix(in srgb, var(--brand-1) 8%, var(--surface)); border-color:transparent; }
+  .impact-card.after .big{ background:linear-gradient(120deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .impact-card .sub{ font-size:12px; color:var(--ink-2); line-height:1.5; }
-  .eq{
-    font-family:var(--font-mono); font-weight:700; font-size:18px; color:#fff;
-    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    justify-self:center;
-  }
+  .eq{ font-family:var(--font-display); font-weight:700; font-size:18px; color:#fff; width:36px; height:36px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); justify-self:center; }
 
-  .priority{
-    font-family:var(--font-mono); font-weight:700; font-size:10px; letter-spacing:.03em;
-    padding:3px 8px; border-radius:99px; white-space:nowrap; display:inline-block; text-transform:uppercase;
-  }
+  .priority{ font-family:var(--font-display); font-weight:700; font-size:10px; letter-spacing:.03em; padding:3px 9px; border-radius:99px; white-space:nowrap; display:inline-block; text-transform:uppercase; }
   .priority.p1{ background:var(--critical); color:#fff; }
   .priority.p2{ background:var(--warning); color:#fff; }
-  .priority.p3{ background:var(--panel-2); color:var(--ink-2); border:1px solid var(--border); }
+  .priority.p3{ background:var(--surface-2); color:var(--ink-2); border:1px solid var(--border); }
 
-  .ask-panel{
-    position:relative; overflow:hidden;
-    background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-    border-radius:14px; padding:20px 22px;
-    display:flex; flex-direction:column; gap:6px;
-    box-shadow:var(--shadow-lg);
-  }
-  .ask-panel::after{ content:""; position:absolute; right:-40px; top:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.15); }
+  .ask-panel{ position:relative; overflow:hidden; background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); border-radius:16px; padding:22px 24px;
+    display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow-lg); color:#fff; }
+  .ask-panel::after{ content:""; position:absolute; right:-40px; top:-40px; width:170px; height:170px; border-radius:50%; background:rgba(255,255,255,.15); }
   .ask-panel .from{ position:relative; font-size:12.5px; color:rgba(255,255,255,.85); }
-  .ask-panel .to{ position:relative; font-family:var(--font-mono); font-weight:700; font-size:15px; color:#fff; line-height:1.6; }
+  .ask-panel .to{ position:relative; font-family:var(--font-display); font-weight:700; font-size:15px; line-height:1.6; }
 
-  .gap-panel{
-    border:1px solid var(--critical); background:color-mix(in srgb, var(--critical) 6%, var(--panel));
-    border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:14px;
-  }
+  .gap-panel{ border:1px solid var(--critical); background:var(--crit-bg); border-radius:15px; padding:20px 22px; display:flex; flex-direction:column; gap:14px; }
   .gap-panel h2{ color:var(--critical); }
   .gap-item{ display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:flex-start; }
-  .chip{
-    font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.03em;
-    padding:3px 8px; border-radius:99px; white-space:nowrap; height:fit-content; text-transform:uppercase;
-  }
+  .chip{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.03em; padding:3px 9px; border-radius:99px; white-space:nowrap; height:fit-content; text-transform:uppercase; }
   .chip.critical{ background:var(--critical); color:#fff; }
   .chip.warning{ background:var(--warning); color:#fff; }
   .chip.good{ background:var(--good); color:#fff; }
   .gap-item p{ margin:0; font-size:12.5px; line-height:1.65; color:var(--ink-2); }
   .gap-item p strong{ color:var(--ink); }
 
-  /* ---- email gate ---- */
-  .gate{
-    position:fixed; inset:0; z-index:100;
-    background:var(--bg);
-    display:flex; align-items:center; justify-content:center;
-    padding:20px;
-  }
-  .gate-card{
-    width:min(380px, 100%);
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:32px 28px;
-    display:flex; flex-direction:column; gap:16px;
-    text-align:center;
-    box-shadow:var(--shadow-lg);
-  }
-  .gate-mark{
-    width:42px; height:42px; border-radius:10px; margin:0 auto;
-    background:var(--orange);
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:15px; color:#fff;
-  }
-  .gate-card h2{ font-size:17px; font-weight:600; margin:0; color:var(--ink); }
-  .gate-card p{ font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.6; }
-  .gate-card input{
-    width:100%; padding:11px 14px; border-radius:10px;
-    background:var(--panel-2); border:1px solid var(--border); color:var(--ink);
-    font-family:var(--font-body); font-size:14px; text-align:center;
-    outline:none;
-  }
-  .gate-card input:focus{ border-color:var(--orange); }
-  .gate-card button{
-    width:100%; padding:11px 14px; border-radius:9px; border:none; cursor:pointer;
-    background:var(--orange); color:#fff; font-family:var(--font-body); font-weight:600; font-size:14px;
-    transition:opacity .15s ease;
-  }
-  .gate-card button:hover{ opacity:.9; }
-  .gate-error{ font-size:12px; color:var(--critical); min-height:16px; }
-  .gate.hidden{ display:none; }
+  footer{ font-size:11.5px; color:var(--muted); padding-top:16px; margin-top:4px; border-top:1px solid var(--border); line-height:1.7; }
 </style>
 </head>
 <body>
@@ -584,34 +423,23 @@
   </div>
 </div>
 
-<div class="shell">
+<div class="app">
 
   <aside class="sidebar">
-    <div class="sb-brand">
+    <div class="brand">
       <div class="mark">PT</div>
       <div>
-        <div class="name">PT Glory</div>
-        <div class="sub">Return Report · ก.ค. 69</div>
+        <div class="name">Return Insight</div>
+        <div class="sub">PT Glory · ก.ค. 69</div>
       </div>
     </div>
 
     <div>
-      <div class="sb-label">แถบ</div>
-      <nav class="sb-nav" id="view-nav">
-        <a href="#" class="active" data-view="dashboard"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>Dashboard</a>
-        <a href="#" data-view="insight"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7V17a2 2 0 002 2h4a2 2 0 002-2v-2.3A7 7 0 0012 2z"/><path d="M10 22h4"/></svg></span>Insight</a>
-      </nav>
-    </div>
-
-    <div id="section-nav-wrap">
-      <div class="sb-label">ในหน้า Dashboard</div>
-      <nav class="sb-nav">
-        <a href="#overview"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>ภาพรวม</a>
-        <a href="#rate"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>อัตราตีกลับ</a>
-        <a href="#daily"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg></span>รายวัน</a>
-        <a href="#unit"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></span>ยูนิต</a>
-        <a href="#product"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg></span>สินค้า</a>
-        <a href="#region"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/></svg></span>ภูมิภาค/ขนส่ง</a>
+      <div class="nav-group-label">แถบ</div>
+      <nav class="navlist" id="view-nav">
+        <button class="navbtn active" data-view="overview"><span class="ic">🧭</span>ภาพรวม</button>
+        <button class="navbtn" data-view="explore"><span class="ic">🔎</span>เจาะลึกข้อมูล</button>
+        <button class="navbtn" data-view="insight"><span class="ic">💡</span>Insight</button>
       </nav>
     </div>
 
@@ -621,171 +449,159 @@
     </div>
   </aside>
 
-  <main class="content">
-    <div class="view active" id="view-dashboard">
-    <div class="content-inner">
+  <main class="main">
 
-      <div class="page-head" id="overview">
+    <!-- ================= OVERVIEW ================= -->
+    <div class="view active" id="view-overview">
+    <div class="wrap">
+
+      <div class="page-head">
         <div>
+          <p class="eyebrow">ภาพรวม · ก.ค. 2569</p>
           <h1>สินค้าตีกลับ กรกฎาคม 2569</h1>
           <p class="desc">สรุปจากฐานข้อมูลตีกลับเต็มทั้งเดือน (3,188 ออเดอร์) เทียบกับยอดขายจริง 93,100 ออเดอร์</p>
         </div>
-        <div class="meta">31 วัน · 1–31 ก.ค. 2569<br>ยอดขายทุกช่องทาง 93,100 ออเดอร์</div>
+        <div class="meta">31 วัน · 1–31 ก.ค. 2569<br>ยอดขายทุกช่องทาง <b>93,100</b> ออเดอร์</div>
       </div>
 
-      <!-- top stat row -->
-      <div class="grid grid-4">
-        <div class="card stat-card" onclick="showRateModal()">
-          <div class="stat-label">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
-          <div class="stat-value-row"><span class="stat-value">3.4%</span><span class="stat-delta flag">เฝ้าดู</span></div>
+      <div class="kgrid">
+        <div class="kpi" onclick="goExplore('rate')">
+          <div class="lbl">อัตราตีกลับเฉลี่ยทั้งบริษัท</div>
+          <div class="val">3.4%</div>
+          <div class="sub warn">3,188 / 93,100 ออเดอร์</div>
         </div>
-        <div class="card stat-card" onclick="showDailyModal()">
-          <div class="stat-label">ยอดขายทั้งหมด ก.ค. (บริษัท)</div>
-          <div class="stat-value-row"><span class="stat-value">93,100</span><span class="stat-context">ออเดอร์</span></div>
+        <div class="kpi">
+          <div class="lbl">มูลค่าสินค้าตีกลับ</div>
+          <div class="val">฿1.70M</div>
+          <div class="sub">เฉลี่ย ฿535 / ออเดอร์</div>
         </div>
-        <div class="card stat-card" onclick="showUnitValueModal()">
-          <div class="stat-label">มูลค่าสินค้าตีกลับ</div>
-          <div class="stat-value-row"><span class="stat-value">฿1.70M</span><span class="stat-delta plain">3,188 ออเดอร์</span></div>
+        <div class="kpi">
+          <div class="lbl">ระบบตีกลับอัตโนมัติ</div>
+          <div class="val">94.6%</div>
+          <div class="sub crit">ยังไม่ใช่ "สาเหตุ" ที่แท้จริง</div>
         </div>
-        <div class="card stat-card" onclick="showStatusModal()">
-          <div class="stat-label">ระบบตีกลับอัตโนมัติ</div>
-          <div class="stat-value-row"><span class="stat-value">94.6%</span><span class="stat-delta caveat">ยังไม่ใช่สาเหตุ</span></div>
+        <div class="kpi">
+          <div class="lbl">ชำระแบบ COD</div>
+          <div class="val">99.7%</div>
+          <div class="sub">3,178 ออเดอร์</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">เครือ Flash Express</div>
+          <div class="val">95.0%</div>
+          <div class="sub">3,029 ออเดอร์</div>
+        </div>
+        <div class="kpi" onclick="goExplore('unitcount')">
+          <div class="lbl">ยูนิตตีกลับสูงสุด (ดิบ)</div>
+          <div class="val">UNIT15</div>
+          <div class="sub">437 ออเดอร์ · 13.7%</div>
         </div>
       </div>
 
-      <!-- donut + watchlist -->
-      <div class="grid grid-2">
-        <div class="card" id="region">
-          <div class="card-head"><h3>ตีกลับตามภูมิภาค</h3><span class="tag">คลิกดูจังหวัด →</span></div>
-          <div class="donut-wrap">
-            <svg width="180" height="180" viewBox="0 0 180 180" id="donut-svg"></svg>
+      <div class="callout">
+        <h2>จุดที่ต้องรู้ก่อน</h2>
+        <p>อัตราตีกลับกระจุกตัวผิดปกติที่ 2 ยูนิต และเกือบทั้งหมดเป็นระบบตัดคืนอัตโนมัติ ไม่ใช่ลูกค้าปฏิเสธรับสินค้าหน้าประตู — ดูวิเคราะห์เต็มที่แถบ Insight</p>
+        <div class="chips">
+          <span class="chip">UNIT23 = <b>12.7%</b> (×3.7 เฉลี่ย)</span>
+          <span class="chip">UNIT18 = <b>8.3%</b> (×2.4 เฉลี่ย)</span>
+          <span class="chip">Auto-return = <b>94.6%</b></span>
+        </div>
+      </div>
+
+      <section>
+        <div class="cols2">
+          <div class="panel">
+            <div class="shead"><h2>แนวโน้มรายวัน</h2><span class="hint">31 วัน</span></div>
+            <div class="line-chart" id="chart-trend"></div>
+            <div class="legend-line">เฉลี่ย ~103 ออเดอร์/วัน (73–149) · ไม่มีวันไหนพุ่งผิดปกติ</div>
           </div>
-          <div class="donut-legend" id="donut-legend"></div>
-        </div>
-
-        <div class="card" id="rate">
-          <div class="card-head">
-            <h3>ยูนิตที่ต้องจับตา</h3>
-            <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด →</button>
+          <div class="panel">
+            <div class="shead"><h2>ยูนิตที่ต้องจับตา</h2><button class="dim-btn" style="padding:6px 12px;font-size:12px;" onclick="goExplore('rate')">ดูทั้งหมด →</button></div>
+            <div id="watchlist"></div>
           </div>
-          <div id="watchlist"></div>
         </div>
-      </div>
+      </section>
 
-      <!-- secondary stat row -->
-      <div class="grid grid-3">
-        <div class="card stat-card" onclick="showCourierModal()">
-          <div class="stat-label">เครือ Flash Express · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
-          <div class="stat-value-row"><span class="stat-value">95.0%</span><span class="stat-delta plain">3,029 ออเดอร์</span></div>
-        </div>
-        <div class="card stat-card" onclick="showPaymentModal()">
-          <div class="stat-label">ชำระแบบ COD · สัดส่วนของออเดอร์ตีกลับทั้งหมด</div>
-          <div class="stat-value-row"><span class="stat-value">99.7%</span><span class="stat-delta plain">3,178 ออเดอร์</span></div>
-        </div>
-        <div class="card stat-card" onclick="showUnitCountModal()">
-          <div class="stat-label">ยูนิตตีกลับสูงสุด (ดิบ) · 13.7% ของยอดตีกลับทั้งหมด</div>
-          <div class="stat-value-row"><span class="stat-value">UNIT15</span><span class="stat-delta plain">437 ออเดอร์</span></div>
-        </div>
-      </div>
-
-      <!-- rate by unit + daily -->
-      <div class="grid grid-2">
-        <div class="card">
-          <div class="card-head">
-            <h3>อัตราตีกลับ (%) ต่อยูนิต — เทียบยอดขายจริง</h3>
-            <button class="expand-btn" onclick="showRateModal()">ดูทั้งหมด 34 →</button>
+      <section>
+        <div class="cols2b">
+          <div class="panel">
+            <div class="shead"><h2>ตีกลับตามภูมิภาค</h2><span class="hint">คลิกดูจังหวัด →</span></div>
+            <div class="donut-wrap"><svg width="168" height="168" viewBox="0 0 168 168" id="donut-mini"></svg></div>
+            <div class="donut-legend" id="donut-legend-mini"></div>
           </div>
-          <div class="chart" id="chart-rate"></div>
-          <div class="legend-line">แดง &gt; 2× ค่าเฉลี่ย · เหลือง &gt; ค่าเฉลี่ย · น้ำเงิน ≈ ค่าเฉลี่ย (3.4%) — ยอดขาย ≥ 300 ออเดอร์/เดือน</div>
-        </div>
-        <div class="card" id="daily">
-          <div class="card-head">
-            <h3>แนวโน้มรายวัน</h3>
-            <button class="expand-btn" onclick="showDailyModal()">31 วัน →</button>
+          <div class="panel">
+            <div class="shead"><h2>สรุปช่องทาง / คูเรียร์ / การชำระเงิน</h2><button class="dim-btn" style="padding:6px 12px;font-size:12px;" onclick="goExplore('channel')">เจาะลึกทั้งหมด →</button></div>
+            <div class="chart" id="chart-teaser"></div>
           </div>
-          <div class="line-chart" id="chart-daily"></div>
-          <div class="legend-line">เฉลี่ย ~103 ออเดอร์/วัน · ไม่มีวันพุ่งผิดปกติ</div>
         </div>
-      </div>
-
-      <!-- unit + product -->
-      <div class="grid grid-2">
-        <div class="card" id="unit">
-          <div class="card-head">
-            <h3>ตีกลับตามยูนิต (จำนวนดิบ)</h3>
-            <button class="expand-btn" onclick="showUnitCountModal()">ดูทั้งหมด 40 →</button>
-          </div>
-          <div class="chart" id="chart-unit"></div>
-          <div class="legend-line">สำหรับวางแผนกำลังคน — ไม่ใช่ตัวชี้ปัญหา ดู % ด้านบนแทน</div>
-        </div>
-        <div class="card" id="product">
-          <div class="card-head">
-            <h3>สินค้าที่ถูกตีกลับบ่อยที่สุด</h3>
-            <button class="expand-btn" onclick="showProductModal()">ดูทั้งหมด →</button>
-          </div>
-          <div class="chart" id="chart-product"></div>
-          <div class="legend-line">10 อันดับแรก จาก 3,188 ออเดอร์</div>
-        </div>
-      </div>
-
-      <!-- status / payment / courier / channel -->
-      <div class="grid grid-4">
-        <div class="card">
-          <div class="card-head"><h3>สถานะขนส่ง</h3></div>
-          <div class="chart" id="chart-status"></div>
-          <div class="legend-line">ยังไม่ใช่ “สาเหตุ” ที่แท้จริง — ขนส่งไม่บันทึกจากผู้รับว่าปฏิเสธรับด้วยเหตุผลอะไร</div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>วิธีชำระเงิน</h3></div>
-          <div class="chart" id="chart-payment"></div>
-          <div class="legend-line">ครบทุกประเภทแล้ว</div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>บริษัทขนส่ง</h3></div>
-          <div class="table-wrap"><table><thead><tr><th>บริษัทขนส่ง</th><th class="num">จำนวน</th><th class="num">มูลค่า</th><th class="num">สัดส่วน</th></tr></thead><tbody id="table-courier"></tbody></table></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>ช่องทางขาย</h3></div>
-          <div class="chart" id="chart-channel"></div>
-          <div class="legend-line">FB สูงสุด — แต่เป็นช่องทางขายหลักอยู่แล้ว ยังไม่มียอดขายจริงต่อช่องทางมาเทียบเป็น %</div>
-        </div>
-      </div>
+      </section>
 
       <footer>
-        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.<br>
-        พนักงานขาย (Sales): ยังไม่มีข้อมูลนี้ผูกกับออเดอร์ในชุดข้อมูลปัจจุบัน อยู่ระหว่างเพิ่มเติม — จะนำมาคำนวณ "ตีกลับ + มูลค่าต่อพนักงานขาย" เมื่อได้ข้อมูลครบ
+        SOURCE: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" — Discuse (3,188 rows) · Total_Order on Sell (filtered Jul) · config — all figures computed directly from raw data, unadjusted.
       </footer>
 
     </div>
     </div>
-    <!-- /view-dashboard -->
+    <!-- /view-overview -->
 
-    <div class="view" id="view-insight">
-    <div class="content-inner">
+    <!-- ================= EXPLORE ================= -->
+    <div class="view" id="view-explore">
+    <div class="wrap">
 
       <div class="page-head">
         <div>
+          <p class="eyebrow">เจาะลึกข้อมูล</p>
+          <h1 id="exploreTitle">อัตราตีกลับต่อยูนิต</h1>
+          <p class="desc" id="exploreDesc">เทียบยอดขายจริงต่อยูนิต — 10 ยูนิตอัตราสูงสุด (เฉพาะยูนิตที่มียอดขาย ≥ 300 ออเดอร์/เดือน)</p>
+        </div>
+        <div class="meta" id="exploreMeta">1–31 ก.ค. 2569</div>
+      </div>
+
+      <div class="dim-row" id="dimSwitcher"></div>
+
+      <div class="panel" id="exploreChartPanel">
+        <div class="chart" id="exploreChart"></div>
+        <div class="legend-line" id="exploreChartLegend"></div>
+      </div>
+
+      <div class="panel table-wrap" id="exploreTablePanel">
+        <table id="exploreTable"><thead id="exploreThead"></thead><tbody id="exploreTbody"></tbody></table>
+      </div>
+
+      <div class="panel" id="exploreDrillPanel" style="display:none;">
+        <div class="shead"><h2 id="exploreDrillTitle"></h2><span class="hint">คลิกแถวภูมิภาคด้านบนเพื่อดูจังหวัด</span></div>
+        <div class="table-wrap"><table id="exploreDrillTable"><thead><tr><th>จังหวัด</th><th class="num">จำนวนตีกลับ</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วนในภาค</th></tr></thead><tbody id="exploreDrillTbody"></tbody></table></div>
+      </div>
+
+    </div>
+    </div>
+    <!-- /view-explore -->
+
+    <!-- ================= INSIGHT ================= -->
+    <div class="view" id="view-insight">
+    <div class="wrap">
+
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Insight สำหรับผู้บริหาร</p>
           <h1>สินค้าตีกลับ ก.ค. 2569: ปัญหากระจุกตัวที่ 2 ยูนิต และเกิดจากกระบวนการนัดส่ง ไม่ใช่คุณภาพสินค้า</h1>
           <p class="desc">สรุปสำหรับนำเสนอผู้บริหาร — สิ่งที่พบ สาเหตุที่น่าจะเป็นไปได้มากที่สุด ผลกระทบทางธุรกิจ และสิ่งที่ขอให้อนุมัติ</p>
         </div>
         <div class="meta">อ้างอิง 3,188 ออเดอร์ตีกลับ<br>1–31 ก.ค. 2569</div>
       </div>
 
-      <!-- executive summary -->
-      <div class="hero-panel">
-        <p class="quote">Bottom line: อัตราตีกลับเฉลี่ยทั้งบริษัทอยู่ที่ 3.4% ซึ่งไม่สูงมากในภาพรวม แต่กระจุกตัวผิดปกติที่ 2 ยูนิต (UNIT23 12.7%, UNIT18 8.3%) และ 94.6% ของเคสทั้งหมดเป็น "ระบบตีกลับอัตโนมัติ" — ไม่ใช่ลูกค้าปฏิเสธรับสินค้าหน้าประตู จึงชี้ไปทางปัญหากระบวนการนัดส่ง/ติดต่อลูกค้าของขนส่ง มากกว่าปัญหาคุณภาพสินค้าหรือความไม่พอใจของลูกค้า</p>
-        <p class="desc">ข้อเสนอ: เริ่มตรวจสอบกระบวนการที่ 2 ยูนิตนี้ก่อน และเปิดให้มีการบันทึก "สาเหตุการตีกลับ" จริง เพื่อยืนยันสมมติฐานและแก้ที่ต้นตอได้ตรงจุด</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="v">3.4%</span><span class="l">อัตราตีกลับเฉลี่ยบริษัท (93,100 ออเดอร์)</span></div>
-          <div class="hero-stat"><span class="v">฿1.70M</span><span class="l">มูลค่าสินค้าตีกลับ (ราคาขาย)</span></div>
-          <div class="hero-stat"><span class="v">94.6%</span><span class="l">เป็นระบบตีกลับอัตโนมัติ</span></div>
-          <div class="hero-stat"><span class="v">2 ยูนิต</span><span class="l">อัตราสูงกว่าค่าเฉลี่ย 2–4 เท่า</span></div>
+      <div class="callout">
+        <h2>Bottom line</h2>
+        <p>อัตราตีกลับเฉลี่ยทั้งบริษัทอยู่ที่ 3.4% ซึ่งไม่สูงมากในภาพรวม แต่กระจุกตัวผิดปกติที่ 2 ยูนิต (UNIT23 12.7%, UNIT18 8.3%) และ 94.6% ของเคสทั้งหมดเป็น "ระบบตีกลับอัตโนมัติ" — ไม่ใช่ลูกค้าปฏิเสธรับสินค้าหน้าประตู จึงชี้ไปทางปัญหากระบวนการนัดส่ง/ติดต่อลูกค้าของขนส่ง มากกว่าปัญหาคุณภาพสินค้าหรือความไม่พอใจของลูกค้า</p>
+        <div class="chips">
+          <span class="chip">อัตราเฉลี่ย <b>3.4%</b></span>
+          <span class="chip">มูลค่าตีกลับ <b>฿1.70M</b></span>
+          <span class="chip">Auto-return <b>94.6%</b></span>
+          <span class="chip"><b>2 ยูนิต</b> สูงกว่าเฉลี่ย 2–4 เท่า</span>
         </div>
       </div>
 
-      <!-- key findings -->
-      <div>
-        <div class="card-head" style="margin-top:4px;"><h3>สิ่งที่พบ — เรียงตามน้ำหนักผลกระทบ</h3><span class="tag">แต่ละข้อ = สิ่งที่เห็นในข้อมูล + ทำไมสำคัญ</span></div>
+      <section>
+        <div class="shead"><h2>สิ่งที่พบ — เรียงตามน้ำหนักผลกระทบ</h2><span class="hint">แต่ละข้อ = สิ่งที่เห็นในข้อมูล + ทำไมสำคัญ</span></div>
         <div class="finding-grid">
           <div class="finding">
             <span class="n">1</span>
@@ -808,46 +624,45 @@
             <p>99.7% (3,178 ออเดอร์) ของออเดอร์ตีกลับเป็นการชำระแบบเก็บเงินปลายทาง — ลูกค้าไม่ได้ผูกมัดด้วยการจ่ายเงินล่วงหน้า ทำให้การนัดส่งไม่สำเร็จแปลงเป็น "ตีกลับ" ได้ง่ายกว่าออเดอร์ที่ชำระเงินแล้ว</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- business impact -->
-      <div class="card">
-        <div class="card-head"><h3>ผลกระทบทางธุรกิจ</h3><span class="tag">ตัวเลขนี้ยังเป็นค่าต่ำสุด (underestimate)</span></div>
-        <div class="impact-compare">
-          <div class="impact-card before">
-            <span class="tag">มูลค่าที่เห็นในข้อมูล / เดือน</span>
-            <span class="big">฿1,704,627</span>
-            <span class="sub">ราคาขายของสินค้าที่ตีกลับ ก.ค. 2569 เดือนเดียว — เฉลี่ย ฿535/ออเดอร์</span>
+      <section>
+        <div class="shead"><h2>ผลกระทบทางธุรกิจ</h2><span class="hint">ตัวเลขนี้ยังเป็นค่าต่ำสุด (underestimate)</span></div>
+        <div class="panel">
+          <div class="impact-cmp">
+            <div class="impact-card">
+              <span class="tag">มูลค่าที่เห็นในข้อมูล / เดือน</span>
+              <span class="big">฿1,704,627</span>
+              <span class="sub">ราคาขายของสินค้าที่ตีกลับ ก.ค. 2569 เดือนเดียว — เฉลี่ย ฿535/ออเดอร์</span>
+            </div>
+            <div class="eq">≈</div>
+            <div class="impact-card after">
+              <span class="tag">Run-rate ต่อปี ถ้าไม่แก้ไข</span>
+              <span class="big">~฿20.5M</span>
+              <span class="sub">ประมาณการหยาบจากอัตรารายเดือน ×12 (ยังไม่ปรับตามฤดูกาล)</span>
+            </div>
           </div>
-          <div class="eq">≈</div>
-          <div class="impact-card after">
-            <span class="tag">Run-rate ต่อปี ถ้าไม่แก้ไข</span>
-            <span class="big">~฿20.5M</span>
-            <span class="sub">ประมาณการหยาบจากอัตรารายเดือน ×12 (ยังไม่ปรับตามฤดูกาล)</span>
+          <p class="legend-line" style="margin-top:14px;">ตัวเลขนี้นับเฉพาะ <strong style="color:var(--ink);">ราคาขาย</strong> — ยังไม่รวมค่าส่งไป+ส่งกลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ต้นทุนที่แท้จริงต่อเดือนจึงสูงกว่านี้อีก (ดูหัวข้อข้อจำกัดของข้อมูลด้านล่าง)</p>
+        </div>
+      </section>
+
+      <section>
+        <div class="shead"><h2>สมมติฐานสาเหตุหลัก</h2><span class="hint">เรียงจากหลักฐานหนักแน่นที่สุด — ยังต้องยืนยันด้วยข้อมูล "สาเหตุ" จริง</span></div>
+        <div class="panel">
+          <div class="num-list">
+            <div class="num-item"><div class="n">1</div><p><strong>ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลาไม่รัดกุมพอ</strong> — สอดคล้องกับสัดส่วนตีกลับอัตโนมัติที่สูงถึง 94.6%</p></div>
+            <div class="num-item"><div class="n">2</div><p><strong>2 ยูนิตนี้อาจมีปัญหาเฉพาะจุด</strong> เช่น พื้นที่จัดส่งยาก ข้อมูลที่อยู่ลูกค้าไม่ครบ หรือช่องทางลูกค้าต่างจากยูนิตอื่น — ต้องลงลึกเป็นรายยูนิต</p></div>
+            <div class="num-item"><div class="n">3</div><p><strong>COD ทำให้ลูกค้าไม่มีแรงจูงใจติดตามพัสดุ</strong> เมื่อไม่ได้จ่ายเงินล่วงหน้า การไม่รับสาย/ไม่อยู่บ้านจึงไม่มีต้นทุนต่อลูกค้า</p></div>
+            <div class="num-item"><div class="n">4</div><p><strong>ยังฟันธง "Flash Express มีปัญหา" ไม่ได้</strong> — 95.0% (3,029 ออเดอร์) ของยอดตีกลับวิ่งผ่าน Flash ก็จริง แต่ Flash เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ยังไม่มีสัดส่วนงานจริงที่แต่ละคูเรียร์ขนส่งมาเทียบเป็น %</p></div>
           </div>
         </div>
-        <p class="legend-line" style="margin-top:14px;">ตัวเลขนี้นับเฉพาะ <strong style="color:var(--ink);">ราคาขาย</strong> — ยังไม่รวมค่าส่งไป+ส่งกลับ ต้นทุนสินค้า (COGS) และแรงงานจัดการคืนสินค้า ต้นทุนที่แท้จริงต่อเดือนจึงสูงกว่านี้อีก (ดูหัวข้อข้อจำกัดของข้อมูลด้านล่าง)</p>
-      </div>
+      </section>
 
-      <!-- root cause -->
-      <div class="card">
-        <div class="card-head"><h3>สมมติฐานสาเหตุหลัก</h3><span class="tag">เรียงจากหลักฐานหนักแน่นที่สุด — ยังต้องยืนยันด้วยข้อมูล "สาเหตุ" จริง</span></div>
-        <div class="numbered-list">
-          <div class="numbered-item"><div class="n">1</div><p><strong>ขั้นตอนนัดส่ง/ติดต่อลูกค้าก่อนหมดเวลาไม่รัดกุมพอ</strong> — สอดคล้องกับสัดส่วนตีกลับอัตโนมัติที่สูงถึง 94.6%</p></div>
-          <div class="numbered-item"><div class="n">2</div><p><strong>2 ยูนิตนี้อาจมีปัญหาเฉพาะจุด</strong> เช่น พื้นที่จัดส่งยาก ข้อมูลที่อยู่ลูกค้าไม่ครบ หรือช่องทางลูกค้าต่างจากยูนิตอื่น — ต้องลงลึกเป็นรายยูนิต</p></div>
-          <div class="numbered-item"><div class="n">3</div><p><strong>COD ทำให้ลูกค้าไม่มีแรงจูงใจติดตามพัสดุ</strong> เมื่อไม่ได้จ่ายเงินล่วงหน้า การไม่รับสาย/ไม่อยู่บ้านจึงไม่มีต้นทุนต่อลูกค้า</p></div>
-          <div class="numbered-item"><div class="n">4</div><p><strong>ยังฟันธง "Flash Express มีปัญหา" ไม่ได้</strong> — 95.0% (3,029 ออเดอร์) ของยอดตีกลับวิ่งผ่าน Flash ก็จริง แต่ Flash เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ยังไม่มีสัดส่วนงานจริงที่แต่ละคูเรียร์ขนส่งมาเทียบเป็น %</p></div>
-        </div>
-      </div>
-
-      <!-- recommended actions -->
-      <div class="card">
-        <div class="card-head"><h3>ข้อเสนอเชิงปฏิบัติ</h3><span class="tag">เรียงตามลำดับความสำคัญ</span></div>
-        <div class="table-wrap">
+      <section>
+        <div class="shead"><h2>ข้อเสนอเชิงปฏิบัติ</h2><span class="hint">เรียงตามลำดับความสำคัญ</span></div>
+        <div class="panel table-wrap">
           <table>
-            <thead>
-              <tr><th>ลำดับ</th><th>สิ่งที่ควรทำ</th><th>ผู้รับผิดชอบที่แนะนำ</th><th>ผลที่คาดหวัง</th></tr>
-            </thead>
+            <thead><tr><th>ลำดับ</th><th>สิ่งที่ควรทำ</th><th>ผู้รับผิดชอบที่แนะนำ</th><th>ผลที่คาดหวัง</th></tr></thead>
             <tbody>
               <tr>
                 <td><span class="priority p1">P1</span></td>
@@ -882,18 +697,18 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
 
-      <!-- decision needed -->
-      <div class="ask-panel">
-        <span class="from">สิ่งที่ขอการอนุมัติจากผู้บริหารในรอบนี้</span>
-        <span class="to">1) เริ่มตรวจกระบวนการ UNIT23/UNIT18 &nbsp;·&nbsp; 2) บังคับบันทึก "สาเหตุการตีกลับ" ทุกเคส &nbsp;·&nbsp; 3) ขอข้อมูล COGS + ค่าส่งเพิ่มเพื่อคำนวณผลขาดทุนจริง</span>
-      </div>
+      <section>
+        <div class="ask-panel">
+          <span class="from">สิ่งที่ขอการอนุมัติจากผู้บริหารในรอบนี้</span>
+          <span class="to">1) เริ่มตรวจกระบวนการ UNIT23/UNIT18 &nbsp;·&nbsp; 2) บังคับบันทึก "สาเหตุการตีกลับ" ทุกเคส &nbsp;·&nbsp; 3) ขอข้อมูล COGS + ค่าส่งเพิ่มเพื่อคำนวณผลขาดทุนจริง</span>
+        </div>
+      </section>
 
-      <!-- data confidence / gaps -->
       <div class="gap-panel">
-        <div class="card-head"><h2 style="font-size:14px; margin:0;">ข้อจำกัดของข้อมูล — สิ่งที่ผู้บริหารควรรู้ก่อนตัดสินใจ</h2></div>
-        <div class="numbered-list">
+        <div class="shead"><h2>ข้อจำกัดของข้อมูล — สิ่งที่ผู้บริหารควรรู้ก่อนตัดสินใจ</h2></div>
+        <div class="num-list">
           <div class="gap-item">
             <span class="chip critical">Critical</span>
             <p><strong>ยังไม่มีคอลัมน์ "สาเหตุการตีกลับ"</strong> — มีแต่สถานะขนส่งดิบ (ตีกลับอัตโนมัติ / คูเรียร์ส่งคืนคลัง / ยืนยันตีกลับแล้ว / จัดส่งไม่สำเร็จ) ซึ่งบอกแค่ "กลไก" ไม่บอก "สาเหตุ" ที่แท้จริง ทำให้สมมติฐานด้านบนยังยืนยันไม่ได้ 100% จนกว่าจะมีข้อมูลนี้</p>
@@ -918,7 +733,7 @@
       </div>
 
       <footer>
-        ที่มา: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" · แท็บ Discuse (ฐานข้อมูลตีกลับเต็ม 3,188 แถว), Total_Order on Sell (ยอดขายจริงกรองเฉพาะ ก.ค.) และแท็บ config (ตารางสรุป) · Insight นี้สรุปจากข้อมูลในแท็บ Dashboard ทั้งหมด ตัวเลขไม่มีการปรับแต่ง
+        ที่มา: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" · แท็บ Discuse (ฐานข้อมูลตีกลับเต็ม 3,188 แถว), Total_Order on Sell (ยอดขายจริงกรองเฉพาะ ก.ค.) และแท็บ config (ตารางสรุป) · Insight นี้สรุปจากข้อมูลในแท็บ ภาพรวม/เจาะลึกข้อมูล ทั้งหมด ตัวเลขไม่มีการปรับแต่ง
       </footer>
 
     </div>
@@ -928,461 +743,387 @@
   </main>
 </div>
 
-<dialog id="modal">
-  <div class="modal-head">
-    <h3 id="modal-title"></h3>
-    <button class="modal-close" onclick="document.getElementById('modal').close()" aria-label="ปิด"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-  </div>
-  <div class="modal-body" id="modal-body"></div>
-</dialog>
-
 <script>
-  /* ---------------- view switching (Dashboard / Insight) ---------------- */
-  (function initViewNav() {
-    const navLinks = document.querySelectorAll('#view-nav a');
-    const sectionNavWrap = document.getElementById('section-nav-wrap');
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const view = link.dataset.view;
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById('view-' + view).classList.add('active');
-        if (sectionNavWrap) sectionNavWrap.style.display = view === 'dashboard' ? '' : 'none';
-        document.getElementById('view-' + view).scrollTop = 0;
-        window.scrollTo(0, 0);
-      });
-    });
-  })();
+/* ============================================================
+   view switching
+============================================================ */
+function switchView(view){
+  document.querySelectorAll('#view-nav .navbtn').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('#view-nav .navbtn').forEach(btn=>{
+  btn.addEventListener('click', ()=>switchView(btn.dataset.view));
+});
+function goExplore(dim){ switchView('explore'); selectDim(dim); }
+function goExploreRegion(region){ switchView('explore'); selectDim('region'); showProvince(region); }
 
-  /* ---------------- email gate ----------------
-     Client-side allow-list only — this does NOT verify identity,
-     it just checks the typed string against a known list. Anyone
-     who reads the page source can see the list and any of these
-     addresses. Use for casual deterrence only, not real security. */
-  const ALLOWED_EMAILS = [
-    'boomericz@gmail.com',
-    'phongphuy@gmail.com',
-    'ptglorydata02@gmail.com',
-    'supervisorsalefbptgrory9@gmail.com',
-    'ptglorydata@gmail.com',
-  ];
-  const GATE_KEY = 'return_report_jul69_auth';
+/* ============================================================
+   email gate — client-side allow-list only (casual deterrence, not real auth)
+============================================================ */
+const ALLOWED_EMAILS = [
+  'boomericz@gmail.com',
+  'phongphuy@gmail.com',
+  'ptglorydata02@gmail.com',
+  'supervisorsalefbptgrory9@gmail.com',
+  'ptglorydata@gmail.com',
+];
+const GATE_KEY = 'return_report_jul69_auth';
+(function initGate(){
+  const gate=document.getElementById('gate'), form=document.getElementById('gate-form'),
+        input=document.getElementById('gate-email'), err=document.getElementById('gate-error');
+  const saved=localStorage.getItem(GATE_KEY);
+  if(saved && ALLOWED_EMAILS.includes(saved)){ gate.classList.add('hidden'); return; }
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const val=input.value.trim().toLowerCase();
+    if(ALLOWED_EMAILS.includes(val)){ localStorage.setItem(GATE_KEY, val); gate.classList.add('hidden'); }
+    else{ err.textContent='อีเมลนี้ไม่มีสิทธิ์เข้าดูหน้านี้'; input.focus(); }
+  });
+})();
 
-  (function initGate() {
-    const gate = document.getElementById('gate');
-    const form = document.getElementById('gate-form');
-    const input = document.getElementById('gate-email');
-    const err = document.getElementById('gate-error');
+/* ============================================================
+   helpers
+============================================================ */
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const fmt1=n=>n.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+const money=n=>'฿'+fmt(n);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-    const saved = localStorage.getItem(GATE_KEY);
-    if (saved && ALLOWED_EMAILS.includes(saved)) {
-      gate.classList.add('hidden');
-      return;
-    }
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = input.value.trim().toLowerCase();
-      if (ALLOWED_EMAILS.includes(val)) {
-        localStorage.setItem(GATE_KEY, val);
-        gate.classList.add('hidden');
-      } else {
-        err.textContent = 'อีเมลนี้ไม่มีสิทธิ์เข้าดูหน้านี้';
-        input.focus();
-      }
-    });
-  })();
-
-  const fmt = n => Math.round(n).toLocaleString('en-US');
-  const fmt1 = n => n.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
-  const money = n => '฿' + fmt(n);
-
-  function openModal(title, bodyHtml) {
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-body').innerHTML = bodyHtml;
-    document.getElementById('modal').showModal();
-    enableSort(document.getElementById('modal-body'));
-  }
-  function tableHtml(headers, rows) {
-    return `<div class="table-wrap scroll-y"><table><thead><tr>${headers.map(h=>`<th${h.num?' class="num"':''}>${h.label}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
-  }
-
-  /* click or Enter/Space a <th> to sort its table by that column; numeric-aware, toggles asc/desc */
-  function enableSort(root) {
-    root.querySelectorAll('table').forEach(table => {
-      const ths = [...table.querySelectorAll('thead th')];
-      ths.forEach((th, colIndex) => {
-        th.tabIndex = 0;
-        th.setAttribute('role', 'columnheader button');
-        th.setAttribute('aria-sort', 'none');
-        const doSort = () => {
-          const tbody = table.querySelector('tbody');
-          const rows = [...tbody.querySelectorAll('tr')];
-          const isNum = th.classList.contains('num');
-          const dir = th.dataset.dir === 'asc' ? 'desc' : 'asc';
-          ths.forEach(h => { delete h.dataset.dir; h.classList.remove('sort-asc', 'sort-desc'); h.setAttribute('aria-sort', 'none'); });
-          th.dataset.dir = dir;
-          th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
-          th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
-          rows.sort((a, b) => {
-            const av = a.children[colIndex].textContent.trim();
-            const bv = b.children[colIndex].textContent.trim();
-            if (isNum) {
-              const an = parseFloat(av.replace(/[^0-9.-]/g, '')) || 0;
-              const bn = parseFloat(bv.replace(/[^0-9.-]/g, '')) || 0;
-              return dir === 'asc' ? an - bn : bn - an;
-            }
-            return dir === 'asc' ? av.localeCompare(bv, 'th') : bv.localeCompare(av, 'th');
-          });
-          rows.forEach(r => tbody.appendChild(r));
-        };
-        th.addEventListener('click', doSort);
-        th.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doSort(); }
+function enableSort(root){
+  root.querySelectorAll('table').forEach(table=>{
+    const ths=[...table.querySelectorAll('thead th')];
+    ths.forEach((th,colIndex)=>{
+      th.tabIndex=0; th.setAttribute('role','columnheader button'); th.setAttribute('aria-sort','none');
+      const doSort=()=>{
+        const tbody=table.querySelector('tbody'); const rows=[...tbody.querySelectorAll('tr')];
+        const isNum=th.classList.contains('num'); const dir=th.dataset.dir==='asc'?'desc':'asc';
+        ths.forEach(h=>{ delete h.dataset.dir; h.classList.remove('sort-asc','sort-desc'); h.setAttribute('aria-sort','none'); });
+        th.dataset.dir=dir; th.classList.add(dir==='asc'?'sort-asc':'sort-desc'); th.setAttribute('aria-sort',dir==='asc'?'ascending':'descending');
+        rows.sort((a,b)=>{
+          const av=a.children[colIndex].textContent.trim(), bv=b.children[colIndex].textContent.trim();
+          if(isNum){ const an=parseFloat(av.replace(/[^0-9.-]/g,''))||0, bn=parseFloat(bv.replace(/[^0-9.-]/g,''))||0; return dir==='asc'?an-bn:bn-an; }
+          return dir==='asc'?av.localeCompare(bv,'th'):bv.localeCompare(av,'th');
         });
-      });
+        rows.forEach(r=>tbody.appendChild(r));
+      };
+      th.addEventListener('click',doSort);
+      th.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); doSort(); } });
     });
+  });
+}
+
+/* ============================================================
+   data (unchanged from source sheet — see footer for provenance)
+============================================================ */
+const UNIT_RETURNS = [
+  ['UNIT15',437,253634.00],['UNIT9',365,165910.00],['UNIT12',356,188030.00],['UNIT11',337,177100.00],
+  ['UNIT13',227,110150.00],['UNIT5',221,131290.00],['UNIT21',145,61030.00],['UNIT23',108,49440.00],
+  ['UNIT8',103,56380.00],['UNIT7',102,56980.00],['UNIT14',96,39650.00],['UNIT18',81,36030.00],
+  ['LineOA',54,28960.00],['UNIT16',54,22740.00],["TikTok_D'Lellise",51,31000.00],['UNIT11(CRM)',44,31290.00],
+  ['UNIT13(CRM)',43,24874.00],['Shopee_1',40,30068.00],['UNIT17',39,24620.00],['UNIT12(CRM)',31,21660.00],
+  ['UNIT22',23,11180.00],['UNIT 7(CRM)',22,14960.00],['ครีมบัวหิมะ',20,8820.00],['Shopee_2',19,24327.00],
+  ['UNIT9(CRM)',18,9700.00],['UNIT4',17,9110.00],['UNIT4(CRM)',17,12190.00],['Lazada_2',16,12937.61],
+  ['Lazada_1',15,10149.20],['TikTok_ชาสมุนไพร Le Vonglow',15,6240.00],['UNIT21(CRM)',15,8470.00],['TikTok_Dwawa',14,8740.00],
+  ['UNIT 15 (CRM)',10,7127.00],['UNIT 5 (CRM)',9,5520.00],['UNIT16(CRM)',8,3980.00],['UNIT17(CRM)',6,3740.00],
+  ['UNIT 8 (CRM)',5,4150.00],['UNIT14(CRM)',2,1080.00],['UNIT6',2,980.00],['UNIT10',1,390.00],
+];
+
+const PRODUCTS = [
+  ['มัลติกรีน เวจจี้ 1 แถม 1',379,185454.7],['ชาแม่แย้ม 1 แถม 2',311,121657],['ดีเลลลิสเซ่ 1 แถม 1',274,134592],
+  ['จินเซง 1 แถม 1',174,85235],['เจสันเอ็ม 1 แถม 1',169,82726.43],['เจสันเอ็ม 2 กป + Valtora-x 1',153,75570],
+  ['ชาแก้ปวดเมื่อย 1 แถม 2',122,47985.28],['ลูนารี่ 1 แถม 1',116,45591],['พลูคาว 1 แถม 1',92,35880],
+  ['โพรไบโอวิต้า 1 แถม 1',91,44571],['เวนอร์ร่า กลูต้า พลัส 2 ห่อ',90,35100],['วีมีวิสตร้า 1 แถม 1',89,43910],
+  ['ลูนารี่ไบโอ เมล่อนเอส 1 แถม 1',69,26910],['ชาแม่แย้ม 4',62,30380],['น้ำชงลูนารี่ไฟเบอร์ 1 แถม 1',59,23110],
+  ['มัลติกรีน เวจจี้ 5',56,55944],['Valtora-X',38,19020],['กาแฟต่อมลูกหมาก 1 แถม 1',34,16650],
+  ['ชาแม่แย้ม 2 แถม 4',28,21000],['ดีเลลลิสเซ่ 2 แถม 2',28,23210],['ชาแก้ปวดเมื่อย 4',23,11270],
+  ['โพรไบโอวิต้า 1',22,6580],['ดีเลลลิสเซ่ 1 + โพรไบโอวิต้า 1',21,10290],['ลูนารี่ 2 แถม 2',21,14310],
+  ['ดีเลลลิสเซ่ 2 + โพรไบโอวิต้า 2',20,15745],['โพรไบโอวิต้า 2 ห่อ',20,9800],['โพรไบโอวิต้า 1 + ดีเลลลิสเซ่ 1',20,9800],
+  ['จินเซง 4 + ชาแม่แย้มห่อเล็ก 1',18,14220],['ครีมบัวหิมะ 2 กระปุก',17,6630],['จินเซง 5 + แผ่นทอง 1',17,15130],
+  ['โอเรนจิพลัส 1 แถม 2',17,6630],['ครีม 1 แถม 1',16,6450],['เวนอร์ร่า กลูต้า พลัส 4 ห่อ',16,11160],
+  ['โพรไบโอวิต้า 2 แถม 2',14,11060],['เจสันเอ็ม 4 กป + Valtora-x 1 (790)',13,10270],['ลูนารี่ 5',12,11060],
+  ['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 1',12,8280],['มัลติกรีน เวจจี้ 3 แถม 4',11,15290],['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 2',11,8690],
+  ['ดีเลลลิสเซ่ 1 + วีมีวิสตร้า 1',10,4850],['ชาต่อมลูกหมาก 4',9,4410],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (650)',9,5850],
+  ['จินเซง 2 แถม 3',8,7120],['ลูนารี่(แดง) 1 + ลูนารี่(ส้ม) 1',8,3120],['วีมีวิสตร้า 4 กระปุก',8,6800],
+  ['เจสันเอ็ม 2 แถม 2',8,7120],['ชาแก้ปวด 1 แถม 2',7,2730],['เจสันเอ็ม 5 กป + Valtora-x 1',7,7000],
+  ['เวอร์น่าพลัส 1 แถม 1',7,3430],['กาแฟต่อมลูกหมาก 2 แถม 2',6,4940],['จินเซง 3 แถม 3',6,6000],
+  ['ชาแม่แย้ม 4 แถม 8',6,28750],['ดีเลลลิสเซ่ 5 + กระบอกน้ำ My Bottle 1',6,6000],['มัลติกรีน เวจจี้ 2 แถม 2',6,5590],
+  ['ลูนารี่ไบโอ เมล่อนเอส',6,2544],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (690)',6,4850],
+];
+
+const RATES = [
+  ['UNIT23',12.7,108,848],['UNIT18',8.3,81,979],['UNIT8',6.1,103,1675],['ครีมบัวหิมะ',6.0,20,333],
+  ['UNIT13',5.9,227,3826],['UNIT5',5.4,221,4059],['UNIT9',4.8,365,7615],['UNIT11',4.7,337,7157],
+  ['LineOA',4.7,54,1159],['UNIT15',4.1,437,10539],['UNIT12',3.9,356,9048],['UNIT14',3.9,96,2486],
+  ['UNIT7',3.8,102,2663],['UNIT16',3.8,54,1437],['UNIT17',3.2,39,1222],['UNIT21',3.1,145,4617],
+  ['UNIT 7(CRM)',2.6,22,837],['UNIT4',2.5,17,667],['UNIT11(CRM)',2.5,44,1776],['UNIT13(CRM)',2.4,43,1783],
+  ['UNIT 5 (CRM)',2.1,9,428],['Lazada_2',1.9,16,854],['UNIT12(CRM)',1.4,31,2218],['UNIT21(CRM)',1.4,15,1083],
+  ['UNIT4(CRM)',1.3,17,1284],['TikTok_Dwawa',1.3,14,1067],['UNIT17(CRM)',1.2,6,492],["TikTok_D'Lellise",1.2,51,4229],
+  ['UNIT9(CRM)',1.2,18,1540],['Lazada_1',0.9,15,1714],['Shopee_2',0.8,19,2307],['TikTok_ชาสมุนไพร Le Vonglow',0.8,15,1847],
+  ['Shopee_1',0.7,40,5786],['UNIT 15 (CRM)',0.6,10,1633],
+];
+
+const REGIONS = [
+  ['ภาคกลาง',1283,'var(--c-violet)',699985.32],['ภาคใต้',533,'var(--c-blue)',269916.00],['ภาคตะวันออกเฉียงเหนือ',521,'var(--c-aqua)',276921.00],
+  ['ภาคตะวันออก',468,'var(--c-magenta)',248153.49],['ภาคเหนือ',209,'var(--c-orange)',113660.00],['ภาคตะวันตก',171,'var(--c-yellow)',92471.00],['ไม่ระบุ',3,'var(--muted)',3520.00],
+];
+
+const CHANNELS = [
+  ['FB',2714,1394644.00],['CRM',230,148741.00],['Marketplace',170,123461.81],['LineOA',74,37780.00],
+];
+
+const PROVINCES = {
+  'ภาคกลาง': [
+    ['กรุงเทพมหานคร',491,284649.43],['สมุทรปราการ',147,78271.00],['นนทบุรี',120,65476.64],['ปทุมธานี',104,56059.28],['นครปฐม',51,25599.00],['สมุทรสาคร',46,21519.00],
+    ['พระนครศรีอยุธยา',44,23187.00],['นครสวรรค์',43,23639.00],['สระบุรี',42,19740.00],['สุพรรณบุรี',38,19791.00],['พิษณุโลก',29,15519.00],['ลพบุรี',20,10660.00],
+    ['เพชรบูรณ์',18,8740.27],['นครนายก',14,6460.00],['กำแพงเพชร',13,6870.00],['ชัยนาท',13,6270.00],['สมุทรสงคราม',13,9799.00],['สุโขทัย',12,6000.00],
+    ['พิจิตร',9,4410.00],['สิงห์บุรี',9,4395.70],['อ่างทอง',4,1760.00],['อุทัยธานี',3,1170.00],
+  ],
+  'ภาคตะวันตก': [
+    ['ราชบุรี',52,31234.00],['เพชรบุรี',36,17658.00],['กาญจนบุรี',32,15680.00],['ประจวบคีรีขันธ์',31,16789.00],['ตาก',20,11110.00],
+  ],
+  'ภาคตะวันออก': [
+    ['ชลบุรี',228,119738.49],['ระยอง',87,46317.00],['ฉะเชิงเทรา',55,29670.00],['ปราจีนบุรี',33,19268.00],['จันทบุรี',31,16280.00],['สระแก้ว',22,11200.00],['ตราด',12,5680.00],
+  ],
+  'ภาคตะวันออกเฉียงเหนือ': [
+    ['นครราชสีมา',81,44116.00],['ขอนแก่น',51,26090.00],['อุดรธานี',42,21998.00],['เลย',40,20460.00],['อุบลราชธานี',39,21779.00],['บุรีรัมย์',29,15980.00],
+    ['หนองคาย',28,14120.00],['ร้อยเอ็ด',26,14720.00],['ศรีสะเกษ',26,14072.00],['นครพนม',25,14050.00],['กาฬสินธุ์',17,9350.00],['ชัยภูมิ',17,9159.00],
+    ['มหาสารคาม',17,9149.00],['สกลนคร',16,7949.00],['บึงกาฬ',14,6560.00],['สุรินทร์',14,5960.00],['มุกดาหาร',12,7000.00],['ยโสธร',10,5609.00],
+    ['อำนาจเจริญ',9,4570.00],['หนองบัวลำภู',8,4230.00],
+  ],
+  'ภาคเหนือ': [
+    ['เชียงใหม่',71,39976.00],['เชียงราย',37,19395.00],['พะเยา',23,11202.00],['น่าน',19,10688.00],['ลำปาง',19,9530.00],['ลำพูน',13,8170.00],
+    ['แพร่',10,5060.00],['อุตรดิตถ์',9,3910.00],['แม่ฮ่องสอน',8,5729.00],
+  ],
+  'ภาคใต้': [
+    ['สงขลา',87,41799.00],['นครศรีธรรมราช',83,39850.00],['สุราษฎร์ธานี',73,39070.00],['ภูเก็ต',67,33989.00],['ชุมพร',40,22487.00],['กระบี่',39,19712.00],
+    ['ตรัง',35,15631.00],['สตูล',25,11450.00],['ปัตตานี',22,11549.00],['พัทลุง',16,9249.00],['พังงา',13,7260.00],['ยะลา',12,5900.00],['ระนอง',12,7150.00],['นราธิวาส',9,4820.00],
+  ],
+  'ไม่ระบุ': [
+    ['ข้อมูลที่อยู่ไม่สมบูรณ์/พิมพ์ผิด',3,3520.00],
+  ],
+};
+
+const STATUSES = [
+  ['ตีกลับอัตโนมัติ','พัสดุถูกคูเรียร์พักไว้จนครบกำหนดเวลา ไม่มีการติดต่อสำเร็จ ระบบตีกลับให้เอง','SYSTEM_AUTO_RETURN',3017,1580875.00],
+  ['คูเรียร์ส่งคืนคลัง','คูเรียร์นำพัสดุกลับเข้าคลังต้นทางโดยตรง','Return',80,45980.00],
+  ['ยืนยันตีกลับแล้ว','ระบบขนส่งยืนยันสถานะตีกลับสมบูรณ์','RETURNED',58,54005.00],
+  ['จัดส่งไม่สำเร็จ','พยายามส่งแล้วแต่ไม่สำเร็จ (เช่น ที่อยู่ผิด/ติดต่อไม่ได้)','deliver_failed',31,23086.81],
+  ['เริ่มกระบวนการตีกลับ','อยู่ระหว่างเริ่มขั้นตอนตีกลับ ยังไม่จบ','RETURN_INITIATED',1,390.00],
+  ['แจ้งทางโทรศัพท์','บันทึกผ่านการโทรแจ้ง ไม่ผ่านระบบอัตโนมัติ','PHONE',1,290.00],
+];
+
+const PAYMENTS = [
+  ['COD (เก็บเงินปลายทาง)',3016,1580285.00],['COD',162,116860.81],['Credit Card/Debit Card',2,1430.00],['COD (เก็บเงินปลายทาง), PT2',1,490.00],
+  ['Mbanking',1,1780.00],['PAY_LATER',1,790.00],['PROMPTPAY',1,1250.00],['PT2',1,390.00],['SPayLater',1,471.00],['ShopeePay Balance',1,390.00],['ShopeePay Linked Bank Account',1,490.00],
+];
+
+const COURIERS = [
+  ['Flash Express',3029,1586922.70],['J&T Express',80,45980.00],['SPX Express',54,51864.00],['LEX Express',25,19860.11],
+];
+
+const DAILY = [
+  137,148,117,134,131,117,107,106,107,86,76,94,78,77,86,84,81,103,76,87,96,84,73,82,96,103,124,97,121,149,131
+];
+
+const TOTAL_RETURNS = 3188;
+
+/* ============================================================
+   chart renderers
+============================================================ */
+function renderBars(containerId, rows, color, opts={}){
+  const el=document.getElementById(containerId);
+  const max=Math.max(...rows.map(d=>d.value));
+  const total=opts.total || rows.reduce((a,b)=>a+b.value,0);
+  const compact=opts.compact?' compact':'';
+  el.innerHTML=rows.map(d=>{
+    const share=((d.value/total)*100).toFixed(1);
+    const tip=d.tip || (d.label+': '+fmt(d.value));
+    return '<div class="bar-row'+compact+'"><div class="rowlabel" title="'+esc(d.label)+'">'+esc(d.label)+'</div>'+
+      '<div class="bar-track"><div class="bar-fill" style="width:'+((d.value/max)*100)+'%;background:'+color+';" data-tooltip="'+esc(tip)+'"></div></div>'+
+      '<div class="rowvalue">'+fmt(d.value)+' <small>'+share+'%</small></div></div>';
+  }).join('');
+}
+function renderRateBars(containerId, rows, avg){
+  const el=document.getElementById(containerId);
+  const max=Math.max(...rows.map(d=>d.rate), avg*1.15);
+  el.innerHTML=rows.map(d=>{
+    const avgPct=(avg/max)*100;
+    const color=d.rate>=avg*2?'var(--critical)':d.rate>=avg?'var(--warning)':'var(--c-blue)';
+    const tip=d.label+': '+d.returns+' ตีกลับ / '+fmt(d.total)+' ออเดอร์';
+    return '<div class="bar-row"><div class="rowlabel" title="'+esc(d.label)+'">'+esc(d.label)+'</div>'+
+      '<div class="bar-track"><div class="bar-fill" style="width:'+((d.rate/max)*100)+'%;background:'+color+';" data-tooltip="'+esc(tip)+'"></div>'+
+      '<div style="position:absolute;left:'+avgPct+'%;top:-3px;bottom:-3px;width:1px;border-left:2px dashed var(--muted);"></div></div>'+
+      '<div class="rowvalue">'+fmt1(d.rate)+'%</div></div>';
+  }).join('');
+}
+function renderLine(containerId, values, opts={}){
+  const el=document.getElementById(containerId);
+  const data=values.map((v,i)=>({label:String(i+1),value:v}));
+  const W=760,H=210,padL=30,padR=10,padT=14,padB=24;
+  const innerW=W-padL-padR, innerH=H-padT-padB;
+  const max=Math.max(...data.map(d=>d.value)), min=0;
+  const x=i=>padL+(i/(data.length-1))*innerW;
+  const y=v=>padT+innerH-((v-min)/(max-min))*innerH;
+  const points=data.map((d,i)=>[x(i),y(d.value)]);
+  const linePath=points.map((p,i)=>(i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const areaPath=linePath+' L'+points[points.length-1][0].toFixed(1)+','+(padT+innerH).toFixed(1)+' L'+points[0][0].toFixed(1)+','+(padT+innerH).toFixed(1)+' Z';
+  const gridLines=[0,0.5,1].map(f=>{
+    const yy=padT+innerH*f, val=Math.round(max*(1-f));
+    return '<line class="gridline" x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'"></line><text class="axislabel" x="'+(padL-6)+'" y="'+(yy+3)+'" text-anchor="end">'+val+'</text>';
+  }).join('');
+  const dots=data.map((d,i)=>{
+    const [px,py]=points[i]; const isPeak=d.value===max;
+    const showLabel=(i%5===0)||i===data.length-1;
+    return '<circle class="dot'+(isPeak?' peak':'')+'" cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isPeak?4:3)+'"><title>วันที่ '+d.label+': '+fmt(d.value)+' ออเดอร์</title></circle>'+
+      (showLabel?'<text class="axislabel" x="'+px.toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle">'+d.label+'</text>':'');
+  }).join('');
+  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'+
+    '<defs><linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">'+
+    '<stop offset="0%" stop-color="var(--brand-1)" stop-opacity="0.28"></stop>'+
+    '<stop offset="100%" stop-color="var(--brand-2)" stop-opacity="0"></stop></linearGradient></defs>'+
+    gridLines+'<line class="baseline" x1="'+padL+'" y1="'+(padT+innerH)+'" x2="'+(W-padR)+'" y2="'+(padT+innerH)+'"></line>'+
+    '<path class="area" d="'+areaPath+'"></path><path class="line" d="'+linePath+'"></path>'+dots+'</svg>';
+}
+function renderDonut(containerId, legendId, regions, onClick){
+  const svg=document.getElementById(containerId);
+  const total=regions.reduce((a,b)=>a+b[1],0);
+  const cx=84,cy=84,r=64,sw=20,C=2*Math.PI*r;
+  let offset=0;
+  const segs=regions.map(r0=>{
+    const frac=r0[1]/total, len=frac*C;
+    const seg='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+r0[2]+'" stroke-width="'+sw+'" stroke-dasharray="'+len+' '+(C-len)+'" stroke-dashoffset="'+(-offset)+'" transform="rotate(-90 '+cx+' '+cy+')" style="cursor:pointer;" onclick="'+onClick+'(\''+r0[0]+'\')"><title>'+r0[0]+': '+fmt(r0[1])+' ออเดอร์</title></circle>';
+    offset+=len; return seg;
+  }).join('');
+  svg.innerHTML='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="var(--surface-2)" stroke-width="'+sw+'"></circle>'+segs+
+    '<text x="'+cx+'" y="'+(cy-4)+'" text-anchor="middle" font-family="Kanit" font-weight="700" font-size="20" fill="var(--ink)">'+fmt(total)+'</text>'+
+    '<text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" font-family="Prompt" font-size="10.5" fill="var(--muted)">ออเดอร์ตีกลับ</text>';
+  document.getElementById(legendId).innerHTML=regions.map(r0=>
+    '<div class="donut-row" onclick="'+onClick+'(\''+r0[0]+'\')"><div class="dl"><span class="sw" style="background:'+r0[2]+'"></span>'+r0[0]+'</div>'+
+    '<div class="dv">'+((r0[1]/total)*100).toFixed(1)+'%<small>'+money(r0[3])+'</small></div></div>').join('');
+}
+
+/* ============================================================
+   overview
+============================================================ */
+renderLine('chart-trend', DAILY);
+(function(){
+  const avg=3.4, top=RATES.slice(0,5);
+  document.getElementById('watchlist').innerHTML=top.map((r,i)=>{
+    const c=r[1]>=avg*2?'var(--critical)':r[1]>=avg?'var(--warning)':'var(--ink-2)';
+    return '<div class="wl-row" onclick="goExplore(\'rate\')">'+
+      '<div class="wl-rank" style="background:color-mix(in srgb, '+c+' 16%, var(--surface)); color:'+c+';">'+(i+1)+'</div>'+
+      '<div class="wl-body"><div class="wl-name">'+esc(r[0])+'</div><div class="wl-sub">'+r[2]+' ตีกลับ จาก '+fmt(r[3])+' ออเดอร์</div></div>'+
+      '<div class="wl-meta"><div class="m1" style="color:'+c+'">'+fmt1(r[1])+'%</div><div class="m2">×'+(r[1]/avg).toFixed(1)+' เฉลี่ย</div></div></div>';
+  }).join('');
+})();
+renderDonut('donut-mini','donut-legend-mini', REGIONS, 'goExploreRegion');
+renderBars('chart-teaser', COURIERS.map(r=>({label:r[0],value:r[1],tip:r[0]+': '+fmt(r[1])+' ออเดอร์ · '+money(r[2])})), 'var(--c-aqua)', {total:TOTAL_RETURNS, compact:true});
+
+/* ============================================================
+   explore — dimension switcher (replaces old modal system: chart + full table inline)
+============================================================ */
+const DIMS = [
+  {key:'rate', label:'อัตราตีกลับต่อยูนิต', icon:'📈'},
+  {key:'unitcount', label:'จำนวนตีกลับต่อยูนิต', icon:'🏬'},
+  {key:'product', label:'สินค้า', icon:'🧴'},
+  {key:'region', label:'ภูมิภาค', icon:'🗺️'},
+  {key:'status', label:'สถานะขนส่ง', icon:'🚚'},
+  {key:'payment', label:'การชำระเงิน', icon:'💳'},
+  {key:'courier', label:'คูเรียร์', icon:'📦'},
+  {key:'channel', label:'ช่องทางขาย', icon:'📣'},
+];
+document.getElementById('dimSwitcher').innerHTML=DIMS.map(d=>
+  '<button class="dim-btn" id="dimbtn-'+d.key+'" onclick="selectDim(\''+d.key+'\')">'+d.icon+' '+d.label+'</button>').join('');
+
+let curDim='rate';
+function selectDim(key){
+  curDim=key;
+  DIMS.forEach(d=>document.getElementById('dimbtn-'+d.key).classList.toggle('active', d.key===key));
+  document.getElementById('exploreDrillPanel').style.display='none';
+
+  const chartPanel=document.getElementById('exploreChartPanel');
+  const chartEl=document.getElementById('exploreChart');
+  const thead=document.getElementById('exploreThead');
+  const tbody=document.getElementById('exploreTbody');
+  let title='', desc='', legend='';
+
+  if(key==='rate'){
+    title='อัตราตีกลับต่อยูนิต'; desc='เทียบยอดขายจริงต่อยูนิต — เฉพาะยูนิตที่มียอดขาย ≥ 300 ออเดอร์/เดือน กันตัวอย่างเล็กเกินไปจนตีความผิด';
+    chartPanel.style.display='';
+    renderRateBars('exploreChart', RATES.slice(0,12).map(r=>({label:r[0],rate:r[1],returns:r[2],total:r[3]})), 3.4);
+    legend='แดง = สูงกว่าค่าเฉลี่ยเกิน 2 เท่า · เหลือง = สูงกว่าค่าเฉลี่ย · น้ำเงิน ≈ ค่าเฉลี่ย (3.4%) · แสดง 12 อันดับแรก ดูทั้งหมด 34 ยูนิตในตาราง';
+    thead.innerHTML='<tr><th>ยูนิต</th><th class="num">อัตราตีกลับ</th><th class="num">ตีกลับ</th><th class="num">ยอดขาย ก.ค.</th></tr>';
+    tbody.innerHTML=RATES.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt1(r[1])+'%</td><td class="num">'+fmt(r[2])+'</td><td class="num">'+fmt(r[3])+'</td></tr>').join('');
+  } else if(key==='unitcount'){
+    title='จำนวนตีกลับต่อยูนิต (ดิบ)'; desc='สำหรับวางแผนกำลังคน — ไม่ใช่ตัวชี้ปัญหา ดูอัตรา % แทนถ้าต้องการหาความผิดปกติจริง';
+    chartPanel.style.display='';
+    renderBars('exploreChart', UNIT_RETURNS.slice(0,12).map(r=>({label:r[0],value:r[1],tip:r[1]+' ออเดอร์ · มูลค่ารวม '+money(r[2])})), 'var(--c-blue)', {total:TOTAL_RETURNS});
+    legend='แสดง 12 อันดับแรกจาก 40 ยูนิต · ดูทั้งหมดในตารางด้านล่าง';
+    thead.innerHTML='<tr><th>ยูนิต</th><th class="num">จำนวนตีกลับ</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    tbody.innerHTML=UNIT_RETURNS.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[2])+'</td><td class="num">'+((r[1]/TOTAL_RETURNS)*100).toFixed(1)+'%</td></tr>').join('');
+  } else if(key==='product'){
+    title='สินค้าที่ถูกตีกลับ'; desc='54 SKU ที่มีตีกลับ ≥6 ครั้ง — long tail ต่ำกว่านี้ไม่แสดง';
+    chartPanel.style.display='';
+    renderBars('exploreChart', PRODUCTS.slice(0,12).map(r=>({label:r[0],value:r[1],tip:r[1]+' ออเดอร์ · มูลค่ารวม '+money(r[2])})), 'var(--c-orange)', {total:TOTAL_RETURNS, compact:true});
+    legend='แสดง 12 อันดับแรก จาก 3,188 ออเดอร์ · ดูทั้งหมดในตารางด้านล่าง';
+    thead.innerHTML='<tr><th>สินค้า</th><th class="num">จำนวนตีกลับ</th><th class="num">มูลค่ารวม</th></tr>';
+    tbody.innerHTML=PRODUCTS.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[2])+'</td></tr>').join('');
+  } else if(key==='region'){
+    title='ตีกลับตามภูมิภาค'; desc='คลิกแถวในตาราง หรือวงกลมในกราฟ เพื่อดูรายละเอียดจังหวัด';
+    chartPanel.style.display='';
+    chartEl.innerHTML='<div class="donut-wrap"><svg width="180" height="180" viewBox="0 0 168 168" id="donut-explore"></svg></div><div class="donut-legend" id="donut-legend-explore"></div>';
+    renderDonut('donut-explore','donut-legend-explore', REGIONS, 'showProvince');
+    legend='เรียงจากมากไปน้อย · มูลค่ารวมทั้งหมด '+money(REGIONS.reduce((a,b)=>a+b[3],0));
+    thead.innerHTML='<tr><th>ภูมิภาค</th><th class="num">จำนวนตีกลับ</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    const totalR=REGIONS.reduce((a,b)=>a+b[1],0);
+    tbody.innerHTML=REGIONS.map(r=>'<tr style="cursor:pointer" onclick="showProvince(\''+r[0]+'\')"><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[3])+'</td><td class="num">'+((r[1]/totalR)*100).toFixed(1)+'%</td></tr>').join('');
+  } else if(key==='status'){
+    title='สถานะขนส่ง'; desc='ฟิลด์นี้คือสถานะขนส่งดิบ ตีความให้อ่านง่ายขึ้นแล้ว — ยังไม่ใช่ "สาเหตุ" ที่แท้จริงของการตีกลับ';
+    chartPanel.style.display='';
+    renderBars('exploreChart', STATUSES.map(r=>({label:r[0],value:r[3],tip:r[0]+': '+r[1]+' · '+fmt(r[3])+' ออเดอร์'})), 'var(--c-violet)', {total:TOTAL_RETURNS, compact:true});
+    legend='ขนส่งไม่ได้บันทึกจากผู้รับสินค้าว่าปฏิเสธรับด้วยเหตุผลอะไร — ยังไม่มีคอลัมน์ระบุสาเหตุจริงในข้อมูลต้นทาง';
+    thead.innerHTML='<tr><th>สถานะ</th><th>ความหมาย</th><th class="num">จำนวน</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    tbody.innerHTML=STATUSES.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td class="num">'+fmt(r[3])+'</td><td class="num">'+money(r[4])+'</td><td class="num">'+((r[3]/TOTAL_RETURNS)*100).toFixed(1)+'%</td></tr>').join('');
+  } else if(key==='payment'){
+    title='วิธีการชำระเงิน'; desc='COD ครองเกือบทั้งหมด ส่วนที่เหลือมีเพียงหลักหน่วยออเดอร์';
+    chartPanel.style.display='';
+    renderBars('exploreChart', PAYMENTS.map(r=>({label:r[0],value:r[1],tip:r[0]+': '+fmt(r[1])+' ออเดอร์ · '+money(r[2])})), 'var(--c-yellow)', {total:TOTAL_RETURNS, compact:true});
+    legend='ครบทุกประเภทแล้ว';
+    thead.innerHTML='<tr><th>วิธีชำระเงิน</th><th class="num">จำนวน</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    tbody.innerHTML=PAYMENTS.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[2])+'</td><td class="num">'+((r[1]/TOTAL_RETURNS)*100).toFixed(1)+'%</td></tr>').join('');
+  } else if(key==='courier'){
+    title='บริษัทขนส่ง'; desc='Flash Express รวมทุกเขต/ศูนย์ย่อยเป็นก้อนเดียว = 3,029 ออเดอร์ (95.0%)';
+    chartPanel.style.display='';
+    renderBars('exploreChart', COURIERS.map(r=>({label:r[0],value:r[1],tip:r[0]+': '+fmt(r[1])+' ออเดอร์ · '+money(r[2])})), 'var(--c-aqua)', {total:TOTAL_RETURNS, compact:true});
+    legend='Flash เป็นคูเรียร์หลักของบริษัทอยู่แล้ว ตัวเลข 95% จึงยังฟันธงไม่ได้ว่าตีกลับสูงผิดปกติเมื่อเทียบคูเรียร์อื่น (ยังไม่มีสัดส่วนงานจริงมาเทียบ)';
+    thead.innerHTML='<tr><th>บริษัทขนส่ง</th><th class="num">จำนวน</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    tbody.innerHTML=COURIERS.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[2])+'</td><td class="num">'+((r[1]/TOTAL_RETURNS)*100).toFixed(1)+'%</td></tr>').join('');
+  } else if(key==='channel'){
+    title='ช่องทางขาย'; desc='FB สูงสุด — แต่เป็นช่องทางขายหลักอยู่แล้ว ยังไม่มียอดขายจริงต่อช่องทางมาเทียบเป็น %';
+    chartPanel.style.display='';
+    renderBars('exploreChart', CHANNELS.map(r=>({label:r[0],value:r[1],tip:r[0]+': '+fmt(r[1])+' ออเดอร์ · '+money(r[2])})), 'var(--c-magenta)', {total:TOTAL_RETURNS, compact:true});
+    legend='4 ช่องทางที่มีการขาย ก.ค. 2569';
+    thead.innerHTML='<tr><th>ช่องทางขาย</th><th class="num">จำนวน</th><th class="num">มูลค่ารวม</th><th class="num">สัดส่วน</th></tr>';
+    tbody.innerHTML=CHANNELS.map(r=>'<tr><td class="strong">'+esc(r[0])+'</td><td class="num">'+fmt(r[1])+'</td><td class="num">'+money(r[2])+'</td><td class="num">'+((r[1]/TOTAL_RETURNS)*100).toFixed(1)+'%</td></tr>').join('');
   }
 
-  /* ---------------- data ---------------- */
-
-  const UNIT_RETURNS = [
-    ['UNIT15',437,253634.00],['UNIT9',365,165910.00],['UNIT12',356,188030.00],['UNIT11',337,177100.00],
-    ['UNIT13',227,110150.00],['UNIT5',221,131290.00],['UNIT21',145,61030.00],['UNIT23',108,49440.00],
-    ['UNIT8',103,56380.00],['UNIT7',102,56980.00],['UNIT14',96,39650.00],['UNIT18',81,36030.00],
-    ['LineOA',54,28960.00],['UNIT16',54,22740.00],["TikTok_D'Lellise",51,31000.00],['UNIT11(CRM)',44,31290.00],
-    ['UNIT13(CRM)',43,24874.00],['Shopee_1',40,30068.00],['UNIT17',39,24620.00],['UNIT12(CRM)',31,21660.00],
-    ['UNIT22',23,11180.00],['UNIT 7(CRM)',22,14960.00],['ครีมบัวหิมะ',20,8820.00],['Shopee_2',19,24327.00],
-    ['UNIT9(CRM)',18,9700.00],['UNIT4',17,9110.00],['UNIT4(CRM)',17,12190.00],['Lazada_2',16,12937.61],
-    ['Lazada_1',15,10149.20],['TikTok_ชาสมุนไพร Le Vonglow',15,6240.00],['UNIT21(CRM)',15,8470.00],['TikTok_Dwawa',14,8740.00],
-    ['UNIT 15 (CRM)',10,7127.00],['UNIT 5 (CRM)',9,5520.00],['UNIT16(CRM)',8,3980.00],['UNIT17(CRM)',6,3740.00],
-    ['UNIT 8 (CRM)',5,4150.00],['UNIT14(CRM)',2,1080.00],['UNIT6',2,980.00],['UNIT10',1,390.00],
-  ];
-
-  const PRODUCTS = [
-    ['มัลติกรีน เวจจี้ 1 แถม 1',379,185454.7],['ชาแม่แย้ม 1 แถม 2',311,121657],['ดีเลลลิสเซ่ 1 แถม 1',274,134592],
-    ['จินเซง 1 แถม 1',174,85235],['เจสันเอ็ม 1 แถม 1',169,82726.43],['เจสันเอ็ม 2 กป + Valtora-x 1',153,75570],
-    ['ชาแก้ปวดเมื่อย 1 แถม 2',122,47985.28],['ลูนารี่ 1 แถม 1',116,45591],['พลูคาว 1 แถม 1',92,35880],
-    ['โพรไบโอวิต้า 1 แถม 1',91,44571],['เวนอร์ร่า กลูต้า พลัส 2 ห่อ',90,35100],['วีมีวิสตร้า 1 แถม 1',89,43910],
-    ['ลูนารี่ไบโอ เมล่อนเอส 1 แถม 1',69,26910],['ชาแม่แย้ม 4',62,30380],['น้ำชงลูนารี่ไฟเบอร์ 1 แถม 1',59,23110],
-    ['มัลติกรีน เวจจี้ 5',56,55944],['Valtora-X',38,19020],['กาแฟต่อมลูกหมาก 1 แถม 1',34,16650],
-    ['ชาแม่แย้ม 2 แถม 4',28,21000],['ดีเลลลิสเซ่ 2 แถม 2',28,23210],['ชาแก้ปวดเมื่อย 4',23,11270],
-    ['โพรไบโอวิต้า 1',22,6580],['ดีเลลลิสเซ่ 1 + โพรไบโอวิต้า 1',21,10290],['ลูนารี่ 2 แถม 2',21,14310],
-    ['ดีเลลลิสเซ่ 2 + โพรไบโอวิต้า 2',20,15745],['โพรไบโอวิต้า 2 ห่อ',20,9800],['โพรไบโอวิต้า 1 + ดีเลลลิสเซ่ 1',20,9800],
-    ['จินเซง 4 + ชาแม่แย้มห่อเล็ก 1',18,14220],['ครีมบัวหิมะ 2 กระปุก',17,6630],['จินเซง 5 + แผ่นทอง 1',17,15130],
-    ['โอเรนจิพลัส 1 แถม 2',17,6630],['ครีม 1 แถม 1',16,6450],['เวนอร์ร่า กลูต้า พลัส 4 ห่อ',16,11160],
-    ['โพรไบโอวิต้า 2 แถม 2',14,11060],['เจสันเอ็ม 4 กป + Valtora-x 1 (790)',13,10270],['ลูนารี่ 5',12,11060],
-    ['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 1',12,8280],['มัลติกรีน เวจจี้ 3 แถม 4',11,15290],['โพรไบโอวิต้า 2 + ดีเลลลิสเซ่ 2',11,8690],
-    ['ดีเลลลิสเซ่ 1 + วีมีวิสตร้า 1',10,4850],['ชาต่อมลูกหมาก 4',9,4410],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (650)',9,5850],
-    ['จินเซง 2 แถม 3',8,7120],['ลูนารี่(แดง) 1 + ลูนารี่(ส้ม) 1',8,3120],['วีมีวิสตร้า 4 กระปุก',8,6800],
-    ['เจสันเอ็ม 2 แถม 2',8,7120],['ชาแก้ปวด 1 แถม 2',7,2730],['เจสันเอ็ม 5 กป + Valtora-x 1',7,7000],
-    ['เวอร์น่าพลัส 1 แถม 1',7,3430],['กาแฟต่อมลูกหมาก 2 แถม 2',6,4940],['จินเซง 3 แถม 3',6,6000],
-    ['ชาแม่แย้ม 4 แถม 8',6,28750],['ดีเลลลิสเซ่ 5 + กระบอกน้ำ My Bottle 1',6,6000],['มัลติกรีน เวจจี้ 2 แถม 2',6,5590],
-    ['ลูนารี่ไบโอ เมล่อนเอส',6,2544],['ลูนารี่ไบโอ เมล่อนเอส 2 แถม 2 (690)',6,4850],
-  ];
-
-  const RATES = [
-    ['UNIT23',12.7,108,848],['UNIT18',8.3,81,979],['UNIT8',6.1,103,1675],['ครีมบัวหิมะ',6.0,20,333],
-    ['UNIT13',5.9,227,3826],['UNIT5',5.4,221,4059],['UNIT9',4.8,365,7615],['UNIT11',4.7,337,7157],
-    ['LineOA',4.7,54,1159],['UNIT15',4.1,437,10539],['UNIT12',3.9,356,9048],['UNIT14',3.9,96,2486],
-    ['UNIT7',3.8,102,2663],['UNIT16',3.8,54,1437],['UNIT17',3.2,39,1222],['UNIT21',3.1,145,4617],
-    ['UNIT 7(CRM)',2.6,22,837],['UNIT4',2.5,17,667],['UNIT11(CRM)',2.5,44,1776],['UNIT13(CRM)',2.4,43,1783],
-    ['UNIT 5 (CRM)',2.1,9,428],['Lazada_2',1.9,16,854],['UNIT12(CRM)',1.4,31,2218],['UNIT21(CRM)',1.4,15,1083],
-    ['UNIT4(CRM)',1.3,17,1284],['TikTok_Dwawa',1.3,14,1067],['UNIT17(CRM)',1.2,6,492],["TikTok_D'Lellise",1.2,51,4229],
-    ['UNIT9(CRM)',1.2,18,1540],['Lazada_1',0.9,15,1714],['Shopee_2',0.8,19,2307],['TikTok_ชาสมุนไพร Le Vonglow',0.8,15,1847],
-    ['Shopee_1',0.7,40,5786],['UNIT 15 (CRM)',0.6,10,1633],
-  ];
-
-  // [ภูมิภาค, จำนวนตีกลับ, สี, มูลค่ารวม]
-  const REGIONS = [
-    ['ภาคกลาง',1283,'var(--indigo)',699985.32],['ภาคใต้',533,'var(--blue)',269916.00],['ภาคตะวันออกเฉียงเหนือ',521,'var(--green)',276921.00],
-    ['ภาคตะวันออก',468,'var(--purple)',248153.49],['ภาคเหนือ',209,'var(--pink)',113660.00],['ภาคตะวันตก',171,'var(--teal)',92471.00],['ไม่ระบุ',3,'var(--muted)',3520.00],
-  ];
-
-  // [ช่องทางขาย (ฝ่ายที่ขาย), จำนวนตีกลับ, มูลค่ารวม]
-  const CHANNELS = [
-    ['FB',2714,1394644.00],['CRM',230,148741.00],['Marketplace',170,123461.81],['LineOA',74,37780.00],
-  ];
-
-  // [จังหวัด, จำนวนตีกลับ, มูลค่ารวม]
-  const PROVINCES = {
-    'ภาคกลาง': [
-      ['กรุงเทพมหานคร',491,284649.43],['สมุทรปราการ',147,78271.00],['นนทบุรี',120,65476.64],['ปทุมธานี',104,56059.28],['นครปฐม',51,25599.00],['สมุทรสาคร',46,21519.00],
-      ['พระนครศรีอยุธยา',44,23187.00],['นครสวรรค์',43,23639.00],['สระบุรี',42,19740.00],['สุพรรณบุรี',38,19791.00],['พิษณุโลก',29,15519.00],['ลพบุรี',20,10660.00],
-      ['เพชรบูรณ์',18,8740.27],['นครนายก',14,6460.00],['กำแพงเพชร',13,6870.00],['ชัยนาท',13,6270.00],['สมุทรสงคราม',13,9799.00],['สุโขทัย',12,6000.00],
-      ['พิจิตร',9,4410.00],['สิงห์บุรี',9,4395.70],['อ่างทอง',4,1760.00],['อุทัยธานี',3,1170.00],
-    ],
-    'ภาคตะวันตก': [
-      ['ราชบุรี',52,31234.00],['เพชรบุรี',36,17658.00],['กาญจนบุรี',32,15680.00],['ประจวบคีรีขันธ์',31,16789.00],['ตาก',20,11110.00],
-    ],
-    'ภาคตะวันออก': [
-      ['ชลบุรี',228,119738.49],['ระยอง',87,46317.00],['ฉะเชิงเทรา',55,29670.00],['ปราจีนบุรี',33,19268.00],['จันทบุรี',31,16280.00],['สระแก้ว',22,11200.00],['ตราด',12,5680.00],
-    ],
-    'ภาคตะวันออกเฉียงเหนือ': [
-      ['นครราชสีมา',81,44116.00],['ขอนแก่น',51,26090.00],['อุดรธานี',42,21998.00],['เลย',40,20460.00],['อุบลราชธานี',39,21779.00],['บุรีรัมย์',29,15980.00],
-      ['หนองคาย',28,14120.00],['ร้อยเอ็ด',26,14720.00],['ศรีสะเกษ',26,14072.00],['นครพนม',25,14050.00],['กาฬสินธุ์',17,9350.00],['ชัยภูมิ',17,9159.00],
-      ['มหาสารคาม',17,9149.00],['สกลนคร',16,7949.00],['บึงกาฬ',14,6560.00],['สุรินทร์',14,5960.00],['มุกดาหาร',12,7000.00],['ยโสธร',10,5609.00],
-      ['อำนาจเจริญ',9,4570.00],['หนองบัวลำภู',8,4230.00],
-    ],
-    'ภาคเหนือ': [
-      ['เชียงใหม่',71,39976.00],['เชียงราย',37,19395.00],['พะเยา',23,11202.00],['น่าน',19,10688.00],['ลำปาง',19,9530.00],['ลำพูน',13,8170.00],
-      ['แพร่',10,5060.00],['อุตรดิตถ์',9,3910.00],['แม่ฮ่องสอน',8,5729.00],
-    ],
-    'ภาคใต้': [
-      ['สงขลา',87,41799.00],['นครศรีธรรมราช',83,39850.00],['สุราษฎร์ธานี',73,39070.00],['ภูเก็ต',67,33989.00],['ชุมพร',40,22487.00],['กระบี่',39,19712.00],
-      ['ตรัง',35,15631.00],['สตูล',25,11450.00],['ปัตตานี',22,11549.00],['พัทลุง',16,9249.00],['พังงา',13,7260.00],['ยะลา',12,5900.00],['ระนอง',12,7150.00],['นราธิวาส',9,4820.00],
-    ],
-    'ไม่ระบุ': [
-      ['ข้อมูลที่อยู่ไม่สมบูรณ์/พิมพ์ผิด',3,3520.00],
-    ],
-  };
-
-  // [ป้ายที่แสดง, ความหมาย, รหัสระบบเดิม, จำนวน, มูลค่ารวม]
-  const STATUSES = [
-    ['ตีกลับอัตโนมัติ','พัสดุถูกคูเรียร์พักไว้จนครบกำหนดเวลา ไม่มีการติดต่อสำเร็จ ระบบตีกลับให้เอง','SYSTEM_AUTO_RETURN',3017,1580875.00],
-    ['คูเรียร์ส่งคืนคลัง','คูเรียร์นำพัสดุกลับเข้าคลังต้นทางโดยตรง','Return',80,45980.00],
-    ['ยืนยันตีกลับแล้ว','ระบบขนส่งยืนยันสถานะตีกลับสมบูรณ์','RETURNED',58,54005.00],
-    ['จัดส่งไม่สำเร็จ','พยายามส่งแล้วแต่ไม่สำเร็จ (เช่น ที่อยู่ผิด/ติดต่อไม่ได้)','deliver_failed',31,23086.81],
-    ['เริ่มกระบวนการตีกลับ','อยู่ระหว่างเริ่มขั้นตอนตีกลับ ยังไม่จบ','RETURN_INITIATED',1,390.00],
-    ['แจ้งทางโทรศัพท์','บันทึกผ่านการโทรแจ้ง ไม่ผ่านระบบอัตโนมัติ','PHONE',1,290.00],
-  ];
-
-  // [วิธีชำระเงิน, จำนวน, มูลค่ารวม]
-  const PAYMENTS = [
-    ['COD (เก็บเงินปลายทาง)',3016,1580285.00],['COD',162,116860.81],['Credit Card/Debit Card',2,1430.00],['COD (เก็บเงินปลายทาง), PT2',1,490.00],
-    ['Mbanking',1,1780.00],['PAY_LATER',1,790.00],['PROMPTPAY',1,1250.00],['PT2',1,390.00],['SPayLater',1,471.00],['ShopeePay Balance',1,390.00],['ShopeePay Linked Bank Account',1,490.00],
-  ];
-
-  // เหลือเฉพาะบริษัทขนส่งจริง — รวมทุกเขต/ศูนย์ย่อยของ Flash Express เป็นก้อนเดียว · [บริษัทขนส่ง, จำนวน, มูลค่ารวม]
-  const COURIERS = [
-    ['Flash Express',3029,1586922.70],['J&T Express',80,45980.00],['SPX Express',54,51864.00],['LEX Express',25,19860.11],
-  ];
-
-  const DAILY = [
-    137,148,117,134,131,117,107,106,107,86,76,94,78,77,86,84,81,103,76,87,96,84,73,82,96,103,124,97,121,149,131
-  ];
-
-  const TOTAL_RETURNS = 3188;
-
-  /* ---------------- donut ---------------- */
-  function renderDonut() {
-    const total = REGIONS.reduce((a,b)=>a+b[1],0);
-    const cx=90, cy=90, r=68, sw=22;
-    const C = 2*Math.PI*r;
-    let offset = 0;
-    const segs = REGIONS.map(r0 => {
-      const frac = r0[1]/total;
-      const len = frac*C;
-      const seg = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${r0[2]}" stroke-width="${sw}"
-        stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"
-        style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')"><title>${r0[0]}: ${fmt(r0[1])} ออเดอร์ — คลิกดูจังหวัด</title></circle>`;
-      offset += len;
-      return seg;
-    }).join('');
-    document.getElementById('donut-svg').innerHTML = `
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--panel-2)" stroke-width="${sw}"></circle>
-      ${segs}
-      <text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="Prompt" font-weight="700" font-size="22" fill="var(--ink)">${fmt(total)}</text>
-      <text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="Prompt" font-size="11" fill="var(--muted)">ออเดอร์ตีกลับ</text>
-    `;
-    const totalValue = REGIONS.reduce((a,b)=>a+b[3],0);
-    document.getElementById('donut-legend').innerHTML = REGIONS.map(r0 => `
-      <div class="donut-row" style="cursor:pointer;" onclick="showProvinceModal('${r0[0]}')" title="${r0[0]}: ${fmt(r0[1])} ออเดอร์ · ${money(r0[3])} (${((r0[3]/totalValue)*100).toFixed(1)}% ของมูลค่ารวม)">
-        <div class="dl"><span class="sw" style="background:${r0[2]}"></span>${r0[0]}</div>
-        <div style="text-align:right;">
-          <div class="dv">${((r0[1]/total)*100).toFixed(1)}%</div>
-          <div style="font-size:10.5px; color:var(--muted); font-family:var(--font-mono);">${money(r0[3])}</div>
-        </div>
-      </div>`).join('');
-  }
-  renderDonut();
-
-  /* ---------------- watchlist ---------------- */
-  function renderWatchlist() {
-    const avg = 3.4;
-    const top = RATES.slice(0,5);
-    document.getElementById('watchlist').innerHTML = top.map((r,i) => {
-      const c = r[1] >= avg*2 ? 'var(--critical)' : r[1] >= avg ? 'var(--warning)' : 'var(--ink-2)';
-      return `
-      <div class="list-row" onclick="showRateModal()">
-        <div class="lr-rank" style="background:color-mix(in srgb, ${c} 14%, var(--panel)); color:${c};">${i+1}</div>
-        <div class="lr-body">
-          <div class="lr-title">${r[0]}</div>
-          <div class="lr-sub">${r[2]} ตีกลับ จาก ${fmt(r[3])} ออเดอร์</div>
-        </div>
-        <div class="lr-meta">
-          <div class="m1" style="color:${c}">${fmt1(r[1])}%</div>
-          <div class="m2">×${(r[1]/avg).toFixed(1)} เฉลี่ย</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-  renderWatchlist();
-
-  /* ---------------- chart renderers ---------------- */
-
-  function renderBars(containerId, data, color, opts = {}) {
-    const el = document.getElementById(containerId);
-    const max = Math.max(...data.map(d => d.value));
-    const total = opts.total || data.reduce((a,b)=>a+b.value,0);
-    const compact = opts.compact ? ' compact' : '';
-    el.innerHTML = data.map(d => {
-      const share = ((d.value / total) * 100).toFixed(1);
-      const tip = d.tip || `${d.label}: ${fmt(d.value)}`;
-      return `
-        <div class="bar-row${compact}">
-          <div class="rowlabel" title="${d.label}">${d.label}</div>
-          <div class="bar-track">
-            <div class="bar-fill" style="background:${color}; width:${(d.value/max)*100}%;" data-tooltip="${tip}"></div>
-          </div>
-          <div class="rowvalue">${fmt(d.value)} <small>${share}%</small></div>
-        </div>`;
-    }).join('');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.querySelectorAll('.bar-fill').forEach(b => b.style.transform = 'scaleX(1)');
-    }));
-  }
-
-  function renderRateBars(containerId, data, avg) {
-    const el = document.getElementById(containerId);
-    const max = Math.max(...data.map(d => d.rate), avg * 1.15);
-    el.innerHTML = data.map(d => {
-      const avgPct = (avg / max) * 100;
-      const color = d.rate >= avg * 2 ? 'var(--critical)' : d.rate >= avg ? 'var(--warning)' : 'var(--blue)';
-      const tip = `${d.label}: ${d.returns} ตีกลับ / ${fmt(d.total)} ออเดอร์`;
-      return `
-        <div class="bar-row">
-          <div class="rowlabel" title="${d.label}">${d.label}</div>
-          <div class="bar-track">
-            <div class="bar-fill" style="background:${color}; width:${(d.rate/max)*100}%;" data-tooltip="${tip}"></div>
-            <div style="position:absolute; left:${avgPct}%; top:-3px; bottom:-3px; width:1px; border-left:2px dashed var(--muted);"></div>
-          </div>
-          <div class="rowvalue">${fmt1(d.rate)}%</div>
-        </div>`;
-    }).join('');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.querySelectorAll('.bar-fill').forEach(b => b.style.transform = 'scaleX(1)');
-    }));
-  }
-
-  function renderLine(containerId, values, color) {
-    const el = document.getElementById(containerId);
-    const data = values.map((v,i) => ({label:String(i+1), value:v}));
-    const W = 420, H = 190, padL = 28, padR = 8, padT = 12, padB = 22;
-    const innerW = W - padL - padR, innerH = H - padT - padB;
-    const max = Math.max(...data.map(d => d.value));
-    const min = 0;
-    const x = i => padL + (i / (data.length - 1)) * innerW;
-    const y = v => padT + innerH - ((v - min) / (max - min)) * innerH;
-
-    const points = data.map((d, i) => [x(i), y(d.value)]);
-    const linePath = points.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-    const areaPath = linePath + ` L${points[points.length-1][0].toFixed(1)},${(padT+innerH).toFixed(1)} L${points[0][0].toFixed(1)},${(padT+innerH).toFixed(1)} Z`;
-
-    const gridLines = [0, 1].map(f => {
-      const yy = padT + innerH * f;
-      const val = Math.round(max * (1 - f));
-      return `<line class="gridline" x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}"></line>
-              <text class="axislabel" x="${padL - 5}" y="${yy + 3}" text-anchor="end">${val}</text>`;
-    }).join('');
-
-    const dots = data.map((d, i) => {
-      const [px, py] = points[i];
-      const isPeak = d.value === max;
-      const showLabel = (i % 10 === 0) || i === data.length - 1;
-      return `
-        <circle class="dot${isPeak ? ' peak' : ''}" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${isPeak ? 3.5 : 2.5}" style="${isPeak ? `fill:${color};` : `stroke:${color};`}">
-          <title>วันที่ ${d.label} ก.ค.: ${fmt(d.value)} ออเดอร์</title>
-        </circle>
-        ${isPeak ? `<text class="peaklabel" x="${px.toFixed(1)}" y="${(py - 9).toFixed(1)}" text-anchor="middle" style="fill:${color};">${fmt(d.value)}</text>` : ''}
-        ${showLabel ? `<text class="axislabel" x="${px.toFixed(1)}" y="${H - 4}" text-anchor="middle">${d.label}</text>` : ''}
-      `;
-    }).join('');
-
-    el.innerHTML = `
-      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
-        ${gridLines}
-        <line class="baseline" x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}"></line>
-        <path class="area" d="${areaPath}" style="fill:${color};"></path>
-        <path class="line" d="${linePath}" style="stroke:${color};"></path>
-        ${dots}
-      </svg>`;
-  }
-
-  /* ---------------- initial render ---------------- */
-
-  renderRateBars('chart-rate', RATES.slice(0,10).map(r => ({label:r[0], rate:r[1], returns:r[2], total:r[3]})), 3.4);
-  renderLine('chart-daily', DAILY, 'var(--blue)');
-  renderBars('chart-unit', UNIT_RETURNS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--blue)', {total:TOTAL_RETURNS});
-  renderBars('chart-product', PRODUCTS.slice(0,10).map(r => ({label:r[0], value:r[1], tip:`${r[1]} ออเดอร์ · มูลค่ารวม ${money(r[2])}`})), 'var(--indigo)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-status', STATUSES.map(r => ({label:r[0], value:r[3], tip:`${r[0]}: ${r[1]} · ${fmt(r[3])} ออเดอร์ · ${money(r[4])}`})), 'var(--purple)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-payment', PAYMENTS.map(r => ({label:r[0], value:r[1], tip:`${r[0]}: ${fmt(r[1])} ออเดอร์ · ${money(r[2])}`})), 'var(--teal)', {total:TOTAL_RETURNS, compact:true});
-  renderBars('chart-channel', CHANNELS.map(r => ({label:r[0], value:r[1], tip:`${r[0]}: ${fmt(r[1])} ออเดอร์ · ${money(r[2])}`})), 'var(--pink)', {total:TOTAL_RETURNS, compact:true});
-
-  document.getElementById('table-courier').innerHTML = COURIERS.map(c => `
-    <tr>
-      <td class="strong">${c[0]}</td>
-      <td class="num">${fmt(c[1])}</td>
-      <td class="num">${money(c[2])}</td>
-      <td class="num">${((c[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td>
-    </tr>`).join('');
-  enableSort(document.getElementById('table-courier').closest('.card'));
-
-  /* ---------------- modals (full data) ---------------- */
-
-  function showRateModal() {
-    const rows = RATES.map(r => `
-      <tr><td class="strong">${r[0]}</td><td class="num">${fmt1(r[1])}%</td><td class="num">${fmt(r[2])}</td><td class="num">${fmt(r[3])}</td></tr>`).join('');
-    const body = `<p class="modal-note">UNITS WITH ≥300 ORDERS/MONTH ONLY · COMPANY AVG = 3.4% · CLICK A COLUMN HEADER TO SORT</p>
-      ${tableHtml([{label:'ยูนิต'},{label:'อัตราตีกลับ',num:true},{label:'ตีกลับ',num:true},{label:'ยอดขาย ก.ค.',num:true}], rows)}`;
-    openModal('อัตราตีกลับ (%) ต่อยูนิต — 34 ยูนิต', body);
-  }
-  function showUnitCountModal() {
-    const rows = UNIT_RETURNS.map(r => `
-      <tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${money(r[2])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    openModal('ตีกลับตามยูนิต — 40 ยูนิต', tableHtml([{label:'ยูนิต'},{label:'จำนวนตีกลับ',num:true},{label:'มูลค่ารวม',num:true},{label:'สัดส่วน',num:true}], rows));
-  }
-  function showUnitValueModal() {
-    const sorted = [...UNIT_RETURNS].sort((a,b) => b[2]-a[2]);
-    const rows = sorted.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${money(r[2])}</td><td class="num">${fmt(r[1])}</td></tr>`).join('');
-    const body = `<p class="modal-note">TOTAL ฿1,704,627 · CLICK A COLUMN HEADER TO SORT</p>${tableHtml([{label:'ยูนิต'},{label:'มูลค่ารวม',num:true},{label:'จำนวนออเดอร์',num:true}], rows)}`;
-    openModal('มูลค่าสินค้าตีกลับ — แยกตามยูนิต', body);
-  }
-  function showProductModal() {
-    const rows = PRODUCTS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${money(r[2])}</td></tr>`).join('');
-    const body = `<p class="modal-note">${PRODUCTS.length} SKUs WITH ≥6 RETURNS — LONG TAIL BELOW 6 NOT SHOWN</p>${tableHtml([{label:'สินค้า'},{label:'จำนวนตีกลับ',num:true},{label:'มูลค่ารวม',num:true}], rows)}`;
-    openModal('สินค้าที่ถูกตีกลับ — รายละเอียด', body);
-  }
-  function showDailyModal() {
-    const rows = DAILY.map((v,i) => `<tr><td class="strong">${i+1} ก.ค. 2569</td><td class="num">${fmt(v)}</td></tr>`).join('');
-    const avg = (DAILY.reduce((a,b)=>a+b,0)/DAILY.length).toFixed(1);
-    const body = `<p class="modal-note">AVG ${avg}/DAY · MIN ${Math.min(...DAILY)} (DAY ${DAILY.indexOf(Math.min(...DAILY))+1}) · MAX ${Math.max(...DAILY)} (DAY ${DAILY.indexOf(Math.max(...DAILY))+1})</p>${tableHtml([{label:'วันที่'},{label:'จำนวนตีกลับ',num:true}], rows)}`;
-    openModal('แนวโน้มรายวัน — 31 วัน', body);
-  }
-  function showStatusModal() {
-    const rows = STATUSES.map(r => `<tr><td class="strong">${r[0]}</td><td>${r[1]}</td><td class="num">${fmt(r[3])}</td><td class="num">${money(r[4])}</td><td class="num">${((r[3]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">ฟิลด์นี้คือสถานะขนส่งดิบ ตีความให้อ่านง่ายขึ้นแล้ว — ยังไม่ใช่ "สาเหตุ" ที่แท้จริงของการตีกลับ ขนส่งไม่ได้บันทึกจากผู้รับสินค้าว่าปฏิเสธรับด้วยเหตุผลอะไร (ที่อยู่ผิด/ติดต่อไม่ได้/เปลี่ยนใจ/สินค้าเสียหาย ฯลฯ) ระบบขนส่งจะตีเป็นสถานะ "ตีกลับอัตโนมัติ" ให้เองเมื่อพัสดุพ้นกำหนดเวลาโดยไม่มีการติดต่อสำเร็จ — ยังไม่มีคอลัมน์ระบุสาเหตุจริงในข้อมูลต้นทาง</p>${tableHtml([{label:'สถานะ'},{label:'ความหมาย'},{label:'จำนวน',num:true},{label:'มูลค่ารวม',num:true},{label:'สัดส่วน',num:true}], rows)}`;
-    openModal('สถานะขนส่ง — รายละเอียดทั้งหมด', body);
-  }
-  function showPaymentModal() {
-    const rows = PAYMENTS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${money(r[2])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    openModal('วิธีการชำระเงิน — รายละเอียดทั้งหมด', tableHtml([{label:'วิธีชำระเงิน'},{label:'จำนวน',num:true},{label:'มูลค่ารวม',num:true},{label:'สัดส่วน',num:true}], rows));
-  }
-  function showCourierModal() {
-    const rows = COURIERS.map(r => `<tr><td class="strong">${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${money(r[2])}</td><td class="num">${((r[1]/TOTAL_RETURNS)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">FLASH EXPRESS รวมทุกเขต/ศูนย์ย่อยเป็นก้อนเดียว = 3,029 ออเดอร์ (95.0%) — ดูรายละเอียดเขตย่อยได้ในชีต Discuse คอลัมน์บริษัทขนส่ง</p>${tableHtml([{label:'บริษัทขนส่ง'},{label:'จำนวน',num:true},{label:'มูลค่ารวม',num:true},{label:'สัดส่วน',num:true}], rows)}`;
-    openModal('ตีกลับตามบริษัทขนส่ง — รายละเอียดทั้งหมด', body);
-  }
-  function showProvinceModal(region) {
-    const list = PROVINCES[region] || [];
-    const total = list.reduce((a,b) => a+b[1], 0);
-    const rows = list.map(p => `<tr><td class="strong">${p[0]}</td><td class="num">${fmt(p[1])}</td><td class="num">${money(p[2])}</td><td class="num">${((p[1]/total)*100).toFixed(1)}%</td></tr>`).join('');
-    const body = `<p class="modal-note">${region.toUpperCase()} — ${list.length} จังหวัด รวม ${fmt(total)} ออเดอร์</p>${tableHtml([{label:'จังหวัด'},{label:'จำนวนตีกลับ',num:true},{label:'มูลค่ารวม',num:true},{label:'สัดส่วนในภาค',num:true}], rows)}`;
-    openModal(`ตีกลับใน${region} — แยกตามจังหวัด`, body);
-  }
+  document.getElementById('exploreTitle').textContent=title;
+  document.getElementById('exploreDesc').textContent=desc;
+  document.getElementById('exploreChartLegend').textContent=legend;
+  enableSort(document.getElementById('exploreTablePanel'));
+}
+function showProvince(region){
+  const list=PROVINCES[region]||[];
+  const total=list.reduce((a,b)=>a+b[1],0);
+  document.getElementById('exploreDrillTitle').textContent='ตีกลับใน'+region+' — แยกตามจังหวัด ('+list.length+' จังหวัด รวม '+fmt(total)+' ออเดอร์)';
+  document.getElementById('exploreDrillTbody').innerHTML=list.map(p=>'<tr><td class="strong">'+esc(p[0])+'</td><td class="num">'+fmt(p[1])+'</td><td class="num">'+money(p[2])+'</td><td class="num">'+((p[1]/total)*100).toFixed(1)+'%</td></tr>').join('');
+  const panel=document.getElementById('exploreDrillPanel');
+  panel.style.display='';
+  enableSort(panel);
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+selectDim('rate');
 </script>
-
 </body>
 </html>
