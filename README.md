@@ -1,4 +1,4 @@
-# สินค้าตีกลับ กรกฎาคม — แดชบอร์ด
+# Dashboard สินค้าตีกลับ ประจำเดือน กรกฎาคม 2569
 
 หน้าเว็บสถิตย์ (static) หน้าเดียว (`index.html`) ไม่มีขั้นตอน build สรุปข้อมูลสินค้าตีกลับเดือน ก.ค. 2569 ของ PT Glory จาก Google Sheet (แท็บ Discuse, Total_Order on Sell, config)
 
