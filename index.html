@@ -798,6 +798,60 @@
       </section>
 
       <section>
+        <div class="shead"><h2>เทียบกับข้อมูล JST ของทีม DA — แหล่งที่ 3</h2><span class="hint">ข้อมูลดึงตรงจากโปรแกรมส่งสินค้า JST โดยทีม Data Analytics เพื่อเช็คว่าตัวเลขฝ่ายไหน "ตรง" กับระบบต้นทาง</span></div>
+
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>รายการ</th>
+                  <th class="num">แดชบอร์ดนี้ (Discuse)</th>
+                  <th class="num">JST — ทีม DA</th>
+                  <th class="num">รายงานฝ่ายบัญชี (ที่ประชุม)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="strong">ออเดอร์ตีกลับรวม</td>
+                  <td class="num">3,188</td>
+                  <td class="num">3,188</td>
+                  <td class="num">2,834</td>
+                </tr>
+                <tr>
+                  <td class="strong">สถานะ SYSTEM_AUTO_RETURN</td>
+                  <td class="num">3,017</td>
+                  <td class="num">3,017</td>
+                  <td class="num">—</td>
+                </tr>
+                <tr>
+                  <td class="strong">ตีกลับผ่าน Flash Express TH_14</td>
+                  <td class="num">2,665</td>
+                  <td class="num">2,665</td>
+                  <td class="num">—</td>
+                </tr>
+                <tr>
+                  <td class="strong">ตีกลับภาคกลาง</td>
+                  <td class="num">1,283</td>
+                  <td class="num">1,283</td>
+                  <td class="num">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="legend-line">ตัวเลขรวม/สถานะขนส่ง/คูเรียร์/ภูมิภาคของ JST (ทีม DA) <strong style="color:var(--ink);">ตรงกับแดชบอร์ดนี้ทุกตัว</strong> แต่ไม่ตรงกับตัวเลขที่ฝ่ายบัญชีรายงานในที่ประชุม (2,834 ออเดอร์) — เมื่อ 2 ใน 3 แหล่งเห็นตรงกัน จึงชี้ว่าตัวเลข <strong style="color:var(--critical);">ฝ่ายบัญชีน่าจะเป็นตัวที่ต้องปรับแก้/นับใหม่</strong> มากกว่าอีกสองแหล่ง</p>
+        </div>
+
+        <div class="panel" style="margin-top:14px; border-color:var(--critical);">
+          <div class="num-list">
+            <div class="num-item"><div class="n" style="background:var(--critical); color:#fff;">!</div><p><strong>พบสูตรพัง (#REF!) ในชีต JST ทั้งไฟล์ ไม่ใช่แค่บางแถว</strong> คอลัมน์ที่ควรดึงมาจากตารางอ้างอิง ได้แก่ ฝ่ายที่ขาย, รหัสสินค้า, ชื่อสินค้า, ราคาสินค้า, Unit, วิธีการชำระเงิน, ชื่อร้าน และพนักงานขาย ขึ้น #REF! ทุกแถว — ยืนยันจากตาราง pivot ในชีตเดียวกันที่นับ "วิธีการชำระเงิน" ได้ค่า #REF! ครบ 3,188 แถว (เท่ากับยอดตีกลับทั้งหมด) แปลว่าคอลัมน์นี้ใช้งานไม่ได้เลยทั้งไฟล์</p></div>
+            <div class="num-item"><div class="n">2</div><p><strong>ผลกระทบ:</strong> ทีม DA (และใครก็ตามที่ใช้ชีตนี้) ยังเทียบข้อมูล "ระดับยูนิต / สินค้า / วิธีชำระเงิน" กับฝ่ายขายไม่ได้ในตอนนี้ เพราะคอลัมน์เหล่านี้ไม่มีค่าจริงให้เทียบ — เทียบได้แค่ระดับ "รวมทั้งบริษัท / คูเรียร์ / ภูมิภาค / สถานะขนส่ง" เท่านั้น ซึ่งเป็นส่วนที่ตรงกับแดชบอร์ดนี้ตามตารางด้านบน</p></div>
+            <div class="num-item"><div class="n">3</div><p><strong>ข้อเสนอ:</strong> ให้ทีม DA ตรวจสอบสูตรอ้างอิง (VLOOKUP/INDEX-MATCH) ในชีต JST ว่าตารางอ้างอิงต้นทาง (ฝ่ายขาย/สินค้า/Unit) ถูกย้ายหรือลบไปหรือไม่ แก้ไขให้ค่ากลับมาเป็นปกติ ก่อนใช้ชีตนี้เทียบข้อมูลระดับยูนิต/สินค้ากับรายงานของแต่ละฝ่ายในหัวข้อก่อนหน้า</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <div class="shead"><h2>สาเหตุตีกลับจากที่ประชุม (24 ส.ค. 2569)</h2><span class="hint">ปัจจัยภายนอกคิดเป็นประมาณ 90% ของสาเหตุทั้งหมด</span></div>
         <div class="panel">
           <div class="num-list">
@@ -913,6 +967,11 @@
                 <td class="strong">ฝ่ายคลังสินค้า — สรุปออเดอร์ตีกลับ</td>
                 <td>Google Slides</td>
                 <td><a href="https://docs.google.com/presentation/d/11E_fX5USinr5dveP57kEGyoMsacmFZGLjvqtP1s0PZw/edit" target="_blank" rel="noopener" style="color:var(--brand-1); font-weight:600; text-decoration:underline;">เปิดเอกสาร ↗</a></td>
+              </tr>
+              <tr>
+                <td class="strong">ทีม Data Analytics — ข้อมูลดิบจากโปรแกรมส่งสินค้า JST</td>
+                <td>Google Sheet</td>
+                <td><a href="https://docs.google.com/spreadsheets/d/1EIKRt4EHeYKPoymw53F5UsxZZTYATPtUd0HCDIwLNtE/edit?gid=0#gid=0" target="_blank" rel="noopener" style="color:var(--brand-1); font-weight:600; text-decoration:underline;">เปิดชีต ↗</a></td>
               </tr>
             </tbody>
           </table>
