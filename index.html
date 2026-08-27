@@ -375,6 +375,33 @@
   .num-item p{ margin:0; font-size:13px; line-height:1.65; color:var(--ink-2); }
   .num-item p strong{ color:var(--ink); }
 
+  /* ---------- accordion (condensed hypotheses / causes) ---------- */
+  .acc{ display:flex; flex-direction:column; gap:8px; }
+  .acc details{ border:1px solid var(--border); border-radius:12px; background:var(--surface-2); overflow:hidden; }
+  .acc details[open]{ background:var(--surface); }
+  .acc summary{ list-style:none; cursor:pointer; padding:13px 15px; display:flex; align-items:center; gap:11px;
+    font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); }
+  .acc summary::-webkit-details-marker{ display:none; }
+  .acc summary .n{ display:flex; align-items:center; justify-content:center; width:25px; height:25px; border-radius:50%; flex:none;
+    background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#fff; font-family:var(--font-display); font-weight:700; font-size:11.5px; }
+  .acc summary .tt{ flex:1; }
+  .acc summary .chev{ color:var(--muted); font-size:11px; transition:transform .15s ease; flex:none; }
+  .acc details[open] summary .chev{ transform:rotate(90deg); }
+  .acc .body{ padding:0 15px 15px 51px; font-size:13px; line-height:1.65; color:var(--ink-2); }
+  .acc .body strong{ color:var(--ink); }
+
+  /* ---------- jump card (Insight -> ตรวจสอบข้อมูล) ---------- */
+  .jump-card{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-radius:15px;
+    background:var(--surface-2); border:1px dashed var(--border); flex-wrap:wrap; }
+  .jump-card .txt{ font-size:13px; color:var(--ink-2); line-height:1.65; }
+  .jump-card .txt strong{ color:var(--ink); }
+  .jump-btn{ flex:none; border:none; cursor:pointer; padding:10px 18px; border-radius:99px; font-size:13px; font-weight:600; color:#fff;
+    font-family:var(--font-body); background:linear-gradient(135deg,var(--brand-1),var(--brand-2));
+    box-shadow:0 8px 18px -8px color-mix(in srgb, var(--brand-1) 60%, transparent); display:flex; align-items:center; gap:6px; }
+  .jump-btn:hover{ opacity:.92; }
+  .badge-status{ display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:99px; font-size:11.5px; font-weight:600; margin-left:6px; }
+  .badge-status.ok{ background:color-mix(in srgb, var(--good) 16%, var(--surface)); color:var(--good); }
+
   .impact-cmp{ display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; }
   @media (max-width:640px){ .impact-cmp{ grid-template-columns:1fr; } .impact-cmp .eq{ transform:rotate(90deg); } }
   .impact-card{ border:1px solid var(--border); border-radius:14px; padding:17px 19px; display:flex; flex-direction:column; gap:4px; background:var(--surface-2); }
@@ -442,6 +469,7 @@
         <button class="navbtn active" data-view="overview"><span class="ic">🧭</span>ภาพรวม</button>
         <button class="navbtn" data-view="explore"><span class="ic">🔎</span>เจาะลึกข้อมูล</button>
         <button class="navbtn" data-view="insight"><span class="ic">💡</span>Insight</button>
+        <button class="navbtn" data-view="datacheck"><span class="ic">⚖️</span>ตรวจสอบข้อมูล</button>
       </nav>
     </div>
 
@@ -649,16 +677,107 @@
       </section>
 
       <section>
-        <div class="shead"><h2>สมมติฐานสาเหตุหลัก</h2><span class="hint">เรียงจากหลักฐานที่หนักแน่นที่สุด ยังต้องยืนยันด้วยข้อมูล "สาเหตุการตีกลับ" ที่แท้จริงอีกครั้ง</span></div>
+        <div class="shead"><h2>สมมติฐานสาเหตุหลัก</h2><span class="hint">แตะหัวข้อเพื่อดูรายละเอียด — เรียงจากหลักฐานที่หนักแน่นที่สุด ยังต้องยืนยันด้วยข้อมูล "สาเหตุการตีกลับ" ที่แท้จริงอีกครั้ง</span></div>
         <div class="panel">
-          <div class="num-list">
-            <div class="num-item"><div class="n">1</div><p><strong>ขั้นตอนนัดส่งและติดต่อลูกค้าก่อนหมดเวลายังไม่รัดกุมพอ</strong> สอดคล้องกับสัดส่วนการตีกลับแบบอัตโนมัติที่สูงถึง 94.6%</p></div>
-            <div class="num-item"><div class="n">2</div><p><strong>UNIT23 และ UNIT18 อาจมีปัญหาเฉพาะจุด</strong> เช่น พื้นที่จัดส่งยาก ข้อมูลที่อยู่ลูกค้าไม่ครบถ้วน หรือฐานลูกค้าต่างจากยูนิตอื่น ควรลงไปตรวจสอบเป็นรายยูนิต</p></div>
-            <div class="num-item"><div class="n">3</div><p><strong>การชำระแบบ COD ทำให้ลูกค้าไม่มีแรงจูงใจติดตามพัสดุ</strong> เมื่อไม่ได้จ่ายเงินล่วงหน้า การไม่รับสายหรือไม่อยู่บ้านจึงไม่มีต้นทุนต่อลูกค้า</p></div>
-            <div class="num-item"><div class="n">4</div><p><strong>ยังสรุปไม่ได้ว่า Flash Express มีปัญหา</strong> แม้ยอดตีกลับ 95.0% หรือ 3,029 ออเดอร์จะวิ่งผ่าน Flash แต่ Flash เป็นคูเรียร์หลักของบริษัทอยู่แล้ว จึงยังต้องขอสัดส่วนงานจัดส่งจริงของแต่ละคูเรียร์มาเทียบเป็นเปอร์เซ็นต์ก่อน</p></div>
+          <div class="acc">
+            <details>
+              <summary><span class="n">1</span><span class="tt">ขั้นตอนนัดส่งและติดต่อลูกค้าก่อนหมดเวลายังไม่รัดกุมพอ</span><span class="chev">▸</span></summary>
+              <div class="body">สอดคล้องกับสัดส่วนการตีกลับแบบอัตโนมัติที่สูงถึง 94.6%</div>
+            </details>
+            <details>
+              <summary><span class="n">2</span><span class="tt">UNIT23 และ UNIT18 อาจมีปัญหาเฉพาะจุด</span><span class="chev">▸</span></summary>
+              <div class="body">เช่น พื้นที่จัดส่งยาก ข้อมูลที่อยู่ลูกค้าไม่ครบถ้วน หรือฐานลูกค้าต่างจากยูนิตอื่น ควรลงไปตรวจสอบเป็นรายยูนิต</div>
+            </details>
+            <details>
+              <summary><span class="n">3</span><span class="tt">การชำระแบบ COD ทำให้ลูกค้าไม่มีแรงจูงใจติดตามพัสดุ</span><span class="chev">▸</span></summary>
+              <div class="body">เมื่อไม่ได้จ่ายเงินล่วงหน้า การไม่รับสายหรือไม่อยู่บ้านจึงไม่มีต้นทุนต่อลูกค้า</div>
+            </details>
+            <details>
+              <summary><span class="n">4</span><span class="tt">ยังสรุปไม่ได้ว่า Flash Express มีปัญหา</span><span class="chev">▸</span></summary>
+              <div class="body">แม้ยอดตีกลับ 95.0% หรือ 3,029 ออเดอร์จะวิ่งผ่าน Flash แต่ Flash เป็นคูเรียร์หลักของบริษัทอยู่แล้ว จึงยังต้องขอสัดส่วนงานจัดส่งจริงของแต่ละคูเรียร์มาเทียบเป็นเปอร์เซ็นต์ก่อน</div>
+            </details>
           </div>
         </div>
       </section>
+
+      <section>
+        <div class="shead"><h2>ตรวจสอบข้อมูลเพิ่มเติม</h2></div>
+        <div class="jump-card">
+          <div class="txt">
+            เทียบตัวเลขกับ<strong>รายงานที่ประชุมฝ่ายต่างๆ</strong> และ<strong>ชีต JST ของทีม DA</strong> — ตรวจว่าฝ่ายไหนตัวเลขตรง/ไม่ตรง พร้อมสาเหตุตีกลับจากที่ประชุมและแหล่งอ้างอิงเอกสารทั้งหมด<span class="badge-status ok">✓ 2/3 แหล่งตรงกัน</span>
+          </div>
+          <button class="jump-btn" onclick="switchView('datacheck')">ไปที่แท็บ ⚖️ ตรวจสอบข้อมูล →</button>
+        </div>
+      </section>
+
+      <section>
+        <div class="shead"><h2>ข้อเสนอเชิงปฏิบัติ</h2><span class="hint">เรียงตามลำดับความสำคัญ</span></div>
+        <div class="panel table-wrap">
+          <table>
+            <thead><tr><th>ลำดับ</th><th>สิ่งที่ควรทำ</th><th>ผู้รับผิดชอบที่แนะนำ</th><th>ผลที่คาดว่าจะได้รับ</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td class="strong">ตรวจสอบกระบวนการนัดส่งและติดต่อลูกค้าของ UNIT23 และ UNIT18 ร่วมกับทีมขนส่ง</td>
+                <td>หัวหน้ายูนิต ร่วมกับทีมประสานงานขนส่ง</td>
+                <td>ลดอัตราตีกลับของทั้งสองยูนิตให้ใกล้เคียงค่าเฉลี่ยบริษัท</td>
+              </tr>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td class="strong">เปิดให้บันทึก "สาเหตุการตีกลับ" ทุกครั้งที่เกิดขึ้น เช่น ปฏิเสธรับ ติดต่อไม่ได้ ที่อยู่ผิด สินค้าเสียหาย หรือเปลี่ยนใจ</td>
+                <td>ทีมขนส่งและทีมขาย ร่วมกับแอดมินระบบ</td>
+                <td>ยืนยันสาเหตุที่แท้จริง และแก้ปัญหาได้ตรงจุดมากขึ้นในรอบถัดไป</td>
+              </tr>
+              <tr>
+                <td><span class="priority p2">P2</span></td>
+                <td class="strong">ขอสัดส่วนงานจัดส่งจริงแยกตามคูเรียร์ เพื่อเทียบอัตราตีกลับของ Flash Express กับคูเรียร์อื่นเป็นเปอร์เซ็นต์</td>
+                <td>ทีมจัดส่งและจัดซื้อขนส่ง</td>
+                <td>รู้ว่าควรเจรจาหรือปรับสัดส่วนคูเรียร์หรือไม่</td>
+              </tr>
+              <tr>
+                <td><span class="priority p2">P2</span></td>
+                <td class="strong">เชื่อมข้อมูลต้นทุนสินค้า (COGS) และค่าขนส่งไป-กลับเข้ากับรายงานนี้</td>
+                <td>ทีมบัญชี การเงิน และนักวิเคราะห์ข้อมูล</td>
+                <td>ทราบตัวเลขขาดทุนที่แท้จริงต่อเดือน ไม่ใช่แค่ราคาขาย</td>
+              </tr>
+              <tr>
+                <td><span class="priority p3">P3</span></td>
+                <td class="strong">จัดมาตรฐาน ID ลูกค้าให้เป็นชุดเดียวกันในทุกช่องทาง เพื่อกรองลูกค้าที่ตีกลับซ้ำ</td>
+                <td>ทีมระบบและ IT</td>
+                <td>สามารถให้ลูกค้ากลุ่มเสี่ยงสูงชำระเงินโอนก่อนได้</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <div class="ask-panel">
+          <span class="from">สิ่งที่ขอให้ผู้บริหารพิจารณาอนุมัติในรอบนี้</span>
+          <span class="to">1) เริ่มตรวจสอบกระบวนการของ UNIT23 และ UNIT18 &nbsp;·&nbsp; 2) กำหนดให้บันทึก "สาเหตุการตีกลับ" ทุกครั้ง &nbsp;·&nbsp; 3) ขอข้อมูลต้นทุนสินค้าและค่าขนส่งเพิ่มเติม เพื่อคำนวณผลขาดทุนที่แท้จริง</span>
+        </div>
+      </section>
+
+      <footer>
+        ที่มา: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" แท็บ Discuse (ฐานข้อมูลตีกลับเต็ม 3,188 แถว), Total_Order on Sell (ยอดขายจริงกรองเฉพาะเดือน ก.ค.) และแท็บ config (ตารางสรุป) เนื้อหา Insight นี้สรุปจากข้อมูลในแท็บภาพรวมและเจาะลึกข้อมูลทั้งหมด ไม่มีการปรับแต่งตัวเลข · รายละเอียดการตรวจสอบข้อมูลกับที่ประชุม/JST อยู่ที่แท็บ ⚖️ ตรวจสอบข้อมูล
+      </footer>
+
+    </div>
+    </div>
+    <!-- /view-insight -->
+
+    <!-- ================= DATA CHECK ================= -->
+    <div class="view" id="view-datacheck">
+    <div class="wrap">
+
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">ตรวจสอบข้อมูล</p>
+          <h1>ตัวเลขจากแต่ละแหล่งตรงกันไหม</h1>
+          <p class="desc">เทียบตัวเลขแดชบอร์ดนี้กับรายงานที่ประชุมฝ่ายต่างๆ และชีต JST ของทีม DA เพื่อดูว่าฝ่ายไหนตัวเลขตรง/ไม่ตรง พร้อมสาเหตุตีกลับจากที่ประชุมและแหล่งอ้างอิงเอกสารทั้งหมด</p>
+        </div>
+        <div class="meta">อ้างอิง 3,188 ออเดอร์ตีกลับ<br>1–31 ก.ค. 2569</div>
+      </div>
 
       <section>
         <div class="shead"><h2>เทียบกับข้อมูลจากที่ประชุมฝ่ายต่างๆ — ก.ค. 2569</h2><span class="hint">จากรายงานการประชุม วันที่ 24 ส.ค. 2569 (ผู้บริหาร / เลขา / แอดมิน / CRM / Line OA / Data Analytics / คลังสินค้า) และเอกสารสรุปของแต่ละฝ่าย</span></div>
@@ -900,47 +1019,6 @@
       </section>
 
       <section>
-        <div class="shead"><h2>ข้อเสนอเชิงปฏิบัติ</h2><span class="hint">เรียงตามลำดับความสำคัญ</span></div>
-        <div class="panel table-wrap">
-          <table>
-            <thead><tr><th>ลำดับ</th><th>สิ่งที่ควรทำ</th><th>ผู้รับผิดชอบที่แนะนำ</th><th>ผลที่คาดว่าจะได้รับ</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><span class="priority p1">P1</span></td>
-                <td class="strong">ตรวจสอบกระบวนการนัดส่งและติดต่อลูกค้าของ UNIT23 และ UNIT18 ร่วมกับทีมขนส่ง</td>
-                <td>หัวหน้ายูนิต ร่วมกับทีมประสานงานขนส่ง</td>
-                <td>ลดอัตราตีกลับของทั้งสองยูนิตให้ใกล้เคียงค่าเฉลี่ยบริษัท</td>
-              </tr>
-              <tr>
-                <td><span class="priority p1">P1</span></td>
-                <td class="strong">เปิดให้บันทึก "สาเหตุการตีกลับ" ทุกครั้งที่เกิดขึ้น เช่น ปฏิเสธรับ ติดต่อไม่ได้ ที่อยู่ผิด สินค้าเสียหาย หรือเปลี่ยนใจ</td>
-                <td>ทีมขนส่งและทีมขาย ร่วมกับแอดมินระบบ</td>
-                <td>ยืนยันสาเหตุที่แท้จริง และแก้ปัญหาได้ตรงจุดมากขึ้นในรอบถัดไป</td>
-              </tr>
-              <tr>
-                <td><span class="priority p2">P2</span></td>
-                <td class="strong">ขอสัดส่วนงานจัดส่งจริงแยกตามคูเรียร์ เพื่อเทียบอัตราตีกลับของ Flash Express กับคูเรียร์อื่นเป็นเปอร์เซ็นต์</td>
-                <td>ทีมจัดส่งและจัดซื้อขนส่ง</td>
-                <td>รู้ว่าควรเจรจาหรือปรับสัดส่วนคูเรียร์หรือไม่</td>
-              </tr>
-              <tr>
-                <td><span class="priority p2">P2</span></td>
-                <td class="strong">เชื่อมข้อมูลต้นทุนสินค้า (COGS) และค่าขนส่งไป-กลับเข้ากับรายงานนี้</td>
-                <td>ทีมบัญชี การเงิน และนักวิเคราะห์ข้อมูล</td>
-                <td>ทราบตัวเลขขาดทุนที่แท้จริงต่อเดือน ไม่ใช่แค่ราคาขาย</td>
-              </tr>
-              <tr>
-                <td><span class="priority p3">P3</span></td>
-                <td class="strong">จัดมาตรฐาน ID ลูกค้าให้เป็นชุดเดียวกันในทุกช่องทาง เพื่อกรองลูกค้าที่ตีกลับซ้ำ</td>
-                <td>ทีมระบบและ IT</td>
-                <td>สามารถให้ลูกค้ากลุ่มเสี่ยงสูงชำระเงินโอนก่อนได้</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section>
         <div class="shead"><h2>แหล่งอ้างอิงข้อมูลการประชุม</h2><span class="hint">เอกสารต้นฉบับที่ใช้สร้างส่วน "เทียบกับข้อมูลจากที่ประชุมฝ่ายต่างๆ" ด้านบน — เปิดสิทธิ์ดูสาธารณะ (view-only)</span></div>
         <div class="panel table-wrap">
           <table>
@@ -1003,21 +1081,13 @@
         </div>
       </section>
 
-      <section>
-        <div class="ask-panel">
-          <span class="from">สิ่งที่ขอให้ผู้บริหารพิจารณาอนุมัติในรอบนี้</span>
-          <span class="to">1) เริ่มตรวจสอบกระบวนการของ UNIT23 และ UNIT18 &nbsp;·&nbsp; 2) กำหนดให้บันทึก "สาเหตุการตีกลับ" ทุกครั้ง &nbsp;·&nbsp; 3) ขอข้อมูลต้นทุนสินค้าและค่าขนส่งเพิ่มเติม เพื่อคำนวณผลขาดทุนที่แท้จริง</span>
-        </div>
-      </section>
-
       <footer>
-        ที่มา: Google Sheet "สรุปรายการสินค้าตีกลับเดือน ก.ค. 2569" แท็บ Discuse (ฐานข้อมูลตีกลับเต็ม 3,188 แถว), Total_Order on Sell (ยอดขายจริงกรองเฉพาะเดือน ก.ค.) และแท็บ config (ตารางสรุป) เนื้อหา Insight นี้สรุปจากข้อมูลในแท็บภาพรวมและเจาะลึกข้อมูลทั้งหมด ไม่มีการปรับแต่งตัวเลข<br>
-        ข้อมูลการประชุม: รายงานการประชุมสรุปตีกลับ ก.ค. 2569 (24 ส.ค. 2569) และเอกสารสรุปของฝ่ายบัญชี, ฝ่ายขาย Facebook (ไทย/ลาว), CRM สำนักงานใหญ่, CRM สาขา 1, Branding และฝ่ายคลังสินค้า
+        ข้อมูลการประชุม: รายงานการประชุมสรุปตีกลับ ก.ค. 2569 (24 ส.ค. 2569) และเอกสารสรุปของฝ่ายบัญชี, ฝ่ายขาย Facebook (ไทย/ลาว), CRM สำนักงานใหญ่, CRM สาขา 1, Branding และฝ่ายคลังสินค้า · ข้อมูล JST: ทีม Data Analytics ดึงจากโปรแกรมส่งสินค้า JST
       </footer>
 
     </div>
     </div>
-    <!-- /view-insight -->
+    <!-- /view-datacheck -->
 
   </main>
 </div>
